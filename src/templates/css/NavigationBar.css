@@ -1,0 +1,19 @@
+.nav-tabs {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: inherit;
+    margin-right: 20px; 
+  }
+  
+  .nav-link:last-child {
+    margin-right: 0;
+  }
+  
+  .AppBar-root {
+    justify-content: center;
+  }
+  

@@ -1,10 +1,11 @@
 import './App.css';
-import RegistrationForm from './templates/RegistrationForm';
+import NavigationBar from './templates/NavigationBar';
+
 
 function App() {
   return (
     <>
-      <RegistrationForm />
+      <NavigationBar />
     </>
   );
 }

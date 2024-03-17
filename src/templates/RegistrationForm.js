@@ -1,10 +1,8 @@
-import { Grid, InputLabel, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { dispatch } from '../store';
-import { registerUser } from '../store/slices/userReducer';
+import React, { useState } from "react";
+import { Grid, InputLabel, TextField, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function RegistrationForm() {
-
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -12,45 +10,116 @@ export default function RegistrationForm() {
   const [cpassword, setCpassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const formData = {
       userName,
+      email,
       firstName,
       lastName,
       password,
-      email,
     };
-    console.log(formData);
-    dispatch(registerUser(formData))
-  }
+    if (password === cpassword) {
+      try {
+        const response = await fetch("http://localhost:5000/api/users/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to register");
+        }
+
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    } else {
+      alert("Passwords DO NOT match");
+    }
+  };
 
   return (
-    <>
-      <h1>Hello</h1>
+    <Grid container spacing={2} justifyContent="center">
+      <Grid item xs={12}>
+        <Typography variant="h4" align="center">Register User</Typography>
+      </Grid>
       <form onSubmit={handleSubmit}>
-        <Grid>
-
+        <Grid item xs={12}>
           <InputLabel>Enter Your UserName</InputLabel>
-          <TextField placeholder="Enter Username" id="username"  name="username" onChange={e => setUserName(e.target.value)} />
-
+          <TextField
+            placeholder="Enter Username"
+            id="userName"
+            name="username"
+            fullWidth
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
           <InputLabel>Enter Your First Name</InputLabel>
-          <TextField placeholder="Enter First name" id="firstname" name="firstname" onChange={e => setFirstName(e.target.value)} />
-
+          <TextField
+            placeholder="Enter First name"
+            id="firstName"
+            name="firstname"
+            fullWidth
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
           <InputLabel>Enter Your last Name</InputLabel>
-          <TextField placeholder="Enter last name" id="lastname" name="lastname" onChange={e => setLastName(e.target.value)} />
-
+          <TextField
+            placeholder="Enter last name"
+            id="lastName"
+            name="lastname"
+            fullWidth
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
           <InputLabel>Enter Your email</InputLabel>
-          <TextField placeholder="Enter email" id="email" name="email" onChange={e => setEmail(e.target.value)} />
-
+          <TextField
+            placeholder="Enter email"
+            id="email"
+            name="email"
+            fullWidth
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
           <InputLabel>Enter Your Password</InputLabel>
-          <TextField placeholder="Enter Password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
-
+          <TextField
+            placeholder="Enter Password"
+            id="password"
+            name="password"
+            type="password"
+            fullWidth
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
           <InputLabel>Enter Confirm Password</InputLabel>
-          <TextField placeholder="Enter Confirm Password" name="cpassword" onChange={e => setCpassword(e.target.value)} />
-
-          <button type="submit">Submit</button>
+          <TextField
+            placeholder="Enter Confirm Password"
+            name="cpassword"
+            type="password"
+            fullWidth
+            onChange={(e) => setCpassword(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>Submit</Button>
         </Grid>
       </form>
-    </>
-  )
+      <Grid item xs={12}>
+        <Typography variant="body1" align="center">
+          Already have an account? <Link to="/login">Login here</Link>
+        </Typography>
+      </Grid>
+    </Grid>
+  );
 }
