@@ -45,7 +45,6 @@ export default function RegistrationForm() {
       alert("Passwords DO NOT match");
     }
   };
-
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
