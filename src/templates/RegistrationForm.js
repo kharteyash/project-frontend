@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Grid, InputLabel, TextField, Typography, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { IP } from './constants.js'
 
 export default function RegistrationForm() {
   const [userName, setUserName] = useState("");
@@ -9,7 +10,7 @@ export default function RegistrationForm() {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [email, setEmail] = useState("");
-  const navigate= useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,12 +23,13 @@ export default function RegistrationForm() {
     };
     if (password === cpassword) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/register", {
+        const response = await fetch(`http://${IP}:5000/api/users/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
+          credentials: "include",
         });
 
         if (!response.ok) {
@@ -35,9 +37,7 @@ export default function RegistrationForm() {
         }
 
         const data = await response.json();
-        alert("User Registered Successfully")
-        navigate("/login")
-
+        console.log(data);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -57,7 +57,7 @@ export default function RegistrationForm() {
           <TextField
             placeholder="Enter Username"
             id="userName"
-            name="username"
+            name="userName"
             fullWidth
             onChange={(e) => setUserName(e.target.value)}
           />
@@ -67,7 +67,7 @@ export default function RegistrationForm() {
           <TextField
             placeholder="Enter First name"
             id="firstName"
-            name="firstname"
+            name="firstName"
             fullWidth
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -77,7 +77,7 @@ export default function RegistrationForm() {
           <TextField
             placeholder="Enter last name"
             id="lastName"
-            name="lastname"
+            name="lastName"
             fullWidth
             onChange={(e) => setLastName(e.target.value)}
           />

@@ -1,11 +1,12 @@
 import { Grid, InputLabel, TextField, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { IP } from './constants.js'
 
 export default function LoginForm() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -14,24 +15,25 @@ export default function LoginForm() {
       password,
     };
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
+      const response = await fetch(`http://${IP}:5000/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
+
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to Login");
-      }
+      // console.log(response)
 
       const data = await response.json();
-      navigate("/")
+      console.log(data);
 
     } catch (error) {
       console.error("Error:", error);
     }
+    
   };
 
   return (

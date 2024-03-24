@@ -9,14 +9,17 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { IP } from './constants.js'
+
 
 export default function ProfilePage() {
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
+  const [gender, setGender] = useState("");
+  const [goal, setGoal] = useState("")
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-  const [gender, setGender] = useState("male");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,22 +28,25 @@ export default function ProfilePage() {
       age,
       weight,
       height,
+      goal,
+      gender,
       city,
       country,
-      gender,
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/register", {
-        method: "POST",
+      const response = await fetch(`http://${IP}:5000/api/users/profile`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
+
       });
 
       if (!response.ok) {
-        throw new Error("Failed to register");
+        throw new Error("Failed to update profile");
       }
 
       const data = await response.json();
@@ -74,7 +80,7 @@ export default function ProfilePage() {
               fullWidth
               onChange={(e) => setWeight(e.target.value)}
             />
-          </Grid>
+          </Grid> 
           <Grid item xs={12} sm={6}>
             <InputLabel>Enter Your Height</InputLabel>
             <TextField
@@ -95,6 +101,19 @@ export default function ProfilePage() {
             >
               <FormControlLabel value="male" control={<Radio />} label="Male" />
               <FormControlLabel value="female" control={<Radio />} label="Female" />
+            </RadioGroup>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <InputLabel>Enter Your Goal</InputLabel>
+            <RadioGroup
+              aria-label="goal"
+              name="goal"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+            >
+              <FormControlLabel value="bulk" control={<Radio />} label="bulk" />
+              <FormControlLabel value="cut" control={<Radio />} label="cut" />
+              <FormControlLabel value="lean" control={<Radio />} label="lean" />
             </RadioGroup>
           </Grid>
           <Grid item xs={12}>
