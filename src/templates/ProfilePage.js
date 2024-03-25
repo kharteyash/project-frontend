@@ -35,14 +35,14 @@ export default function ProfilePage() {
     };
 
     try {
+      console.log("Aala update la", formData)
       const response = await fetch(`http://${IP}:5000/api/users/profile`, {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials: "include",
-
+        credentials: "include", 
       });
 
       if (!response.ok) {
