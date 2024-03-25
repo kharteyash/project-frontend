@@ -29,6 +29,11 @@ export default function LoginForm() {
 
       const data = await response.json();
       console.log(data);
+      if (data.loggedInUser.role === 'admin') {
+
+      } else {
+        
+      }
 
     } catch (error) {
       console.error("Error:", error);
