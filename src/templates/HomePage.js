@@ -1,10 +1,15 @@
-import React from 'react'
+import React from "react";
+import "../templates/css/NavigationBar.css";
 
 export default function HomePage() {
   return (
     <div>
-       <h1>HomePage</h1>
-       
+      <div className="">
+        <h1>Workout hub</h1>
+        <p>Get In, Get Fit, Get On with Life!</p>
+      </div>
+
+      {/* manasi pls decorate */}
     </div>
-  )
+  );
 }
