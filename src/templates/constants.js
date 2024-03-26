@@ -20,6 +20,7 @@
 // }
 
 
-export const IP = '192.168.29.71'
+// export const IP = '192.168.29.71'
 
+export const IP = '192.168.5.114'
 
