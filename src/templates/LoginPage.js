@@ -1,12 +1,13 @@
 import { Grid, InputLabel, TextField, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IP } from './constants.js'
 
 export default function LoginForm() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
+  const [userDetails, setUserDetails] = useState({});
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,12 +30,13 @@ export default function LoginForm() {
 
       const data = await response.json();
       console.log(data);
-      if (data.loggedInUser.role === 'admin') {
-
+      setUserDetails(data);
+      if (data?.loggedInUser?.role === 'admin') {
+        navigate("/dashboard");
       } else {
-        
+        console.log("click")
+        navigate("/profile", {userDetails})
       }
-
     } catch (error) {
       console.error("Error:", error);
     }

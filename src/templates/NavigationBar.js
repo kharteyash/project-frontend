@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Link,
   BrowserRouter as Router,
   Route,
   Switch,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import { AppBar, Tab, Tabs, Typography } from "@mui/material";
 import RegistrationForm from "./RegistrationForm";
@@ -19,12 +20,52 @@ import ViewOrders from "./admin-pages/ViewOrders";
 import Gallery from "./Gallery";
 import ProductStore from "./ProductStore";
 import "bootstrap/dist/css/bootstrap.css";
+import { IP } from "./constants";
 
 export default function NavigationBar() {
-  //fetch user details api here
+  const [userDetails, setUserDetails] = useState({});
+  const details = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/users/get-details`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(details),
+        credentials: "include",
+      });
 
-  const logoutUser = () => {
-    //write logic when api is complete
+      const data = await response.json();
+      setUserDetails(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    details();
+  }, []);
+  console.log(userDetails);
+
+  const logoutUser = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/users/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(details),
+        credentials: "include",
+      });
+
+      const logout = await response.json();
+      console.log("logout", logout);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -41,25 +82,26 @@ export default function NavigationBar() {
             <Link to="/store" className="nav-link">
               Store
             </Link>
-            <Link to="/register" className="nav-link">
-              Register
-            </Link>
+            {!userDetails?.data?._id ? (
+              <Link to="/register" className="nav-link">
+                Register
+              </Link>
+            ) : (
+              <></>
+            )}
             <Link to="/profile" className="nav-link">
               Profile
             </Link>
-            {/* {user?.role === 'admin' ? <>
-        <Link to="/add-images" classname="nav-link">Add Images</Link>
-        <Link to="/add-products" classname="nav-link">Add Products</Link>   uncomment this when fetch user api is called and change the key from user?.role to which comes from the api
-        <Link to="/view-orders" classname="nav-link">View Orders</Link>
-        <Link to="/register" classname="nav-link">Generate Admin</Link>   when admin wants to add other people as admins
-        </>
-        : <></>
-  } */}
-            {/* {user?.loggedIn ? <Link to="/" className="nav-link" onClick="logoutUser     ithe put api call karaychi jyat user ch login status logged out hoil">
-              Logout
-            </Link>
-            : <></>} 
-            */}
+            {userDetails?.data?.role === 'admin' ?
+            <Link to="/dashboard" className="nav-link">Dashboard</Link>
+            : <></>}
+            {userDetails?.data?._id ? (
+              <Link to="/" className="nav-link" onClick={logoutUser}>
+                Logout
+              </Link>
+            ) : (
+              <></>
+            )}
           </Tabs>
         </AppBar>
         <Routes>

@@ -1,7 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
+// import WMTable from "../ui-components/table";
 export default function Dashboard() {
+
   return (
-    <div>
+    <>
+      {/* <WMTable /> */}
       Admin Dashboard
       {/* things to show 
       
@@ -12,6 +16,25 @@ export default function Dashboard() {
        baaki aur kya chaiye daal do
       
       */}
-    </div>
+      
+        <>
+          <Link to="/users" classname="nav-link">
+            Users
+          </Link>
+          <Link to="/add-images" classname="nav-link">
+            Images
+          </Link>
+          <Link to="/add-products" classname="nav-link">
+            Products
+          </Link>
+          <Link to="/view-orders" classname="nav-link">
+            View Orders
+          </Link>
+          {/* <Link to="/register" classname="nav-link">
+            Generate Admin
+          </Link> */}
+        </>
+      
+    </>
   );
 }

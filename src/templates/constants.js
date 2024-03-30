@@ -20,7 +20,15 @@
 // }
 
 
-// export const IP = '192.168.29.71'
 
-export const IP = '192.168.5.114'
+//adiking
+// export const IP = '192.168.29.71' 
+
+
+//adiking office
+// export const IP = '192.168.5.114'
+
+
+//kharte home
+export const IP = '192.168.29.83'
 

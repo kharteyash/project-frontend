@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Grid, InputLabel, TextField, Typography, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { IP } from './constants.js'
 
 export default function RegistrationForm() {
@@ -10,7 +10,7 @@ export default function RegistrationForm() {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,6 +38,7 @@ export default function RegistrationForm() {
 
         const data = await response.json();
         console.log(data);
+        navigate("/login")
       } catch (error) {
         console.error("Error:", error);
       }

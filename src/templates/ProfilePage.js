@@ -10,9 +10,10 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { IP } from './constants.js'
+import { useNavigate } from "react-router-dom";
 
 
-export default function ProfilePage() {
+export default function ProfilePage(userDetails) {
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
@@ -20,7 +21,7 @@ export default function ProfilePage() {
   const [goal, setGoal] = useState("")
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-
+  const navigate=useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,11 +52,12 @@ export default function ProfilePage() {
 
       const data = await response.json();
       console.log(data);
+      navigate("/");
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
+console.log("userDetails",userDetails)
   return (
     <>
       <h1>User Profile</h1>
