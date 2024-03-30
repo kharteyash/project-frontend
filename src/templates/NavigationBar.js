@@ -21,6 +21,7 @@ import Gallery from "./Gallery";
 import ProductStore from "./ProductStore";
 import "bootstrap/dist/css/bootstrap.css";
 import { IP } from "./constants";
+import AllUsers from "./admin-pages/AllUsers";
 
 export default function NavigationBar() {
   const [userDetails, setUserDetails] = useState({});
@@ -73,7 +74,7 @@ export default function NavigationBar() {
       <Router>
         <AppBar position="static">
           <Tabs aria-label="navigation tabs" className="nav-tabs">
-            <Link to="/" className="nav-link">
+            <Link to="/home" className="nav-link">
               Home
             </Link>
             <Link to="/gallery" className="nav-link">
@@ -105,7 +106,7 @@ export default function NavigationBar() {
           </Tabs>
         </AppBar>
         <Routes>
-          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/home" element={<HomePage />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -115,6 +116,7 @@ export default function NavigationBar() {
           <Route path="/view-orders" element={<ViewOrders />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/store" element={<ProductStore />} />
+          <Route path="/users" element={<AllUsers />} />
         </Routes>
       </Router>
     </>
