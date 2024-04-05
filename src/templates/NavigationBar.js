@@ -93,7 +93,7 @@ export default function NavigationBar() {
             <Link to="/profile" className="nav-link">
               Profile
             </Link>
-            {userDetails?.data?.role === 'admin' ?
+            {userDetails?.data?.role === 'admin' || 'superadmin' ?
             <Link to="/dashboard" className="nav-link">Dashboard</Link>
             : <></>}
             {userDetails?.data?._id ? (

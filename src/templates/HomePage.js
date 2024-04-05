@@ -29,6 +29,16 @@ const [userDetails, setUserDetails] = useState({})
   return (
     <div>
       <div className="">
+        {/* <div style={{ width:"100%", backgroundColor:"aqua"}}>
+          <div style={{backgroundColor:"red", width:"40%", float:"left"}}>
+            hi
+          </div>
+          <div style={{backgroundColor:"blue", width:"60%", float:"left"}}>
+            hi
+          </div>
+          hello
+          
+          </div> */}
         <h1>Workout hub</h1>
         <p>Get In, Get Fit, Get On with Life!</p>
       </div>

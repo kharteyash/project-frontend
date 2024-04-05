@@ -1,13 +1,140 @@
 import React, { useEffect, useState } from "react";
 import { IP } from "../constants";
+import PropTypes from "prop-types";
 import WMTable from "../../ui-components/table";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { IconButton } from "@mui/material";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import {
+  Dialog,
+  DialogTitle,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
+function UserDialog(props) {
+  const { onClose, open } = props;
+  const handleClose = () => {
+    onClose(true);
+  };
+
+  const handleEditDialog = async (event, data) => {
+    console.log(data?._id);
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${data?._id}/makeadmin`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+
+      const userAdmin = await response.json();
+      console.log("User admin", userAdmin);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  return (
+    <Grid container xs={12} lg={12} sm={12}>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle>Change User Role</DialogTitle>
+        <List sx={{ pt: 0 }}>
+          <ListItem>
+            <ListItemButton onClick={() => handleEditDialog()}>
+              Admin
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton onClick={() => handleEditDialog()}>
+              User
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Dialog>
+    </Grid>
+  );
+}
+//
+function UserDeleteDialog(props) {
+  const { onClose, open } = props;
+
+  const handleClose = () => {
+    onClose(true);
+  };
+  console.log("props", props);
+
+  const handleDeleteDialog = async (event, data) => {
+    console.log(data);
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${data}/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+
+      const userDelete = await response.json();
+      console.log("user deleted", userDelete);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  return (
+    <Grid container xs={12} lg={12} sm={12}>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle>Delete User</DialogTitle>
+        <List sx={{ pt: 0 }}>
+          <ListItem>
+            <ListItemButton
+              onClick={(e) => handleDeleteDialog(e, props?.selectedId)}
+            >
+              Confirm Delete
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Dialog>
+    </Grid>
+  );
+}
+
+UserDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+};
+
+UserDeleteDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+};
+
 export default function AllUsers() {
-  //http://localhost:5000/api/admin/view/users
   const [allUserDetails, setAllUserDetails] = useState({});
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [editDialog, setEditDialog] = useState(false);
+  const [selectedId, setSelectedId] = useState();
 
   const details = async () => {
     try {
@@ -31,47 +158,71 @@ export default function AllUsers() {
     details();
   }, []);
 
-  const handleDeleteDialog = async(event, data) => {
-    console.log(data?._id);
+  const openDeleteDialog = (e, id) => {
+    setSelectedId(id?._id);
+    setDeleteDialog(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialog(false);
+  };
+
+  const openEditDialog = (e, id) => {
+    setSelectedId(id?._id);
+    setEditDialog(true);
+  };
+
+  const closeEditDialog = () => {
+    setEditDialog(false);
+  };
+
+  const handleDeleteDialog = async (event, data) => {
     try {
-        const response = await fetch(`http://${IP}:5000/api/admin/view/users/${data?._id}/delete`, {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${data?._id}/delete`,
+        {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           // body: JSON.stringify(details),
           credentials: "include",
-        });
-  
-        const userDelete = await response.json();
-        console.log("user deleted", userDelete);
-        // if (!userDetails?.data?.refreshToken) {
-        //   navigate("/");
-        // }
-      } catch (error) {
-        console.error("Error:", error);
-      }
+        }
+      );
+
+      const userDelete = await response.json();
+      console.log("user deleted", userDelete);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
-  const handleEditDialog = async(event, data) => {
+
+  const handleEditDialog = async (event, data) => {
     console.log(data?._id);
     try {
-        const response = await fetch(`http://${IP}:5000/api/admin/view/users/${data?._id}/makeadmin`, {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${data?._id}/makeadmin`,
+        {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
           // body: JSON.stringify(details),
           credentials: "include",
-        });
-  
-        const userAdmin = await response.json();
-        console.log("User admin", userAdmin);
-        // if (!userDetails?.data?.refreshToken) {
-        //   navigate("/");
-        // }
-      } catch (error) {
-        console.error("Error:", error);
-      }
+        }
+      );
+
+      const userAdmin = await response.json();
+      console.log("User admin", userAdmin);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const columns = [
@@ -100,11 +251,13 @@ export default function AllUsers() {
             <>
               <IconButton>
                 <DeleteIcon
-                  onClick={(e) => handleDeleteDialog(e, row?.original)}
+                  onClick={(e) => openDeleteDialog(e, row?.original)}
                 />
               </IconButton>
               <IconButton>
-                <AddCircleOutlineIcon onClick={(e) => handleEditDialog(e, row?.original)} />
+                <AddCircleOutlineIcon
+                  onClick={(e) => openEditDialog(e, row?.original)}
+                />
               </IconButton>
             </>
           ) : (
@@ -115,16 +268,26 @@ export default function AllUsers() {
     },
   ];
 
-  console.log("all Users", allUserDetails);
-
   return (
     <div>
       {allUserDetails?.data && (
-        <WMTable
-          columns={columns}
-          data={allUserDetails?.data}
-          tableTitle={"All Users"}
-        />
+        <>
+          <WMTable
+            columns={columns}
+            data={allUserDetails?.data}
+            tableTitle={"All Users"}
+          />
+          <UserDialog
+            open={editDialog}
+            onClose={closeEditDialog}
+            selectedId={selectedId}
+          />
+          <UserDeleteDialog
+            open={deleteDialog}
+            onClose={closeDeleteDialog}
+            selectedId={selectedId}
+          />
+        </>
       )}
     </div>
   );
