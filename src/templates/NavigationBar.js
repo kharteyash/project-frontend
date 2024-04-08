@@ -22,6 +22,9 @@ import ProductStore from "./ProductStore";
 import "bootstrap/dist/css/bootstrap.css";
 import { IP } from "./constants";
 import AllUsers from "./admin-pages/AllUsers";
+import ProductInfo from "./ProductInfo";
+import Wishlist from "./Wishlist";
+import Cart from "./Cart";
 
 export default function NavigationBar() {
   const [userDetails, setUserDetails] = useState({});
@@ -97,9 +100,17 @@ export default function NavigationBar() {
             <Link to="/dashboard" className="nav-link">Dashboard</Link>
             : <></>}
             {userDetails?.data?._id ? (
+              <>
+              <Link to="/wishlist" className="nav-link">
+                Wishlist
+              </Link>
+              <Link to="/cart" className="nav-link">
+                Cart
+              </Link>
               <Link to="/" className="nav-link" onClick={logoutUser}>
                 Logout
               </Link>
+              </>
             ) : (
               <></>
             )}
@@ -117,6 +128,9 @@ export default function NavigationBar() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/store" element={<ProductStore />} />
           <Route path="/users" element={<AllUsers />} />
+          <Route path="/store/product/:productId" element={<ProductInfo />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
     </>

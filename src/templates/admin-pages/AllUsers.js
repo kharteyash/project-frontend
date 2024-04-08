@@ -3,7 +3,7 @@ import { IP } from "../constants";
 import PropTypes from "prop-types";
 import WMTable from "../../ui-components/table";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import {
   Dialog,
   DialogTitle,
@@ -21,14 +21,12 @@ function UserDialog(props) {
   const handleClose = () => {
     onClose(true);
   };
-
-  const handleEditDialog = async (event, data) => {
-    console.log(data?._id);
+  const handleAdminDialog = async (event, data) => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/admin/view/users/${data?._id}/makeadmin`,
+        `http://${IP}:5000/api/admin/view/users/${props?.selectedId}/makeadmin`,
         {
-          method: "PATCH",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -47,19 +45,43 @@ function UserDialog(props) {
     }
   };
 
+  const handleUserDialog = async (event, data) => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${props?.selectedId}/makeuser`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+
+      const makeUser = await response.json();
+      console.log("User", makeUser);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <Grid container xs={12} lg={12} sm={12}>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>Change User Role</DialogTitle>
         <List sx={{ pt: 0 }}>
           <ListItem>
-            <ListItemButton onClick={() => handleEditDialog()}>
+            <ListItemButton onClick={(e) => handleAdminDialog(e, props?.selectedId)}>
               Admin
             </ListItemButton>
           </ListItem>
 
           <ListItem>
-            <ListItemButton onClick={() => handleEditDialog()}>
+            <ListItemButton onClick={(e) => handleUserDialog(e, props?.selectedId)}>
               User
             </ListItemButton>
           </ListItem>
@@ -75,10 +97,8 @@ function UserDeleteDialog(props) {
   const handleClose = () => {
     onClose(true);
   };
-  console.log("props", props);
 
   const handleDeleteDialog = async (event, data) => {
-    console.log(data);
     try {
       const response = await fetch(
         `http://${IP}:5000/api/admin/view/users/${data}/delete`,
@@ -176,55 +196,6 @@ export default function AllUsers() {
     setEditDialog(false);
   };
 
-  const handleDeleteDialog = async (event, data) => {
-    try {
-      const response = await fetch(
-        `http://${IP}:5000/api/admin/view/users/${data?._id}/delete`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // body: JSON.stringify(details),
-          credentials: "include",
-        }
-      );
-
-      const userDelete = await response.json();
-      console.log("user deleted", userDelete);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const handleEditDialog = async (event, data) => {
-    console.log(data?._id);
-    try {
-      const response = await fetch(
-        `http://${IP}:5000/api/admin/view/users/${data?._id}/makeadmin`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // body: JSON.stringify(details),
-          credentials: "include",
-        }
-      );
-
-      const userAdmin = await response.json();
-      console.log("User admin", userAdmin);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   const columns = [
     {
       accessorKey: "firstName",
@@ -256,6 +227,22 @@ export default function AllUsers() {
               </IconButton>
               <IconButton>
                 <AddCircleOutlineIcon
+                  onClick={(e) => openEditDialog(e, row?.original)}
+                />
+              </IconButton>
+            </>
+          ) : (
+            <></>
+          )}
+          {row?.original?.role === "admin" ? (
+            <>
+              <IconButton>
+                <DeleteIcon
+                  onClick={(e) => openDeleteDialog(e, row?.original)}
+                />
+              </IconButton>
+              <IconButton>
+                <RemoveCircleOutlineIcon
                   onClick={(e) => openEditDialog(e, row?.original)}
                 />
               </IconButton>
