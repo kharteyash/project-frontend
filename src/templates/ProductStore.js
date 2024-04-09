@@ -38,6 +38,26 @@ export default function ProductStore() {
     }
   };
 
+  const handleAddToCart = async(productId) => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000//api/users/view/products/${productId}/addToCart`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log("data",data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    products();
+  }
+
   return (
     <>
       <div>
@@ -45,7 +65,6 @@ export default function ProductStore() {
           {allProducts?.data?.map((value, index) => {
             return (
               <div
-                onClick={() => openProductInfo(value._id)}
                 className="card m-3"
                 style={{ width: "18rem", height: "450px" }}
               >
@@ -58,13 +77,14 @@ export default function ProductStore() {
                     width: "300px",
                     height: "200px",
                   }}
+                  onClick={() => openProductInfo(value._id)}
                 />
                 <div className="card-body">
                   <h5 className="card-title">{value.name}</h5>
                   <h5 className="card-title">{value.description}</h5>
                   <p className="card-text">{value.price}</p>
                   <p className="card-text">{value.avgRating}</p>
-                  <a className="btn btn-primary">Add to Cart</a>
+                  <button className="btn btn-primary" onClick={() => handleAddToCart(value?._id)}>Add to Cart</button>
                   <IconButton>
                     <FavoriteBorderIcon />
                   </IconButton>
