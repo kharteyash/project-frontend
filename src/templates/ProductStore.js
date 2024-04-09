@@ -32,16 +32,17 @@ export default function ProductStore() {
 
   const openProductInfo = (productId) => {
     if (productId) {
-      navigate(`product/${productId}`,{ state: productId })
+      navigate(`product/${productId}`, { state: productId });
     } else {
       console.error("Product name is empty or invalid.");
     }
   };
 
-  const handleAddToCart = async(productId) => {
+  const handleAddToCart = async (productId) => {
+    console.log("productId", productId);
     try {
       const response = await fetch(
-        `http://${IP}:5000//api/users/view/products/${productId}/addToCart`,
+        `http://${IP}:5000/api/users/view/products/${productId}/addToCart`,
         {
           method: "POST",
           headers: {
@@ -51,12 +52,33 @@ export default function ProductStore() {
         }
       );
       const data = await response.json();
-      console.log("data",data);
+      console.log("data", data);
     } catch (error) {
       console.error("Error:", error);
     }
     products();
-  }
+  };
+
+  const handleAddToWishlist = async (productId) => {
+    console.log("productId", productId);
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/products/${productId}/addToWishlist`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log("data", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    products();
+  };
 
   return (
     <>
@@ -81,16 +103,24 @@ export default function ProductStore() {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{value.name}</h5>
-                  <h5 className="card-title">{value.description}</h5>
+                  <h6 className="card-title">{value.description}</h6>
                   <p className="card-text">{value.price}</p>
                   <p className="card-text">{value.avgRating}</p>
-                  <button className="btn btn-primary" onClick={() => handleAddToCart(value?._id)}>Add to Cart</button>
-                  <IconButton>
-                    <FavoriteBorderIcon />
-                  </IconButton>
-                  <IconButton>
-                    <Favorite />
-                  </IconButton>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleAddToCart(value?._id)}
+                  >
+                    Add to Cart
+                  </button>
+                  {true ? (
+                    <IconButton>
+                      <FavoriteBorderIcon onClick={() =>handleAddToWishlist(value._id)}/>
+                    </IconButton>
+                  ) : (
+                    <IconButton>
+                      <Favorite />
+                    </IconButton>
+                  )}
                 </div>
               </div>
             );

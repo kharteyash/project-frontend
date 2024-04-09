@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 import WMTable from "../ui-components/table";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import {
   Dialog,
   DialogTitle,
@@ -16,7 +19,6 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 export default function Cart() {
   const [allCart, setAllcart] = useState({});
@@ -49,7 +51,7 @@ export default function Cart() {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/cart/${data}/deleteItem`,
         {
-          method: "DELETE",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -59,6 +61,76 @@ export default function Cart() {
       );
       const itemDelete = await response.json();
       console.log("user deleted", itemDelete);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    cart();
+  };
+
+  const handleDeleteAll = async() => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/cart/delCart`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log("data",data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    cart();
+  }
+
+  const handleAddQty = async (event, data) => {
+    console.log("data",data)
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/cart/${data}/addQty`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+      const itemadd = await response.json();
+      console.log("user deleted", itemadd);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    cart();
+  };
+
+  const handleSubQty = async (event, data) => {
+    console.log("data",data)
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/cart/${data}/subQty`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+      const itemadd = await response.json();
+      console.log("user deleted", itemadd);
       // if (!userDetails?.data?.refreshToken) {
       //   navigate("/");
       // }
@@ -81,8 +153,23 @@ export default function Cart() {
       header: "Product Name",
     },
     {
-      accessorKey: "quantity",
+      // accessorKey: "quantity",
       header: "Quantity",
+      Cell: ({ row }) => (
+        <>
+        <Grid>
+        <IconButton>
+        <ArrowCircleUpIcon onClick={(e)=> handleAddQty(e, row?.original?.product?._id)}/>
+        </IconButton>
+        <Typography ml={2}>
+         {row?.original?.quantity}
+        </Typography>
+        <IconButton>
+        <ArrowCircleDownIcon onClick={(e)=> handleSubQty(e, row?.original?.product?._id)}/>
+        </IconButton>
+        </Grid>
+        </>
+      )
     },
     {
       accessorKey: "product.price",
@@ -117,13 +204,20 @@ export default function Cart() {
   ];
   return (
     <>
-      {allCart?.data && (
+      {allCart?.data ? (
+        <>
         <WMTable
           columns={columns}
           data={allCart?.data}
           tableTitle={"Cart"}
         />
-      )}
+        <button onClick={() => handleDeleteAll()}>Delete All</button>
+        {/* <button onClick={() => handleBuyAll()}>Buy all</button> */}
+</>
+      ) : <>
+      <h1>No Items in Cart</h1>
+      </>}
+      
     </>
   );
 }

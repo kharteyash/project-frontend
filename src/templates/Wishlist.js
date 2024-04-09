@@ -38,10 +38,59 @@ export default function Wishlist() {
       console.error("Error:", error);
     }
   };
-  console.log("allWishlist", allWishlist);
   useEffect(() => {
     wishlist();
   }, []);
+
+  const moveToCart = async (event, data) => {
+    console.log("data",data)
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/wishlist/${data?._id}/moveToCart`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+      const itemMove = await response.json();
+      console.log("item deleted", itemMove);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    wishlist();
+  };
+
+  const handleDeleteItem = async (event, data) => {
+    console.log("data",data?._id)
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/wishlist/${data?._id}/removeItem`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+      const itemDelete = await response.json();
+      console.log("user deleted", itemDelete);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    wishlist();
+  };
 
   const columns = [
     {
@@ -68,12 +117,12 @@ export default function Wishlist() {
         <>
           <IconButton>
             <DeleteIcon
-            // onClick={(e) => removeFromWishlist(e, row?.original)}
+            onClick={(e) => handleDeleteItem(e, row?.original)}
             />
           </IconButton>
           <IconButton>
             <ShoppingCartCheckoutIcon
-            // onClick={(e) => moveToCart(e, row?.original)}
+            onClick={(e) => moveToCart(e, row?.original)}
             />
           </IconButton>
         </>
