@@ -71,7 +71,7 @@ export default function ShippingInfo() {
       const response = await fetch(
         `http://${IP}:5000/api/users/shippingDetails`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -82,7 +82,7 @@ export default function ShippingInfo() {
 
       const data = await response.json();
       console.log(data);
-      // navigate("/");
+      navigate("/paymentInfo");
     } catch (error) {
       console.error("Error:", error);
     }

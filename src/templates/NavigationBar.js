@@ -26,6 +26,8 @@ import ProductInfo from "./ProductInfo";
 import Wishlist from "./Wishlist";
 import Cart from "./Cart";
 import ShippingInfo from "./ShippingDetails";
+import Orders from "./Orders";
+import PaymentInfo from "./PaymentInfo";
 
 export default function NavigationBar() {
   const [userDetails, setUserDetails] = useState({});
@@ -108,6 +110,9 @@ export default function NavigationBar() {
               <Link to="/cart" className="nav-link">
                 Cart
               </Link>
+              <Link to="/orders" className="nav-link">
+                Orders
+              </Link>
               <Link to="/" className="nav-link" onClick={logoutUser}>
                 Logout
               </Link>
@@ -133,6 +138,8 @@ export default function NavigationBar() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/shippingDetails" element={<ShippingInfo />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/paymentInfo" element={<PaymentInfo />} />
         </Routes>
       </Router>
     </>

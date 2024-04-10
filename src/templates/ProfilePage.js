@@ -37,7 +37,7 @@ export default function ProfilePage(userDetails) {
     };
     try {
       const response = await fetch(`http://${IP}:5000/api/users/profile`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
