@@ -25,6 +25,7 @@ import AllUsers from "./admin-pages/AllUsers";
 import ProductInfo from "./ProductInfo";
 import Wishlist from "./Wishlist";
 import Cart from "./Cart";
+import ShippingInfo from "./ShippingDetails";
 
 export default function NavigationBar() {
   const [userDetails, setUserDetails] = useState({});
@@ -131,6 +132,7 @@ export default function NavigationBar() {
           <Route path="/store/product/:productId" element={<ProductInfo />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/shippingDetails" element={<ShippingInfo />} />
         </Routes>
       </Router>
     </>

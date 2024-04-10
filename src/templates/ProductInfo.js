@@ -66,7 +66,7 @@ export default function ProductInfo() {
   const product = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/admin/view/products/${productId}`,
+        `http://${IP}:5000/api/users/view/products/${productId}`,
         {
           method: "GET",
           headers: {
@@ -161,19 +161,19 @@ export default function ProductInfo() {
     <>
       <div>
         <img
-          src={productInfo?.data?.image}
+          src={productInfo?.data?.product?.image}
           height={"500px"}
           width={"500px"}
           style={{ objectFit: "cover" }}
         />
 
         <div>
-          <h1>{productInfo?.data?.name}</h1>
+          <h1>{productInfo?.data?.product?.name}</h1>
 
-          <h3>{productInfo?.data?.description}</h3>
-          <h2>{productInfo?.data?.price}</h2>
+          <h3>{productInfo?.data?.product?.description}</h3>
+          <h2>{productInfo?.data?.product?.price}</h2>
           <p>
-            {productInfo?.data?.avgRating} / 5 <StarIcon /> (
+            {productInfo?.data?.product?.avgRating} / 5 <StarIcon /> (
             {reviews?.data?.length})
           </p>
 

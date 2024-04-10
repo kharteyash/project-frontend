@@ -11,7 +11,7 @@ export default function ProductStore() {
   const products = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/admin/view/products`,
+        `http://${IP}:5000/api/users/view/products`,
         {
           method: "GET",
           headers: {
@@ -60,12 +60,31 @@ export default function ProductStore() {
   };
 
   const handleAddToWishlist = async (productId) => {
-    console.log("productId", productId);
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/products/${productId}/addToWishlist`,
         {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log("data", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    products();
+  };
+
+  const handleRemoveFromWishlist = async (productId) => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/wishlist/${productId}/removeItem`,
+        {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -112,13 +131,13 @@ export default function ProductStore() {
                   >
                     Add to Cart
                   </button>
-                  {true ? (
+                  {!value?.inWishlist ? (
                     <IconButton>
                       <FavoriteBorderIcon onClick={() =>handleAddToWishlist(value._id)}/>
                     </IconButton>
                   ) : (
                     <IconButton>
-                      <Favorite />
+                      <Favorite onClick={() =>handleRemoveFromWishlist(value._id)}/>
                     </IconButton>
                   )}
                 </div>
