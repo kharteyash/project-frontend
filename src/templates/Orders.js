@@ -48,49 +48,15 @@ export default function Orders() {
     },
     {
       // accessorKey: "paymentStatus",
-      header: "Paymment Status",
+      header: "Buy Again",
       Cell: ({ row }) => (
         <>
-          {row?.original?.paymentStatus === "Pending" ? (
             <IconButton value={"Pending Payment"}>
               <AddCardIcon />
             </IconButton>
-          ) : (
-            "Completed"
-          )}
         </>
       ),
     },
-    // {
-    //   accessorKey: "product.price",
-    //   header: "Price",
-    // },
-    // {
-    //   header: "Total Price",
-    //   Cell: ({ row }) => (
-    //     <Typography>
-    //       {row?.original?.product?.price * row?.original?.quantity}
-    //     </Typography>
-    //   ),
-    // },
-    // {
-    //   header: "Actions",
-    //   // accessorKey: "actions",
-    //   Cell: ({ row }) => (
-    //     <>
-    //       <IconButton>
-    //         <DeleteIcon
-    //           onClick={(e) => handleDeleteItem(e, row?.original?.product?._id)}
-    //         />
-    //       </IconButton>
-    //       {/* <IconButton>
-    //         <ShoppingCartCheckoutIcon
-    //         // onClick={(e) => moveToCart(e, row?.original)}
-    //         />
-    //       </IconButton> */}
-    //     </>
-    //   ),
-    // },
   ];
 
   console.log("myOrders", myOrders);

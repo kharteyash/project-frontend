@@ -10,12 +10,12 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export default function PaymentInfo() {
-  const [payemntType, setPaymentType] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      payemntType,
+        paymentMethod,
     };
     try {
       const response = await fetch(`http://${IP}:5000/api/users/buy/products`, {
@@ -48,7 +48,7 @@ export default function PaymentInfo() {
               aria-label="paymentType"
               name="paymentType"
               id="paymentType"
-              onChange={(e) => setPaymentType(e.target.value)}
+              onChange={(e) => setPaymentMethod(e.target.value)}
             >
               <FormControlLabel value="UPI" control={<Radio />} label="UPI" />
               <FormControlLabel value="Card" control={<Radio />} label="Card" />

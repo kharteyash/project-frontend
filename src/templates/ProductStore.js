@@ -99,6 +99,30 @@ export default function ProductStore() {
     products();
   };
 
+  const handleRemoveFromCart = async (event, data) => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/cart/${data}/deleteItem`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+      const itemDelete = await response.json();
+      console.log("user deleted", itemDelete);
+      // if (!userDetails?.data?.refreshToken) {
+      //   navigate("/");
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    products();
+  };
+
   return (
     <>
       <div>
@@ -125,19 +149,37 @@ export default function ProductStore() {
                   <h6 className="card-title">{value.description}</h6>
                   <p className="card-text">{value.price}</p>
                   <p className="card-text">{value.avgRating}</p>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleAddToCart(value?._id)}
-                  >
-                    Add to Cart
-                  </button>
+                  {!value?.inCart ? (
+                    <>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleAddToCart(value?._id)}
+                      >
+                        Add to Cart
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="btn btn-primary"
+                        onClick={(e) => handleRemoveFromCart(e,value?._id)}
+                      >
+                        Remove from Cart
+                      </button>
+                    </>
+                  )}
+
                   {!value?.inWishlist ? (
                     <IconButton>
-                      <FavoriteBorderIcon onClick={() =>handleAddToWishlist(value._id)}/>
+                      <FavoriteBorderIcon
+                        onClick={() => handleAddToWishlist(value._id)}
+                      />
                     </IconButton>
                   ) : (
                     <IconButton>
-                      <Favorite onClick={() =>handleRemoveFromWishlist(value._id)}/>
+                      <Favorite
+                        onClick={() => handleRemoveFromWishlist(value._id)}
+                      />
                     </IconButton>
                   )}
                 </div>
