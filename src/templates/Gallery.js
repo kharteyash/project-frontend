@@ -6,7 +6,7 @@ export default function Gallery() {
   const [allImages, setAllImages] = useState({});
   const images = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/gallery`, {
+      const response = await fetch(`http://${IP}:5000/api/users/gallery`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

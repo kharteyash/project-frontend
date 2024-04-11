@@ -28,8 +28,10 @@ import Cart from "./Cart";
 import ShippingInfo from "./ShippingDetails";
 import Orders from "./Orders";
 import PaymentInfo from "./PaymentInfo";
+import ViewOrderById from "./admin-pages/ViewOrderById";
 
 export default function NavigationBar() {
+  // const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({});
   const details = async () => {
     try {
@@ -52,7 +54,6 @@ export default function NavigationBar() {
   useEffect(() => {
     details();
   }, []);
-  console.log(userDetails);
 
   const logoutUser = async () => {
     try {
@@ -66,10 +67,8 @@ export default function NavigationBar() {
       });
 
       const logout = await response.json();
-      console.log("logout", logout);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
+      window.location.reload();
+      // navigate("/home");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -113,7 +112,7 @@ export default function NavigationBar() {
               <Link to="/orders" className="nav-link">
                 Orders
               </Link>
-              <Link to="/" className="nav-link" onClick={logoutUser}>
+              <Link to="/home" className="nav-link" onClick={logoutUser}>
                 Logout
               </Link>
               </>
@@ -140,6 +139,7 @@ export default function NavigationBar() {
           <Route path="/shippingDetails" element={<ShippingInfo />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/paymentInfo" element={<PaymentInfo />} />
+          <Route path="/view-order/:id" element={<ViewOrderById />} />
         </Routes>
       </Router>
     </>

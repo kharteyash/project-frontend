@@ -8,6 +8,24 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [userDetails, setUserDetails] = useState({});
   const navigate = useNavigate();
+
+  const details = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/users/get-details`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(details),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -34,13 +52,13 @@ export default function LoginForm() {
       if (data?.loggedInUser?.role === 'admin') {
         navigate("/dashboard");
       } else {
-        console.log("click")
+        details();
         navigate("/profile", {userDetails})
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error:", error);
     }
-    
   };
 
   return (
