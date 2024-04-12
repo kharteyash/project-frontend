@@ -48,8 +48,10 @@ export default function HomePage() {
     setMenuAnchorEl(event.currentTarget);
     setIsMenuOpen(true);
   };
-  useEffect(() => {
+  useEffect(()=>{
     details();
+  },[])
+  useEffect(() => {
     if (userDetails?.data?._id) {
       notifications();
     }
