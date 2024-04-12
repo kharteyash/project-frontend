@@ -50,8 +50,7 @@ export default function ProfilePage(userDetails) {
       }
 
       const data = await response.json();
-      console.log(data);
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -73,8 +72,6 @@ export default function ProfilePage(userDetails) {
       console.error("Error:", error);
     }
   };
-
-  console.log("profileDetails", profileDetails)
 
   useEffect(() => {
     getProfileDetails();

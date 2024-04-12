@@ -53,7 +53,7 @@ export default function LoginForm() {
         navigate("/dashboard");
       } else {
         details();
-        navigate("/profile", {userDetails})
+        navigate("/home", {userDetails})
         window.location.reload();
       }
     } catch (error) {

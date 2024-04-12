@@ -29,9 +29,9 @@ import ShippingInfo from "./ShippingDetails";
 import Orders from "./Orders";
 import PaymentInfo from "./PaymentInfo";
 import ViewOrderById from "./admin-pages/ViewOrderById";
+import UserInfo from "./admin-pages/UserInfo";
 
 export default function NavigationBar() {
-  // const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({});
   const details = async () => {
     try {
@@ -98,23 +98,28 @@ export default function NavigationBar() {
             <Link to="/profile" className="nav-link">
               Profile
             </Link>
-            {userDetails?.data?.role === 'admin' || 'superadmin' ?
-            <Link to="/dashboard" className="nav-link">Dashboard</Link>
-            : <></>}
+            {(userDetails?.data?._id && userDetails?.data?.role === "admin" ||
+            userDetails?.data?._id && userDetails?.data?.role === "superadmin") ? (
+              <Link to="/dashboard" className="nav-link">
+                Dashboard
+              </Link>
+            ) : (
+              ""
+            )}
             {userDetails?.data?._id ? (
               <>
-              <Link to="/wishlist" className="nav-link">
-                Wishlist
-              </Link>
-              <Link to="/cart" className="nav-link">
-                Cart
-              </Link>
-              <Link to="/orders" className="nav-link">
-                Orders
-              </Link>
-              <Link to="/home" className="nav-link" onClick={logoutUser}>
-                Logout
-              </Link>
+                <Link to="/wishlist" className="nav-link">
+                  Wishlist
+                </Link>
+                <Link to="/cart" className="nav-link">
+                  Cart
+                </Link>
+                <Link to="/orders" className="nav-link">
+                  Orders
+                </Link>
+                <Link to="/home" className="nav-link" onClick={logoutUser}>
+                  Logout
+                </Link>
               </>
             ) : (
               <></>
@@ -140,6 +145,7 @@ export default function NavigationBar() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/paymentInfo" element={<PaymentInfo />} />
           <Route path="/view-order/:id" element={<ViewOrderById />} />
+          <Route path="/userInfo/:id" element={<UserInfo />} />
         </Routes>
       </Router>
     </>

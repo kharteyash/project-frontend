@@ -37,6 +37,13 @@ export default function AddProducts() {
     }
   };
 
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + "...";
+  };
+
   return (
     <>
       <div>
@@ -45,7 +52,7 @@ export default function AddProducts() {
             return (
               <div
                 className="card m-3"
-                style={{ width: "18rem", height: "370px" }}
+                style={{ width: "18rem", height: "430px" }}
               >
                 <img
                   className="img-fluid"
@@ -60,7 +67,7 @@ export default function AddProducts() {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{value.name}</h5>
-                  <h6 className="card-title">{value.description}</h6>
+                  <h6 className="card-title">{truncateText(value.description, 100)}</h6>
                   <p className="card-text">{value.price}</p>
                   <p className="card-text">{value.avgRating}</p>
                   {/* {!value?.inCart ? (

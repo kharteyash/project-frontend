@@ -16,7 +16,6 @@ export default function Gallery() {
       });
 
       const data = await response.json();
-      console.log("images",data);
       setAllImages(data)
     } catch (error) {
       console.error("Error:", error);

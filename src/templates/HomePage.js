@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../templates/css/NavigationBar.css";
 import { IP } from "./constants";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import {IconButton, Menu, MenuItem} from "@mui/material"
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 export default function HomePage() {
-const [userDetails, setUserDetails] = useState({})
-const [allNotifications, setAllNotifications] = useState({})
-const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
+  const [allNotifications, setAllNotifications] = useState({});
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const details = async () => {
     try {
       const response = await fetch(`http://${IP}:5000/api/users/get-details`, {
@@ -18,7 +18,6 @@ const [isMenuOpen, setIsMenuOpen] = useState(false);
         // body: JSON.stringify(details),
         credentials: "include",
       });
-
       const data = await response.json();
       setUserDetails(data);
     } catch (error) {
@@ -26,18 +25,19 @@ const [isMenuOpen, setIsMenuOpen] = useState(false);
     }
   };
 
-
   const notifications = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/users/view/notifications`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(details),
-        credentials: "include",
-      });
-
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/notifications`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setAllNotifications(data);
     } catch (error) {
@@ -48,16 +48,25 @@ const [isMenuOpen, setIsMenuOpen] = useState(false);
     setMenuAnchorEl(event.currentTarget);
     setIsMenuOpen(true);
   };
-console.log("allNotifications",allNotifications)
-  useEffect(()=>{
+  useEffect(() => {
     details();
-    notifications();
-  },[])
+    if (userDetails?.data?._id) {
+      notifications();
+    }
+  }, [userDetails?.data]);
 
   return (
-    <div style={{position:"relative"}}>
-      <IconButton style={{position:"absolute", top:"10px", right:"10px", fontSize:"60px"}} onClick={(e)=>handleOpenNotifications(e)}>
-      <NotificationsIcon style={{fontSize:"30px"}}/>
+    <div style={{ position: "relative" }}>
+      <IconButton
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          fontSize: "60px",
+        }}
+        onClick={(e) => handleOpenNotifications(e)}
+      >
+        <NotificationsIcon style={{ fontSize: "30px" }} />
       </IconButton>
       <Menu
         anchorEl={menuAnchorEl}
@@ -65,12 +74,12 @@ console.log("allNotifications",allNotifications)
         onClose={() => setIsMenuOpen(false)}
       >
         {allNotifications?.data?.map((value, index) => {
-          return(
-            <MenuItem>{value?.message}</MenuItem>
-          )
+          return <MenuItem>{value?.message}</MenuItem>;
         })}
       </Menu>
-      <p style={{position:"absolute", top:"10px", right:"14px"}}>{allNotifications?.data?.length}</p>
+      <p style={{ position: "absolute", top: "10px", right: "14px" }}>
+        {allNotifications?.data?.length}
+      </p>
       <div className="">
         {/* <div style={{ width:"100%", backgroundColor:"aqua"}}>
           <div style={{backgroundColor:"red", width:"40%", float:"left"}}>

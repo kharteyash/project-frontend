@@ -99,7 +99,7 @@ export default function ViewOrderById() {
     <>
     <div>
       <h1>
-        User : {" "}
+        Name : {" "}
         {order?.user?.firstName} {order?.user?.lastName}
       </h1>
       <h1>
