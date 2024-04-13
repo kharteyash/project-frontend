@@ -61,6 +61,8 @@ export default function AddImages() {
   const [allImages, setAllImages] = useState({});
   const [selectedImage, setSelectedImage] = useState(null); // State to track the selected image
   const [openDialog, setOpenDialog] = useState(false);
+  const [message, setMessage] = useState('');
+
   const [imageURL, setImageURL] = useState();
   const images = async () => {
     try {
@@ -93,6 +95,30 @@ export default function AddImages() {
     setSelectedImage(null); // Clear the selected image URL
     setOpenDialog(false); // Close the dialog box
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch(`http://${IP}:5000/api/admin/view/gallery/addImage`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setMessage(data.message);
+      } else {
+        throw new Error(data.error.message);
+      }
+    } catch (error) {
+      setMessage(`Error: ${error.message}`);
+    }
+  };
+
 
   return (
     <div>
@@ -123,7 +149,6 @@ export default function AddImages() {
           );
         })}
       </div>
-      {/* Render the ImageDialog component conditionally */}
       {openDialog && (
         <ImageDialog
           open={openDialog}
@@ -132,6 +157,13 @@ export default function AddImages() {
           onClose={handleCloseImage}
         />
       )}
+      <div>
+      <form id="imageUploadForm" onSubmit={handleSubmit}>
+        <input type="file" name="image" accept="image/*" />
+        <button type="submit">Submit</button>
+      </form>
+      <div id="message">{message}</div>
+    </div>
     </div>
   );
 }
