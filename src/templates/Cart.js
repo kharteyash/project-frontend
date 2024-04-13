@@ -45,7 +45,6 @@ export default function Cart() {
   }, []);
 
   const handleDeleteItem = async (event, data) => {
-    console.log("data", data);
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/cart/${data}/deleteItem`,

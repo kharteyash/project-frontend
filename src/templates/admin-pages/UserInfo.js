@@ -148,7 +148,7 @@ export default function UserInfo() {
       </>
       {userInfo?.orderHistory && (
         <WMTable
-          data={userInfo?.orderHistory}
+          data={userInfo?.orders}
           tableTitle={"All Orders"}
           columns={columns}
         />

@@ -34,7 +34,7 @@ function ReviewDialog(props) {
 
   return (
     <div>
-      <Dialog open={props?.open}>
+      <Dialog open={props?.open} onClose={props?.onClose}>
         <DialogTitle>Add Review</DialogTitle>
         <TextField
           placeholder="Add Comment"
@@ -157,6 +157,11 @@ export default function ProductInfo() {
     setOpenDialog(true);
   };
 
+  
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
+
   return (
     <>
       <div>
@@ -204,7 +209,7 @@ export default function ProductInfo() {
           <></>
         )}
       </div>
-      <ReviewDialog open={openDialog} productId={productId} close={openDialog}/>
+      <ReviewDialog open={openDialog} productId={productId} onClose={handleClose}/>
     </>
   );
 }
