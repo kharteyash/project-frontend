@@ -30,6 +30,7 @@ import Orders from "./Orders";
 import PaymentInfo from "./PaymentInfo";
 import ViewOrderById from "./admin-pages/ViewOrderById";
 import UserInfo from "./admin-pages/UserInfo";
+import ProductEdit from "./admin-pages/ProductEdit";
 
 export default function NavigationBar() {
   const [userDetails, setUserDetails] = useState({});
@@ -139,6 +140,7 @@ export default function NavigationBar() {
           <Route path="/store" element={<ProductStore />} />
           <Route path="/users" element={<AllUsers />} />
           <Route path="/store/product/:productId" element={<ProductInfo />} />
+          <Route path="/add-products/product/:productId" element={<ProductEdit />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/shippingDetails" element={<ShippingInfo />} />
