@@ -44,12 +44,9 @@ export default function LoginForm() {
 
       });
 
-      // console.log(response)
-
       const data = await response.json();
-      console.log(data);
       setUserDetails(data);
-      if (data?.loggedInUser?.role === 'admin') {
+      if (data?.loggedInUser?.role === 'admin' || data?.loggedInUser?.role === 'superadmin') {
         navigate("/dashboard");
       } else {
         details();

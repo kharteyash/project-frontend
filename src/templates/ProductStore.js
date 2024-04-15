@@ -3,11 +3,12 @@ import { IP } from "./constants";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
-import { Dialog, DialogTitle, Grid, IconButton } from "@mui/material";
+import { Dialog, DialogTitle, Grid, IconButton, TextField } from "@mui/material";
 
 export default function ProductStore() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState({});
+  const [searchItem, setSearchItem] = useState("")
   const products = async () => {
     try {
       const response = await fetch(
@@ -26,9 +27,28 @@ export default function ProductStore() {
       console.error("Error:", error);
     }
   };
+
+  const handleSearchItem = async () => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/products/search?name=${searchItem}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      setAllProducts(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   useEffect(() => {
     products();
-  }, []);
+  }, [searchItem]);
 
   const openProductInfo = (productId) => {
     if (productId) {
@@ -130,6 +150,8 @@ export default function ProductStore() {
   };
   return (
     <>
+    <TextField onChange={(e)=>setSearchItem(e.target.value)} placeholder="Search"/>
+    <IconButton onClick={()=>handleSearchItem()}>🔍</IconButton>
       <div>
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           {allProducts?.data?.map((value, index) => {

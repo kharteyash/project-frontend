@@ -1,7 +1,7 @@
 import { Card, Typography } from "@mui/material";
-import {Stack} from '@mui/system';
+import { Stack } from '@mui/system';
 // import {download, generateCsv, mkConfig} from 'export-to-csv';
-import {MaterialReactTable, useMaterialReactTable} from 'material-react-table';
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { useEffect, useState } from "react";
 
 // const csvConfig = mkConfig({
@@ -13,30 +13,32 @@ import { useEffect, useState } from "react";
 const WMTable = (props) => {
     const [rowSelection, setRowSelection] = useState({});
 
-    useEffect(()=>{
-        if(rowSelection){
+    useEffect(() => {
+        if (rowSelection) {
             const selectedIds = Object.keys(rowSelection).map(
                 (item) => props?.data[item]?.[props?.selectedIdsFields]
             );
             props?.handleChangeRowSelect && props?.handleChangeRowSelect(selectedIds);
         }
-    },[rowSelection]);
+    }, [rowSelection]);
 
-    useEffect(()=>{
-        if(Object.keys(rowSelection)?.length && !props?.selectedIds?.length) {
+    useEffect(() => {
+        if (Object.keys(rowSelection)?.length && !props?.selectedIds?.length) {
             setRowSelection({})
         }
-    },[props?.selectedIds])
+    }, [props?.selectedIds])
+
+    const reversedData = [...props.data].reverse(); // Reverse the array of products
 
     const table = useMaterialReactTable({
         columns: props.columns,
-        data:props.data,
-        initialState: {density: 'compact'},
+        data: reversedData, // Use the reversed array
+        initialState: { density: 'compact' },
         enableRowSelection: props?.enableRowSelection,
         enableRowActions: props?.tableActions,
-        renderRowActions:() => props?.tableActions,
+        renderRowActions: () => props?.tableActions,
         onRowSelectionChange: setRowSelection,
-        state: {rowSelection},
+        state: { rowSelection },
         positionActionColumn: 'last',
         muiTablePaperProps: {
             elevation: 0,
@@ -47,7 +49,7 @@ const WMTable = (props) => {
         },
     });
 
-    return(
+    return (
         <>
             <Card>
                 {(props.headerAction || props.tableTitle) && (
