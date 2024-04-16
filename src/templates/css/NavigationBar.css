@@ -1,78 +1,26 @@
 .nav-tabs {
+
     display: flex;
     justify-content: flex-end;
+    padding: 4px;
+    background: #000000;
+   
+    
+    
   }
   
-  .nav-link {
-    text-decoration: none;
-    color: inherit;
+  .nav-tabs .nav-link {  
+   
     margin-right: 20px; 
     margin-left: 20px; 
     line-height: 50px;
+    font-size: 40px;
+    font-size: 20px;
+    
   }
+  
+
   
   .nav-link:last-child {
     margin-right: 0;
-  }
-  
-  .AppBar-root {
-    justify-content: center;
-  }
-  
-  .contains {
-    background-color: #333;
-    color: #fff;
-    padding: 50px 0;
-  }
-  
-  .frow {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .footer-col {
-    flex: 1;
-    margin-right: 20px;
-  }
-  
-  .footer-col h4 {
-    color: #fff;
-    margin-bottom: 20px;
-  }
-  
-  .footer-col ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-col ul li {
-    margin-bottom: 10px;
-  }
-  
-  .footer-col ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .social-links {
-    margin-top: 20px;
-  }
-  
-  .social-links a {
-    color: #fff;
-    font-size: 24px;
-    margin-right: 10px;
-  }
-  
-  .social-links a:hover {
-    color: #f00; /* Change the color on hover */
-  }
-
-  li{
-    margin-left: 50px;
-  }
-
-  h4{
-    margin-left: 50px;
   }

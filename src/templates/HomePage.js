@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../templates/css/NavigationBar.css";
+import "../templates/css/Common.css";
 import { IP } from "./constants";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IconButton, Menu, MenuItem } from "@mui/material";
@@ -57,7 +58,13 @@ export default function HomePage() {
     }
   }, [userDetails?.data]);
 
+  // <style>
+  //   .css-hip9hq-MuiPaper-root-MuiAppBar-root {
+          
+  // </style>
+
   return (
+    <div class="cont" style={{ background:"black", height:"100vh", color:"white" }}>
     <div style={{ position: "relative" }}>
       <IconButton
         style={{
@@ -65,10 +72,11 @@ export default function HomePage() {
           top: "10px",
           right: "10px",
           fontSize: "60px",
+          color: "#0bd2de",
         }}
         onClick={(e) => handleOpenNotifications(e)}
       >
-        <NotificationsIcon style={{ fontSize: "30px" }} />
+        <NotificationsIcon style={{ fontSize: "35px" }} />
       </IconButton>
       <Menu
         anchorEl={menuAnchorEl}
@@ -82,7 +90,7 @@ export default function HomePage() {
       <p style={{ position: "absolute", top: "10px", right: "14px" }}>
         {allNotifications?.data?.length}
       </p>
-      <div className="">
+      <div class="wlcm-msg" style={{border:"1px solid black",  paddingLeft:"20px"}}>
         {/* <div style={{ width:"100%", backgroundColor:"aqua"}}>
           <div style={{backgroundColor:"red", width:"40%", float:"left"}}>
             hi
@@ -93,11 +101,36 @@ export default function HomePage() {
           hello
           
           </div> */}
-        <h1>Workout hub</h1>
+        
+        <h1 style={{marginTop:"40px", fontSize:"60px"}}>Workout hub</h1>
         <p>Get In, Get Fit, Get On with Life!</p>
       </div>
+{/* <!--slide show--> */}
+
+      <div class="stage">
+  
+  
+<div class="container">
+  <div class="ring">
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+    <div class="img"></div>
+  </div>
+</div>
+{/* slideshow end */}
+
+</div>
 
       {/* manasi pls decorate */}
     </div>
+    </div>
   );
+ 
 }

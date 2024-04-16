@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { IP } from "./constants";
+import "../templates/css/Store.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
+import StarIcon from "@mui/icons-material/Star";
 import { useNavigate } from "react-router-dom";
-import { Dialog, DialogTitle, Grid, IconButton } from "@mui/material";
+import { Dialog, DialogTitle, Grid, IconButton } 
+from "@mui/material";
 
 export default function ProductStore() {
   const navigate = useNavigate();
@@ -136,29 +139,49 @@ export default function ProductStore() {
             return (
               <div
                 className="card m-3"
-                style={{ width: "18rem", height: "460px" }}
+                style={{ width: "18rem", height: "460px" , boxShadow:" 0px 9px 30px -15px rgb(0 0 0)", borderRadius:"20px", marginTop:"20px", border:"1px solid lightgrey"}}
+                
               >
+      
                 <img
                   className="img-fluid"
                   src={value.image}
                   alt="Card image cap"
                   style={{
                     objectFit: "cover",
-                    width: "300px",
+                    width: "100%",
                     height: "200px",
+                    borderRadius:"20px 20px 0px 0px",
+                    
                   }}
                   onClick={() => openProductInfo(value._id)}
                 />
+                
                 <div className="card-body">
+                  {!value?.inWishlist ? (
+                    <IconButton style={{position:"absolute",top:"0",right:"0"}}>
+                      <FavoriteBorderIcon
+                        onClick={() => handleAddToWishlist(value._id)}
+                      />
+                    </IconButton>
+                  ) : (
+                    <IconButton style={{position:"absolute",top:"0", right:"0"}}>
+                      <Favorite
+                        onClick={() => handleRemoveFromWishlist(value._id)}
+                        style={{color:"#F43E29"}}
+                      />
+                    </IconButton>
+                  )}
                   <h5 className="card-title">{value.name}</h5>
-                  <h6 className="card-title" value={value.description}>{truncateText(value.description, 70)}</h6>
-                  <p className="card-text">{value.price}</p>
-                  <p className="card-text">{value.avgRating}</p>
+                  <p className="card-title" value={value.description}>{truncateText(value.description, 70)}</p>
+                  <h6 className="card-text">&#8360; {value.price}</h6>
+                  <p className="card-text">{value.avgRating} / 5 <StarIcon style={{ color:"#FFC300"}}/></p>
                   {!value?.inCart ? (
                     <>
                       <button
                         className="btn btn-primary"
                         onClick={() => handleAddToCart(value?._id)}
+                        style={{background: "linear-gradient(45deg , #0bd2de , #0083f9)"}}
                       >
                         Add to Cart
                       </button>
@@ -168,25 +191,14 @@ export default function ProductStore() {
                       <button
                         className="btn btn-primary"
                         onClick={(e) => handleRemoveFromCart(e,value?._id)}
+                        style={{background: "linear-gradient(45deg , #0bd2de , #0083f9)"}}
                       >
                         Remove from Cart
                       </button>
                     </>
                   )}
 
-                  {!value?.inWishlist ? (
-                    <IconButton>
-                      <FavoriteBorderIcon
-                        onClick={() => handleAddToWishlist(value._id)}
-                      />
-                    </IconButton>
-                  ) : (
-                    <IconButton>
-                      <Favorite
-                        onClick={() => handleRemoveFromWishlist(value._id)}
-                      />
-                    </IconButton>
-                  )}
+                  
                 </div>
               </div>
             );

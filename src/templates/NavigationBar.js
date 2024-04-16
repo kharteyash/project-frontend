@@ -31,6 +31,7 @@ import PaymentInfo from "./PaymentInfo";
 import ViewOrderById from "./admin-pages/ViewOrderById";
 import UserInfo from "./admin-pages/UserInfo";
 
+
 export default function NavigationBar() {
   const [userDetails, setUserDetails] = useState({});
   const details = async () => {
@@ -76,10 +77,11 @@ export default function NavigationBar() {
 
   return (
     <>
-      <Router>
-        <AppBar position="static">
-          <Tabs aria-label="navigation tabs" className="nav-tabs">
-            <Link to="/home" className="nav-link">
+      <Router >
+        
+        <AppBar position="static" >
+          <Tabs aria-label="navigation tabs" className="nav-tabs" >
+            <Link to="/home" className="nav-link"  >
               Home
             </Link>
             <Link to="/gallery" className="nav-link">
@@ -126,6 +128,7 @@ export default function NavigationBar() {
             )}
           </Tabs>
         </AppBar>
+
         <Routes>
           <Route exact path="/home" element={<HomePage />} />
           <Route path="/register" element={<RegistrationForm />} />
