@@ -188,7 +188,7 @@ export default function ProductInfo() {
       </div>
         <div class="prod_content" >
         <div class="prod_description">
-        <span> <p class="category">sum category</p></span>
+        <span> <p class="category">{productInfo?.data?.product?.category}</p></span>
           <h1>{productInfo?.data?.product?.name}</h1>
           <br></br>
           <p class="prod_desc">{productInfo?.data?.product?.description}</p>

@@ -23,18 +23,7 @@ export default function RecommendationPage() {
   const [timelineRecommendation, setTimelineRecommendation] = useState({});
   const [prevSearchRecommendation, setPrevSearchRecommendation] = useState({});
   const [exerciseRecommendation, setExerciseRecommendation] = useState({});
-
-  const [viewTop5, setViewTop5] = useState(false);
-  const [viewgg, setViewgg] = useState(false);
-  const [viewahw, setViewahw] = useState(false);
-  const [viewcc, setViewcc] = useState(false);
-  const [viewpp, setViewpp] = useState(false);
-  const [viewpg, setViewpg] = useState(false);
-  const [viewps, setViewps] = useState(false);
-  const [viewrv, setViewrv] = useState(false);
-  const [viewtime, setViewtime] = useState(false);
-  const [viewexercise, setViewexercise] = useState(false);
-
+  const [render, setRender] = useState(false);
   const ageHeightWeight = async () => {
     try {
       const response = await fetch(
@@ -249,70 +238,45 @@ export default function RecommendationPage() {
     }
   };
 
+  // useEffect(() => {
+  //   // exercises();
+  // }, []);
+
   useEffect(() => {
-    // exercises();
+    const fetchData = async () => {
+      try {
+        await Promise.all([
+          getByTime(),
+          recentlyViewed(),
+          prevSearch(),
+          prevPurchase(),
+          productGoal(),
+          cityCountry(),
+          ageHeightWeight(),
+          goalGender(),
+          top5Purchase(),
+          exercises(),
+        ]);
+        setRender(true);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
-  const showTop5 = () => {
-    if (!viewTop5) {
-      top5Purchase();
-    }
-    setViewTop5(!viewTop5);
-  };
-  const showgg = () => {
-    if (!viewgg) {
-      goalGender();
-    }
-    setViewgg(!viewgg);
-  };
-  const showahw = () => {
-    if (!viewahw) {
-      ageHeightWeight();
-    }
-    setViewahw(!viewahw);
-  };
-  const showcc = () => {
-    if (!viewcc) {
-      cityCountry();
-    }
-    setViewcc(!viewcc);
-  };
-  const showpg = () => {
-    if (!viewpg) {
-      productGoal();
-    }
-    setViewpg(!viewpg);
-  };
-  const showpp = () => {
-    if (!viewpp) {
-      prevPurchase();
-    }
-    setViewpp(!viewpp);
-  };
-  const showps = () => {
-    if (!showps) {
-      prevSearch();
-    }
-    setViewps(!viewps);
-  };
-  const showrv = () => {
-    if (!viewrv) {
-      recentlyViewed();
-    }
-    setViewrv(!viewrv);
-  };
-  const showtime = () => {
-    if (!viewtime) {
-      getByTime();
-    }
-    setViewtime(!viewtime);
-  };
+  if (!render) {
+    return (
+      <>
+        <p>Your recommendations are Loading</p>
+      </>
+    );
+  }
 
   return (
     <>
       <br></br>
-      <button onClick={() => showTop5()}>show top 5</button>
-      {viewTop5 && top5Recommendation?.data && (
+      {top5Recommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -350,8 +314,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showgg()}>show top gender and goal based</button>
-      {viewgg && goalGenderRecommendation?.data && (
+      {goalGenderRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -389,8 +352,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showahw()}>show top products by bmi</button>
-      {viewahw && bmiRecommendation?.data && (
+      {bmiRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -428,10 +390,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showcc()}>
-        show top products by city and country
-      </button>
-      {viewcc && cityCountryRecommendation?.data && (
+      {cityCountryRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -469,8 +428,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showpg()}>show top by product goals</button>
-      {viewpg && productGoalRecommendation?.data && (
+      {productGoalRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -508,8 +466,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showpp()}>show previous purchases</button>
-      {viewpp && prevPurchaseRecommendation?.data && (
+      {prevPurchaseRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -547,8 +504,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showps()}>show previously searched</button>
-      {viewps && prevSearchRecommendation?.data && (
+      {prevSearchRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -586,8 +542,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showrv()}>show recently viewed</button>
-      {viewrv && prevSearchRecommendation?.data && (
+      {prevSearchRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -625,8 +580,7 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      <button onClick={() => showtime()}>show timeline</button>
-      {viewtime && timelineRecommendation?.data && (
+      {timelineRecommendation?.data && (
         <>
           <h3>Top 5 products in our store</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -654,6 +608,43 @@ export default function RecommendationPage() {
                         {truncateText(value.description, 70)}
                       </h6> */}
                       <p className="card-text">{value.price}</p>
+                      {/* <p className="card-text">{value.avgRating}</p> */}
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </>
+      )}
+      {exerciseRecommendation?.data && (
+        <>
+          <h3>Exercises for you</h3>
+          <div className="d-flex flex-wrap justify-content-center align-items-center">
+            {exerciseRecommendation?.data?.map((value, index) => {
+              return (
+                <>
+                  <div
+                    className="card m-3"
+                    style={{ width: "18rem", height: "400px" }}
+                  >
+                    <img
+                      className="img-fluid"
+                      src={value.exerciseGif}
+                      alt="Card image cap"
+                      style={{
+                        objectFit: "cover",
+                        width: "300px",
+                        height: "300px",
+                      }}
+                      // onClick={() => openProductInfo(value._id)}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{value.name}</h5>
+                      {/* <h6 className="card-title" value={value.description}>
+                        {truncateText(value.description, 70)}
+                      </h6> */}
+                      {/* <p className="card-text">{value.price}</p> */}
                       {/* <p className="card-text">{value.avgRating}</p> */}
                     </div>
                   </div>
