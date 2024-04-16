@@ -16,10 +16,12 @@ import {
 
 export default function ViewOrders() {
   const navigate = useNavigate();
-  const [allOrders, setAllOrders] = useState({});
-  const getAllOrders = async () => {
+  const [placedOrders, setPlacedOrders] = useState({});
+  const [deliveredOrders, setDeliveredOrders] = useState({});
+
+  const getPlacedOrders = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/orders`, {
+      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/placed`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -28,14 +30,34 @@ export default function ViewOrders() {
         credentials: "include",
       });
       const data = await response.json();
-      setAllOrders(data);
+      setPlacedOrders(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getDeliveredOrders = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/delivered`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(details),
+        credentials: "include",
+      });
+      const data = await response.json();
+      setDeliveredOrders(data);
     } catch (error) {
       console.error("Error:", error);
     }
   };
   useEffect(() => {
-    getAllOrders();
+    getPlacedOrders();
+    getDeliveredOrders();
   }, []);
+
+
 
   const handleViewOrder = (order) => {
     navigate(`/view-order/${order?._id}`, { state: order });
@@ -45,8 +67,8 @@ export default function ViewOrders() {
       header: "User",
       Cell: ({ row }) => (
         <>
-          {row?.original?.order?.user?.firstName}{" "}
-          {row?.original?.order?.user?.lastName}
+          {row?.original?.user?.firstName}{" "}
+          {row?.original?.user?.lastName}
         </>
       ),
     },
@@ -54,18 +76,18 @@ export default function ViewOrders() {
       header: "Items",
       Cell: ({ row }) => (
         <>
-          {row?.original?.order?.orderItems?.map((value, index) => {
+          {row?.original?.orderItems?.map((value, index) => {
             return <p>{value?.name}</p>;
           })}
         </>
       ),
     },
     {
-      accessorKey: "order.paymentMethod",
+      accessorKey: "paymentMethod",
       header: "Payment Method",
     },
     {
-      accessorKey: "order.subtotalPrice",
+      accessorKey: "subtotalPrice",
       header: "Total Price",
     },
     {
@@ -75,7 +97,7 @@ export default function ViewOrders() {
         <>
           <IconButton>
             <ArrowCircleRightIcon
-              onClick={() => handleViewOrder(row?.original?.order)}
+              onClick={() => handleViewOrder(row?.original)}
             />
           </IconButton>
         </>
@@ -84,12 +106,21 @@ export default function ViewOrders() {
   ];
   return (
     <div>
-      {allOrders?.data && (
+      {placedOrders?.data && (
         <>
           <WMTable
-            data={allOrders?.data}
+            data={placedOrders?.data}
             columns={columns}
-            tableTitle={"All Orders"}
+            tableTitle={"Placed Orders"}
+          />
+        </>
+      )}
+      {deliveredOrders?.data && (
+        <>
+          <WMTable
+            data={deliveredOrders?.data}
+            columns={columns}
+            tableTitle={"Delivered Orders"}
           />
         </>
       )}

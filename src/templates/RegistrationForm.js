@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../templates/css/Common.css";
+import "../templates/css/Registrationf.css";
 import { Grid, InputLabel, TextField, Typography, Button } from "@mui/material";
 import { Link,useNavigate } from "react-router-dom";
 import { IP } from './constants.js'
@@ -47,81 +49,90 @@ export default function RegistrationForm() {
     }
   };
   return (
-    <Grid container spacing={2} justifyContent="center">
-      <Grid item xs={12}>
-        <Typography variant="h4" align="center">Register User</Typography>
+    <div class="cont-f">
+    <div class="box">
+    <Grid  justifyContent="center" >
+      <Grid item xs={12} >
+        <h3 align="center" style={{fontSize:"40px", fontWeight:"bold",}}><span class="span" ></span>Register User</h3>
       </Grid>
-      <form onSubmit={handleSubmit}>
-        <Grid item xs={12}>
-          <InputLabel>Enter Your UserName</InputLabel>
-          <TextField
-            placeholder="Enter Username"
+      <form onSubmit={handleSubmit} >
+        <Grid item xs={12} class="ip_bx">
+          <input type="text"
+            // placeholder="Enter Username"
             id="userName"
             name="userName"
             fullWidth
             onChange={(e) => setUserName(e.target.value)}
           />
+           <label >UserName</label>
         </Grid>
-        <Grid item xs={12}>
-          <InputLabel>Enter Your First Name</InputLabel>
-          <TextField
-            placeholder="Enter First name"
+        <Grid item xs={12} class="ip_bx">
+          <input type="text"
+            // placeholder="Enter First name"
             id="firstName"
             name="firstName"
             fullWidth
             onChange={(e) => setFirstName(e.target.value)}
           />
+          <label>First Name</label>
         </Grid>
-        <Grid item xs={12}>
-          <InputLabel>Enter Your last Name</InputLabel>
-          <TextField
-            placeholder="Enter last name"
+        <Grid item xs={12} class="ip_bx">
+          
+          <input type="text"
+            // placeholder="Enter last name"
             id="lastName"
             name="lastName"
             fullWidth
             onChange={(e) => setLastName(e.target.value)}
+            
           />
+          <label>Last Name</label>
         </Grid>
-        <Grid item xs={12}>
-          <InputLabel>Enter Your email</InputLabel>
-          <TextField
-            placeholder="Enter email"
+        <Grid item xs={12} class="ip_bx">
+          
+          <input type="email"
+            // placeholder="Enter email"
             id="email"
             name="email"
             fullWidth
             onChange={(e) => setEmail(e.target.value)}
           />
+          <label>Email</label>
         </Grid>
-        <Grid item xs={12}>
-          <InputLabel>Enter Your Password</InputLabel>
-          <TextField
-            placeholder="Enter Password"
+        <Grid item xs={12} class="ip_bx">
+         
+          <input 
+            // placeholder="Enter Password"
             id="password"
             name="password"
             type="password"
             fullWidth
             onChange={(e) => setPassword(e.target.value)}
           />
+           <label>Password</label>
         </Grid>
-        <Grid item xs={12}>
-          <InputLabel>Enter Confirm Password</InputLabel>
-          <TextField
-            placeholder="Enter Confirm Password"
+        <Grid item xs={12} class="ip_bx">
+         
+          <input
+            // placeholder="Enter Confirm Password"
             name="cpassword"
             type="password"
             fullWidth
             onChange={(e) => setCpassword(e.target.value)}
           />
+           <label>Confirm Password</label>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} >
           <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>Submit</Button>
         </Grid>
       </form>
-      <Grid item xs={12}>
-        <Typography variant="body1" align="center">
-          Already have an account? <Link to="/login">Login here</Link>
-        </Typography>
+      <Grid item xs={12} class="loginl">
+        <p align="center">
+          Already have an account? <Link to="/login" class="loginlink">Login</Link>
+        </p>
       </Grid>
     </Grid>
+    </div>
+    </div>
   );
 }

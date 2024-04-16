@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { IP } from "./constants";
+import "../templates/css/Product.css";
 import StarIcon from "@mui/icons-material/Star";
 import { Typography, Dialog, DialogTitle, TextField, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 function ReviewDialog(props) {
   const [comment, setComment] = useState();
   const [rating, setRating] = useState();
+  const onClose = props?.onClose;
+  const review = props?.review;
+
   const handleSubmitReview = async () => {
     const formData = {
       comment,
@@ -26,7 +36,8 @@ function ReviewDialog(props) {
         }
       );
       const data = await response.json();
-      console.log(data);
+      onClose();
+      review();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -34,7 +45,7 @@ function ReviewDialog(props) {
 
   return (
     <div>
-      <Dialog open={props?.open} onClose={props?.onClose}>
+      <Dialog open={props?.open} onClose={onClose}>
         <DialogTitle>Add Review</DialogTitle>
         <TextField
           placeholder="Add Comment"
@@ -127,7 +138,6 @@ export default function ProductInfo() {
   };
 
   const handleDeleteReview = async (reviewId) => {
-
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/products/${productId}/reviews/${reviewId}/delete`,
@@ -146,70 +156,98 @@ export default function ProductInfo() {
     review();
     product();
   };
-  console.log(productInfo);
-  // console.log("reviews",review)
-
+  
   const handleReviews = () => {
     setSeeReview(!seeReview);
   };
-
+  
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
 
-  
   const handleClose = () => {
     setOpenDialog(false)
   }
-
+  
   return (
     <>
-      <div>
+    <main class="products">
+    <div class="prod-cont" >
+    <div class="product_wrapper">
+      <div class="left-column">
         <img
           src={productInfo?.data?.product?.image}
           height={"500px"}
           width={"500px"}
           style={{ objectFit: "cover" }}
+          class="m-active"
         />
-
-        <div>
+        <div class="img-small">
+        <img src={productInfo?.data?.product?.image}  class="active"/>
+        </div>
+      </div>
+        <div class="prod_content" >
+        <div class="prod_description">
+        <span> <p class="category">sum category</p></span>
           <h1>{productInfo?.data?.product?.name}</h1>
-
-          <h3>{productInfo?.data?.product?.description}</h3>
-          <h2>{productInfo?.data?.product?.price}</h2>
+          <br></br>
+          <p class="prod_desc">{productInfo?.data?.product?.description}</p>
+         
           <p>
-            {productInfo?.data?.product?.avgRating} / 5 <StarIcon /> (
+            {productInfo?.data?.product?.avgRating} / 5 <StarIcon style={{ color:"#FFC300" }}/> (
             {reviews?.data?.length})
           </p>
+         
+          <h2 class="price"><span>&#8360; {productInfo?.data?.product?.price}</span>
+          <button onClick={() => handleAddToCart()} class="add_cart">Add to cart</button></h2>
 
-          <button onClick={() => handleAddToCart()}>Add to cart</button>
-        </div>
-        <button onClick={() => handleReviews()}>
+          </div>{/*prod description ends */}
+
+      <div class="reviews">
+        <button onClick={() => handleReviews()} class="sa-reviews">
           {!seeReview ? "See All Reviews" : "Hide Reviews"}
         </button>
-        <button onClick={() => handleOpenDialog()}>Add Review</button>
+        <button onClick={() => handleOpenDialog()} class="a-reviews">Add Review</button>
         {seeReview ? (
-          <div>
+          <div class="r-text">
             <h3>Reviews</h3>
+            
             {reviews?.data?.map((value, index) => {
               return (
                 <>
-                  <Typography>
-                    {value?.firstName} {value?.lastName} : {value?.comment} |
-                    Rating : {value?.rating}
+                 <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 100 }} aria-label="simple table">
+                <TableRow>
+                <TableCell sx={{ maxWidth: 100 }}>
+                <Typography>
+                   {value?.firstName} {value?.lastName}: Rating : {value?.rating} | {value?.comment}
                   </Typography>
-                  <IconButton>
-                    <DeleteIcon onClick={() => handleDeleteReview(value?.reveiwId)}/>
+                </TableCell>
+                <TableCell align="right">
+                  <IconButton >
+                    <DeleteIcon onClick={() => handleDeleteReview(value?.reveiwId)} />
                   </IconButton>
+                  </TableCell>
+                  </TableRow>
+                  </Table>
+                  </TableContainer>
+                  
                 </>
+               
               );
             })}
           </div>
         ) : (
           <></>
         )}
-      </div>
-      <ReviewDialog open={openDialog} productId={productId} onClose={handleClose}/>
+     
+     <ReviewDialog open={openDialog} productId={productId} onClose={handleClose} review={review}/>
+      </div>{/*review ends*/}
+      </div>{/* prod content ends*/}
+
+      </div>{/* prod-wrapper ends */}
+      </div>{/*   prod-cont ends */}
+      </main>
     </>
   );
 }

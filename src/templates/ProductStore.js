@@ -3,16 +3,25 @@ import { IP } from "./constants";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
-import { Dialog, DialogTitle, Grid, IconButton, TextField } from "@mui/material";
+import "../templates/css/Store.css";
+import StarIcon from "@mui/icons-material/Star";
+import {
+  Dialog,
+  DialogTitle,
+  Grid,
+  IconButton,
+  TextField,
+} from "@mui/material";
 
 export default function ProductStore() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState({});
-  const [searchItem, setSearchItem] = useState("")
+  const [searchItem, setSearchItem] = useState("");
+  const [pageNo, setPageNo] = useState(1);
   const products = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/users/view/products`,
+        `http://${IP}:5000/api/users/view/products?page=${pageNo}`,
         {
           method: "GET",
           headers: {
@@ -48,7 +57,7 @@ export default function ProductStore() {
   };
   useEffect(() => {
     products();
-  }, [searchItem]);
+  }, [searchItem, pageNo]);
 
   const openProductInfo = (productId) => {
     if (productId) {
@@ -128,15 +137,10 @@ export default function ProductStore() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const itemDelete = await response.json();
-      console.log("user deleted", itemDelete);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -148,17 +152,37 @@ export default function ProductStore() {
     }
     return text.slice(0, maxLength) + "...";
   };
+
+  const handleNextPage = () => {
+    setPageNo(pageNo + 1);
+  };
+  const handlePrevPage = () => {
+    if (pageNo > 1) {
+      setPageNo(pageNo - 1);
+    }
+  };
+
   return (
     <>
-    <TextField onChange={(e)=>setSearchItem(e.target.value)} placeholder="Search"/>
-    <IconButton onClick={()=>handleSearchItem()}>🔍</IconButton>
+      <TextField
+        onChange={(e) => setSearchItem(e.target.value)}
+        placeholder="Search"
+      />
+      <IconButton onClick={() => handleSearchItem()}>🔍</IconButton>
       <div>
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           {allProducts?.data?.map((value, index) => {
             return (
               <div
                 className="card m-3"
-                style={{ width: "18rem", height: "460px" }}
+                style={{
+                  width: "18rem",
+                  height: "460px",
+                  boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                  borderRadius: "20px",
+                  marginTop: "20px",
+                  border: "1px solid lightgrey",
+                }}
               >
                 <img
                   className="img-fluid"
@@ -166,21 +190,49 @@ export default function ProductStore() {
                   alt="Card image cap"
                   style={{
                     objectFit: "cover",
-                    width: "300px",
+                    width: "100%",
                     height: "200px",
+                    borderRadius: "20px 20px 0px 0px",
                   }}
                   onClick={() => openProductInfo(value._id)}
                 />
                 <div className="card-body">
+                  {!value?.inWishlist ? (
+                    <IconButton
+                      style={{ position: "absolute", top: "0", right: "0" }}
+                    >
+                      <FavoriteBorderIcon
+                        onClick={() => handleAddToWishlist(value._id)}
+                      />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      style={{ position: "absolute", top: "0", right: "0" }}
+                    >
+                      <Favorite
+                        onClick={() => handleRemoveFromWishlist(value._id)}
+                        style={{ color: "#F43E29" }}
+                      />
+                    </IconButton>
+                  )}
                   <h5 className="card-title">{value.name}</h5>
-                  <h6 className="card-title" value={value.description}>{truncateText(value.description, 70)}</h6>
-                  <p className="card-text">{value.price}</p>
-                  <p className="card-text">{value.avgRating}</p>
+                  <p className="card-title" value={value.description}>
+                    {truncateText(value.description, 70)}
+                  </p>
+                  <h6 className="card-text">&#8360; {value.price}</h6>
+                  <p className="card-text">
+                    {value.avgRating} / 5{" "}
+                    <StarIcon style={{ color: "#FFC300" }} />
+                  </p>
                   {!value?.inCart ? (
                     <>
                       <button
                         className="btn btn-primary"
                         onClick={() => handleAddToCart(value?._id)}
+                        style={{
+                          background:
+                            "linear-gradient(45deg , #0bd2de , #0083f9)",
+                        }}
                       >
                         Add to Cart
                       </button>
@@ -189,31 +241,25 @@ export default function ProductStore() {
                     <>
                       <button
                         className="btn btn-primary"
-                        onClick={(e) => handleRemoveFromCart(e,value?._id)}
+                        onClick={(e) => handleRemoveFromCart(e, value?._id)}
+                        style={{
+                          background:
+                            "linear-gradient(45deg , #0bd2de , #0083f9)",
+                        }}
                       >
                         Remove from Cart
                       </button>
                     </>
-                  )}
-
-                  {!value?.inWishlist ? (
-                    <IconButton>
-                      <FavoriteBorderIcon
-                        onClick={() => handleAddToWishlist(value._id)}
-                      />
-                    </IconButton>
-                  ) : (
-                    <IconButton>
-                      <Favorite
-                        onClick={() => handleRemoveFromWishlist(value._id)}
-                      />
-                    </IconButton>
                   )}
                 </div>
               </div>
             );
           })}
         </div>
+      </div>
+      <div>
+        <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
+        <button onClick={() => handleNextPage()}>Next</button>
       </div>
     </>
   );

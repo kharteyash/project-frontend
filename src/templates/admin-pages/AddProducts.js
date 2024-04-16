@@ -127,10 +127,11 @@ export default function AddProducts() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
-  
+  const [pageNo, setPageNo] = useState(1);
+
   const products = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/products`, {
+      const response = await fetch(`http://${IP}:5000/api/admin/view/products?page=${pageNo}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +147,7 @@ export default function AddProducts() {
 
   useEffect(() => {
     products();
-  }, []);
+  }, [pageNo]);
 
   const openProductInfo = (productId) => {
     if (productId) {
@@ -171,6 +172,16 @@ export default function AddProducts() {
     setOpenDialog(true);
   };
 
+  const handleNextPage = () => {
+    if (pageNo < 2) {
+      setPageNo(pageNo + 1);
+    }
+  };
+  const handlePrevPage = () => {
+    if (pageNo > 1) {
+      setPageNo(pageNo - 1);
+    }
+  };
   return (
     <>
       <div>
@@ -205,6 +216,10 @@ export default function AddProducts() {
           })}
         </div>
         <button onClick={() => handleOpenDialog()}>Add Products</button>
+      </div>
+      <div>
+        <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
+        <button onClick={() => handleNextPage()}>Next</button>
       </div>
       <AddProductDialog open={openDialog} onClose={handleClose} />
     </>
