@@ -112,7 +112,7 @@ function AddProductDialog(props) {
             onChange={(e) => setCategory(e.target.value)}
           >
             <FormControlLabel value="Eatables" control={<Radio />} label="Eatables" />
-            <FormControlLabel value="Equipment" control={<Radio />} label="Equipment" />
+            <FormControlLabel value="Equipments" control={<Radio />} label="Equipments" />
             <FormControlLabel value="Accessories" control={<Radio />} label="Accessories" />
           </RadioGroup>
           <input type="file" name="image" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} />
