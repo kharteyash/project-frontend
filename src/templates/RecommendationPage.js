@@ -164,26 +164,6 @@ export default function RecommendationPage() {
     }
   };
 
-  const top5Purchase = async () => {
-    try {
-      const response = await fetch(
-        `http://${IP}:5000/api/users/view/products/recommendation/top5Purchase`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // body: JSON.stringify(details),
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-      setTop5Recommendation(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   const getByTime = async () => {
     try {
       const response = await fetch(
@@ -254,7 +234,6 @@ export default function RecommendationPage() {
           cityCountry(),
           ageHeightWeight(),
           goalGender(),
-          top5Purchase(),
           exercises(),
         ]);
         setRender(true);
@@ -275,44 +254,6 @@ export default function RecommendationPage() {
 
   return (
     <>
-      <br></br>
-      {top5Recommendation?.data && (
-        <>
-          <h3>Top 5 products in our store</h3>
-          <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {top5Recommendation?.data?.map((value, index) => {
-              return (
-                <>
-                  <div
-                    className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
-                  >
-                    <img
-                      className="img-fluid"
-                      src={value.image}
-                      alt="Card image cap"
-                      style={{
-                        objectFit: "cover",
-                        width: "300px",
-                        height: "200px",
-                      }}
-                      onClick={() => openProductInfo(value._id)}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
-                      </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
-                    </div>
-                  </div>
-                </>
-              );
-            })}
-          </div>
-        </>
-      )}
       <br></br>
       {goalGenderRecommendation?.data && (
         <>

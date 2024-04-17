@@ -28,11 +28,11 @@ const WMTable = (props) => {
         }
     }, [props?.selectedIds])
 
-    const reversedData = [...props.data].reverse(); // Reverse the array of products
+    const reversedData = [...props.data].reverse();
 
     const table = useMaterialReactTable({
         columns: props.columns,
-        data: reversedData, // Use the reversed array
+        data: reversedData,
         initialState: { density: 'compact' },
         enableRowSelection: props?.enableRowSelection,
         enableRowActions: props?.tableActions,

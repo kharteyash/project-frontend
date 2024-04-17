@@ -7,7 +7,20 @@ import {
   Routes,
   useNavigate,
 } from "react-router-dom";
-import { AppBar, Tab, Tabs, Typography } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import LogoutIcon from "@mui/icons-material/Logout";
+import {
+  AppBar,
+  Tab,
+  Tabs,
+  Typography,
+  Menu,
+  MenuItem,
+  IconButton,
+} from "@mui/material";
 import RegistrationForm from "./RegistrationForm";
 import ProfilePage from "./ProfilePage";
 import HomePage from "./HomePage";
@@ -34,6 +47,14 @@ import ProductEdit from "./admin-pages/ProductEdit";
 import UserProfile from "./UserProfile";
 
 export default function NavigationBar() {
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleOpenMenu = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+    setIsMenuOpen(true);
+  };
+
   const [userDetails, setUserDetails] = useState({});
   const details = async () => {
     try {
@@ -91,17 +112,16 @@ export default function NavigationBar() {
               Store
             </Link>
             {!userDetails?.data?._id ? (
-              <Link to="/register" className="nav-link">
-                Register
+              <Link to="/login" className="nav-link">
+                Login
               </Link>
             ) : (
               <></>
             )}
-            <Link to="/profile" className="nav-link">
-              Profile
-            </Link>
-            {(userDetails?.data?._id && userDetails?.data?.role === "admin" ||
-            userDetails?.data?._id && userDetails?.data?.role === "superadmin") ? (
+
+            {(userDetails?.data?._id && userDetails?.data?.role === "admin") ||
+            (userDetails?.data?._id &&
+              userDetails?.data?.role === "superadmin") ? (
               <Link to="/dashboard" className="nav-link">
                 Dashboard
               </Link>
@@ -110,22 +130,69 @@ export default function NavigationBar() {
             )}
             {userDetails?.data?._id ? (
               <>
-                <Link to="/wishlist" className="nav-link">
-                  Wishlist
+                <Link to="/wishlist">
+                  <LoyaltyIcon
+                    style={{
+                      fontSize: "35px",
+                      position: "absolute",
+                      right: "150px",
+                      top: "8px",
+                      color: "#0bd2de",
+                    }}
+                  />
                 </Link>
-                <Link to="/cart" className="nav-link">
-                  Cart
-                </Link>
-                <Link to="/orders" className="nav-link">
-                  Orders
-                </Link>
-                <Link to="/home" className="nav-link" onClick={logoutUser}>
-                  Logout
+                <Link to="/cart">
+                  <ShoppingCartIcon
+                    style={{
+                      fontSize: "32px",
+                      position: "absolute",
+                      right: "80px",
+                      top: "10px",
+                      color: "#0bd2de",
+                    }}
+                  />
                 </Link>
               </>
             ) : (
               <></>
             )}
+            {userDetails?.data?._id ? (
+              <IconButton
+                style={{
+                  position: "absolute",
+                  // top: "10px",
+                  right: "10px",
+                  fontSize: "60px",
+                  color: "#0bd2de",
+                }}
+                onClick={(e) => handleOpenMenu(e)}
+              >
+                <AccountCircleIcon style={{ fontSize: "30px" }} />
+              </IconButton>
+            ) : (
+              <></>
+            )}
+            <Menu
+              anchorEl={menuAnchorEl}
+              open={isMenuOpen}
+              onClose={() => setIsMenuOpen(false)}
+            >
+              <MenuItem>
+                <Link to="/profile">
+                  Profile
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/orders">
+                  Orders
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/home" className="nav-link" onClick={logoutUser}>
+                  Logout <LogoutIcon />
+                </Link>
+              </MenuItem>
+            </Menu>
           </Tabs>
         </AppBar>
         <Routes>
@@ -142,7 +209,10 @@ export default function NavigationBar() {
           <Route path="/users" element={<AllUsers />} />
           <Route path="/store/product/:productId" element={<ProductInfo />} />
           <Route path="/profile/product/:productId" element={<ProductInfo />} />
-          <Route path="/add-products/product/:productId" element={<ProductEdit />} />
+          <Route
+            path="/add-products/product/:productId"
+            element={<ProductEdit />}
+          />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/shippingDetails" element={<ShippingInfo />} />
