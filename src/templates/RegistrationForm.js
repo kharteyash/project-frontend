@@ -39,7 +39,6 @@ export default function RegistrationForm() {
         }
 
         const data = await response.json();
-        console.log(data);
         navigate("/login")
       } catch (error) {
         console.error("Error:", error);

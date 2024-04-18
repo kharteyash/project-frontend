@@ -45,6 +45,9 @@ import ViewOrderById from "./admin-pages/ViewOrderById";
 import UserInfo from "./admin-pages/UserInfo";
 import ProductEdit from "./admin-pages/ProductEdit";
 import UserProfile from "./UserProfile";
+import ContactUS from "./ContactUS";
+import ViewGrievance from "./admin-pages/ViewGrievance";
+import GrievanceDetails from "./admin-pages/GrievanceDetails";
 
 export default function NavigationBar() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -178,15 +181,28 @@ export default function NavigationBar() {
               onClose={() => setIsMenuOpen(false)}
             >
               <MenuItem>
-                <Link to="/profile">
-                  Profile
-                </Link>
+                <Link to="/profile">Profile</Link>
               </MenuItem>
               <MenuItem>
-                <Link to="/orders">
-                  Orders
-                </Link>
+                <Link to="/orders">Orders</Link>
               </MenuItem>
+              {(userDetails?.data?._id &&
+                userDetails?.data?.role === "admin") ||
+              (userDetails?.data?._id &&
+                userDetails?.data?.role === "superadmin") ? (
+                <MenuItem>
+                  <Link
+                    to="/view-grievance"
+                  >
+                    View Grievance
+                  </Link>
+                </MenuItem>
+              ) : (
+                <MenuItem>
+                  <Link to="/contact">Contact Us</Link>
+                </MenuItem>
+              )}
+
               <MenuItem>
                 <Link to="/home" className="nav-link" onClick={logoutUser}>
                   Logout <LogoutIcon />
@@ -220,6 +236,9 @@ export default function NavigationBar() {
           <Route path="/paymentInfo" element={<PaymentInfo />} />
           <Route path="/view-order/:id" element={<ViewOrderById />} />
           <Route path="/userInfo/:id" element={<UserInfo />} />
+          <Route path="/contact" element={<ContactUS />} />
+          <Route path="/view-grievance" element={<ViewGrievance />} />
+          <Route path="/grievance-details/:id" element={<GrievanceDetails />} />
         </Routes>
       </Router>
     </>

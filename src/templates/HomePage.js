@@ -109,7 +109,7 @@ export default function HomePage() {
   }, []);
 
   const openProductInfo = (productId) => {
-    // navigate(`/profile/product/${productId}`)
+    navigate(`/store/product/${productId}`, {state:productId})
   };
 
   const truncateText = (text, maxLength) => {
@@ -195,7 +195,7 @@ export default function HomePage() {
                             width: "300px",
                             height: "200px",
                           }}
-                          onClick={() => openProductInfo(value._id)}
+                          onClick={() => openProductInfo(value?._id)}
                         />
                         <div className="card-body">
                           <h5 className="card-title">{value.name}</h5>
