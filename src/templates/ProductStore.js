@@ -165,6 +165,7 @@ export default function ProductStore() {
   };
 
   return (
+    
     <>
       <ToastContainer
         position="bottom-left"
@@ -179,11 +180,19 @@ export default function ProductStore() {
         theme="dark"
         transition="Bounce"
       />
+    <div class="text-center" style={{border:"1px solid black"}}>
       <TextField
         onChange={(e) => setSearchItem(e.target.value)}
+        style={{
+        borderRadius: "10px",border:"none" }}
         placeholder="Search"
+        // sx={{
+          
+        // }}
       />
       <IconButton onClick={() => handleSearchItem()}>🔍</IconButton>
+      </div>
+
       <div>
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           {allProducts?.data?.map((value, index) => {
@@ -247,6 +256,9 @@ export default function ProductStore() {
                         style={{
                           background:
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
+                            border:"none",
+                            boxShadow:"0px",
+                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)"
                         }}
                       >
                         Add to Cart
@@ -260,6 +272,8 @@ export default function ProductStore() {
                         style={{
                           background:
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
+                            border:"none",
+                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)"
                         }}
                       >
                         Remove from Cart

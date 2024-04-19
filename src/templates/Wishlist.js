@@ -90,12 +90,7 @@ export default function Wishlist() {
       header: "Image",
       Cell: ({ row }) => (
         <>
-          <img
-            src={row?.original?.image}
-            height={"100px"}
-            width={"100px"}
-            style={{ objectFit: "cover" }}
-          />
+          <img src={row?.original?.image} height={"100px"} width={"100px"} style={{objectFit:"cover", borderRadius:"10px", boxShadow:"0px 9px 30px -15px rgb(0 0 0)"}} />
         </>
       ),
     },
@@ -112,14 +107,20 @@ export default function Wishlist() {
       accessorKey: "actions",
       Cell: ({ row }) => (
         <>
+        <div style={{border:"2px solid green"}}>
           <IconButton>
-            <DeleteIcon onClick={(e) => handleDeleteItem(e, row?.original)} />
+            <DeleteIcon
+            onClick={(e) => handleDeleteItem(e, row?.original)}
+            style={{color:"#0bd2de"}}
+            />
           </IconButton>
           <IconButton>
             <ShoppingCartCheckoutIcon
-              onClick={(e) => moveToCart(e, row?.original)}
+            onClick={(e) => moveToCart(e, row?.original)}
+            style={{color:"#0083f9"}}
             />
           </IconButton>
+          </div>
         </>
       ),
     },
@@ -139,13 +140,19 @@ export default function Wishlist() {
         theme="dark"
         transition="Bounce"
       />
+    <div style={{border:"2px solid red", background:"blue"}}>
       {allWishlist?.data && (
         <WMTable
+        sx={{color:"pink"}} 
           columns={columns}
           data={allWishlist?.data}
           tableTitle={"Wishlist"}
+     
+         
+          
         />
       )}
+      </div>
     </>
   );
 }

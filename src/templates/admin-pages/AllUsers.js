@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import WMTable from "../../ui-components/table";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import Box from '@mui/material/Box';
 import {
   Dialog,
   DialogTitle,
@@ -69,7 +70,7 @@ export default function AllUsers() {
       accessorKey: "actions",
       Cell: ({ row }) => (
         <>
-          <IconButton>
+          <IconButton style={{color:"#3498DB"}}>
             <ArrowCircleRightIcon
               onClick={() => handleOpenUserDetails(row?.original)}
             />
@@ -80,16 +81,22 @@ export default function AllUsers() {
   ];
 
   return (
-    <div>
+    <Box sx={{ flexGrow: 1 }} style={{background:"linear-gradient(45deg , #0bd2de , #0083f9)",  justifyContent:"center",display:"flex", height:"100vh", width:"100%",padding:"20px",marginTop:"-1px"}}>
       {allUserDetails?.data && (
         <>
+        <div style={{width:"95%"}}>
+       
+
           <WMTable
             columns={columns}
             data={allUserDetails?.data}
             tableTitle={"All Users"}
+           
           />
+          </div>
+       
         </>
       )}
-    </div>
+    </Box>
   );
 }

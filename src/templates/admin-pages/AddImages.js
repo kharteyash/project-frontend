@@ -122,7 +122,7 @@ export default function AddImages() {
 
   return (
     <div>
-      <div className="d-flex flex-wrap justify-content-center align-items-center">
+      <div className="d-flex flex-wrap justify-content-center align-items-center" style={{border:"3px solid red"}}>
         {allImages?.data?.map((value, index) => {
           return (
             <div

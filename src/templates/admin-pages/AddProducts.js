@@ -172,9 +172,8 @@ export default function AddProducts() {
   };
 
   const handleNextPage = () => {
-    if (pageNo < 2) {
       setPageNo(pageNo + 1);
-    }
+    
   };
   const handlePrevPage = () => {
     if (pageNo > 1) {
