@@ -5,8 +5,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-
+import { useNavigate } from "react-router";
 export default function Orders() {
+  const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({});
   const details = async () => {
     try {
@@ -33,10 +34,27 @@ export default function Orders() {
   const handleBuyAgain = (orderId) => {
     // navigate
   };
-  const getMyOrders = async () => {
+  const getUserMyOrders = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/users/view/orders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(details),
+        credentials: "include",
+      });
+      const data = await response.json();
+      setMyOrders(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getEmpMyOrders = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/${role}s/view/orders`,
+        `http://${IP}:5000/api/users/view/employee/orders`,
         {
           method: "GET",
           headers: {
@@ -53,10 +71,10 @@ export default function Orders() {
     }
   };
 
-  const getMyAllOrders = async () => {
+  const getUserMyAllOrders = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/${role}s/view/orders/history`,
+        `http://${IP}:5000/api/users/view/orders/history`,
         {
           method: "GET",
           headers: {
@@ -72,6 +90,30 @@ export default function Orders() {
       console.error("Error:", error);
     }
   };
+
+  const getEmpMyAllOrders = async () => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/employee/orders/history`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      setMyAllOrders(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleOpenOrder = (details) => {
+    navigate(`/order-details/${details?._id}`, {state:{details,role}})
+  }
 
   const columns = [
     {
@@ -97,13 +139,9 @@ export default function Orders() {
       header: "Check Status",
       Cell: ({ row }) => (
         <>
-          {row?.original?.orderStatus === "Placed" ? (
-            <IconButton value={"Check Order Status"}>
-              <ArrowCircleRightIcon />
-            </IconButton>
-          ) : (
-            ""
-          )}
+          <IconButton value={"Check Order Status"} onClick={()=>handleOpenOrder(row?.original)}>
+            <ArrowCircleRightIcon />
+          </IconButton>
         </>
       ),
     },
@@ -148,8 +186,13 @@ export default function Orders() {
   }, []);
 
   useEffect(() => {
-    getMyOrders();
-    getMyAllOrders();
+    if (role === "user") {
+      getUserMyOrders();
+      getUserMyAllOrders();
+    } else {
+      getEmpMyOrders();
+      getEmpMyAllOrders();
+    }
   }, [role]);
 
   return (

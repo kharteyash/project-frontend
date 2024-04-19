@@ -48,6 +48,7 @@ import UserProfile from "./UserProfile";
 import ContactUS from "./ContactUS";
 import ViewGrievance from "./admin-pages/ViewGrievance";
 import GrievanceDetails from "./admin-pages/GrievanceDetails";
+import OrderDetails from "./OrderDetails";
 
 export default function NavigationBar() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -237,6 +238,7 @@ export default function NavigationBar() {
           <Route path="/contact" element={<ContactUS />} />
           <Route path="/view-grievance" element={<ViewGrievance />} />
           <Route path="/grievance-details/:id" element={<GrievanceDetails />} />
+          <Route path="/order-details/:id" element={<OrderDetails />} />
         </Routes>
       </Router>
     </>
