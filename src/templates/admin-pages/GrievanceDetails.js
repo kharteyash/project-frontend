@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { IP } from "../constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function GrievanceDetails() {
   const location = useLocation();
   const [grievanceDetails, setGrievanceDetails] = useState();
@@ -34,7 +36,7 @@ export default function GrievanceDetails() {
 
   const handleClick = async (text) => {
     const formData = {
-      answer : text,
+      answer: text,
     };
     try {
       const response = await fetch(
@@ -48,8 +50,8 @@ export default function GrievanceDetails() {
           credentials: "include",
         }
       );
-      const data = await response.json();
-      alert("Response sent successfully");
+      const sendGrievance = await response.json();
+      toast.success(sendGrievance?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -57,6 +59,19 @@ export default function GrievanceDetails() {
 
   return (
     <div>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
       <>
         <h1>
           Name : {grievanceDetails?.data?.user?.firstName}{" "}
@@ -71,7 +86,9 @@ export default function GrievanceDetails() {
           <button value="Yes" onClick={() => handleClick("Yes")}>
             Yes
           </button>
-          <button value="No" onClick={() => handleClick("No")}>No</button>
+          <button value="No" onClick={() => handleClick("No")}>
+            No
+          </button>
         </>
       )}
     </div>

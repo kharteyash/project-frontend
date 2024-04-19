@@ -14,10 +14,11 @@ import { IP } from "./constants.js";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function ProfilePage() {
   const [profileDetails, setProfileDetails] = useState({});
-  
+
   const [editDetails, setEditDetails] = useState(false);
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
@@ -51,13 +52,9 @@ export default function ProfilePage() {
         body: JSON.stringify(formData),
         credentials: "include",
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to update profile");
-      }
-
-      const data = await response.json();
-      getProfileDetails()
+      const updateProfile = await response.json();
+      toast.success(updateProfile?.message);
+      getProfileDetails();
       handleProfileEdit();
     } catch (error) {
       console.error("Error:", error);
@@ -81,14 +78,25 @@ export default function ProfilePage() {
     }
   };
 
-  
-
   useEffect(() => {
     getProfileDetails();
   }, []);
 
   return (
     <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
       <h1>User Profile</h1>
       <IconButton onClick={() => handleProfileEdit()}>
         {!editDetails ? <EditIcon /> : <CloseIcon />}

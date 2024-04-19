@@ -2,25 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useRouteError } from "react-router-dom";
 import WMTable from "../../ui-components/table";
 import { IP } from "../constants";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function UserInfo() {
   const location = useLocation();
   const [userDets, setUserDets] = useState();
-  const userInfo = userDets?.data
+  const userInfo = userDets?.data;
   const userDetails = location?.state;
 
   const details = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/users/${userDetails?._id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(details),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${userDetails?._id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
-      setUserDets(data)
+      setUserDets(data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -75,12 +79,11 @@ export default function UserInfo() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
-
       const userAdmin = await response.json();
+      toast.success(userAdmin?.message);
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);
@@ -96,12 +99,11 @@ export default function UserInfo() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
-
       const makeUser = await response.json();
+      toast.success(makeUser?.message);
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);
@@ -132,6 +134,19 @@ export default function UserInfo() {
 
   return (
     <div>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
       <>
         <h2>
           Name : {userInfo?.firstName} {userInfo?.lastName} (
@@ -144,7 +159,9 @@ export default function UserInfo() {
         ) : (
           <button onClick={() => handleMakeUser()}>Make User</button>
         )}
-        {userInfo?._id && <button onClick={()=>handleDeleteUser()}>Delete User</button>}
+        {userInfo?._id && (
+          <button onClick={() => handleDeleteUser()}>Delete User</button>
+        )}
       </>
       {userInfo?.orderHistory && (
         <WMTable
@@ -162,7 +179,7 @@ export default function UserInfo() {
         />
       )}
       <input type="text" />
-      <input type="submit" value={"Send Notification"}/>
+      <input type="submit" value={"Send Notification"} />
     </div>
   );
 }

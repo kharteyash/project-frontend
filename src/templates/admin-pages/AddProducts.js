@@ -16,19 +16,18 @@ import {
 } from "@mui/material";
 
 function AddProductDialog(props) {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [stock, setStock] = useState("");
-  const [weight, setWeight] = useState("");
-  const [productGoal, setProductGoal] = useState("");
-  const [category, setCategory] = useState("");
+  const [name, setName] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [stock, setStock] = useState(null);
+  const [weight, setWeight] = useState(null);
+  const [productGoal, setProductGoal] = useState(null);
+  const [category, setCategory] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null); // State for selected image data
 
   const handleSubmit = async(e) => {
     e.preventDefault();
     
-    // Create FormData object
     const formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
@@ -37,7 +36,7 @@ function AddProductDialog(props) {
     formData.append("weight", weight);
     formData.append("productGoal", productGoal);
     formData.append("category", category);
-    formData.append("image", selectedImage); // Append selected image data
+    formData.append("image", selectedImage);
 
     try {
       const response = await fetch(`http://${IP}:5000/api/admin/view/products/addProducts`, {

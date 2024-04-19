@@ -204,11 +204,12 @@ export default function RecommendationPage() {
     }
   };
   const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) {
-      return text;
+      if (!text) return "";
+      if (text.length <= maxLength) {
+        return text;
+      }
+      return text.substring(0, maxLength) + "...";
     }
-    return text.slice(0, maxLength) + "...";
-  };
 
   const openProductInfo = (productId) => {
     if (productId) {
@@ -257,7 +258,7 @@ export default function RecommendationPage() {
       <br></br>
       {goalGenderRecommendation?.data && (
         <>
-          <h3>Top 5 products in our store</h3>
+          <h3>Goal Gender</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {goalGenderRecommendation?.data?.map((value, index) => {
               return (
@@ -295,9 +296,10 @@ export default function RecommendationPage() {
       <br></br>
       {bmiRecommendation?.data && (
         <>
-          <h3>Top 5 products in our store</h3>
+          <h3>Age Height Weight</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {bmiRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -333,7 +335,7 @@ export default function RecommendationPage() {
       <br></br>
       {cityCountryRecommendation?.data && (
         <>
-          <h3>Top 5 products in our store</h3>
+          <h3>City country</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {cityCountryRecommendation?.data?.map((value, index) => {
               return (
@@ -371,7 +373,7 @@ export default function RecommendationPage() {
       <br></br>
       {productGoalRecommendation?.data && (
         <>
-          <h3>Top 5 products in our store</h3>
+          <h3>Product goal</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {productGoalRecommendation?.data?.map((value, index) => {
               return (
@@ -409,7 +411,7 @@ export default function RecommendationPage() {
       <br></br>
       {prevPurchaseRecommendation?.data && (
         <>
-          <h3>Top 5 products in our store</h3>
+          <h3>prev purchase</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {prevPurchaseRecommendation?.data?.map((value, index) => {
               return (
@@ -420,22 +422,22 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.image}
+                      src={value.product.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
                         width: "300px",
                         height: "200px",
                       }}
-                      onClick={() => openProductInfo(value._id)}
+                      onClick={() => openProductInfo(value.product._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
+                      <h5 className="card-title">{value.product.name}</h5>
+                      <h6 className="card-title" value={value.product.description}>
+                        {truncateText(value.product.description, 70)}
                       </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
+                      <p className="card-text">{value.product.price}</p>
+                      <p className="card-text">{value.product.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -447,9 +449,47 @@ export default function RecommendationPage() {
       <br></br>
       {prevSearchRecommendation?.data && (
         <>
-          <h3>Top 5 products in our store</h3>
+          <h3>prev search</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {prevSearchRecommendation?.data?.map((value, index) => {
+              return (
+                <>
+                  <div
+                    className="card m-3"
+                    style={{ width: "18rem", height: "400px" }}
+                  >
+                    <img
+                      className="img-fluid"
+                      src={value.product.image}
+                      alt="Card image cap"
+                      style={{
+                        objectFit: "cover",
+                        width: "300px",
+                        height: "200px",
+                      }}
+                      onClick={() => openProductInfo(value.product._id)}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{value.product.name}</h5>
+                      <h6 className="card-title" value={value.product.description}>
+                        {truncateText(value.product.description, 70)}
+                      </h6>
+                      <p className="card-text">{value.product.price}</p>
+                      <p className="card-text">{value.product.avgRating}</p>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </>
+      )}
+      <br></br>
+      {recentlyViewRecommendation?.data && (
+        <>
+          <h3>recently viewed</h3>
+          <div className="d-flex flex-wrap justify-content-center align-items-center">
+            {recentlyViewRecommendation?.data?.map((value, index) => {
               return (
                 <>
                   <div
@@ -465,53 +505,15 @@ export default function RecommendationPage() {
                         width: "300px",
                         height: "200px",
                       }}
-                      onClick={() => openProductInfo(value._id)}
+                      onClick={() => openProductInfo(value.product._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
+                      <h5 className="card-title">{value.product.name}</h5>
+                      <h6 className="card-title" value={value.product.description}>
+                        {truncateText(value.product.description, 70)}
                       </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
-                    </div>
-                  </div>
-                </>
-              );
-            })}
-          </div>
-        </>
-      )}
-      <br></br>
-      {prevSearchRecommendation?.data && (
-        <>
-          <h3>Top 5 products in our store</h3>
-          <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {prevSearchRecommendation?.data?.map((value, index) => {
-              return (
-                <>
-                  <div
-                    className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
-                  >
-                    <img
-                      className="img-fluid"
-                      src={value.image}
-                      alt="Card image cap"
-                      style={{
-                        objectFit: "cover",
-                        width: "300px",
-                        height: "200px",
-                      }}
-                      onClick={() => openProductInfo(value._id)}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
-                      </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
+                      <p className="card-text">{value.product.price}</p>
+                      <p className="card-text">{value.product.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -523,7 +525,7 @@ export default function RecommendationPage() {
       <br></br>
       {timelineRecommendation?.data && (
         <>
-          <h3>Top 5 products in our store</h3>
+          <h3>timeline</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {timelineRecommendation?.data?.lastMonth?.map((value, index) => {
               return (

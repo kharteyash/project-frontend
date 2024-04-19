@@ -20,6 +20,8 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -53,15 +55,11 @@ export default function Cart() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const itemDelete = await response.json();
-      console.log("user deleted", itemDelete);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
+      toast.success(itemDelete?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -80,8 +78,8 @@ export default function Cart() {
           credentials: "include",
         }
       );
-      const data = await response.json();
-      console.log("data", data);
+      const deleteAll = await response.json();
+      toast.success(deleteAll?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -89,7 +87,6 @@ export default function Cart() {
   };
 
   const handleAddQty = async (event, data) => {
-    console.log("data", data);
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/cart/${data}/addQty`,
@@ -103,10 +100,7 @@ export default function Cart() {
         }
       );
       const itemadd = await response.json();
-      console.log("user deleted", itemadd);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
+      toast.success(itemadd?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -127,11 +121,8 @@ export default function Cart() {
           credentials: "include",
         }
       );
-      const itemadd = await response.json();
-      console.log("user deleted", itemadd);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
+      const itemsub = await response.json();
+      toast.success(itemsub?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -213,6 +204,19 @@ export default function Cart() {
   ];
   return (
     <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
       {allCart?.data ? (
         <>
           <WMTable columns={columns} data={allCart?.data} tableTitle={"Cart"} />

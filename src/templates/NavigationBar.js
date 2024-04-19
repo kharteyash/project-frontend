@@ -88,10 +88,8 @@ export default function NavigationBar() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
-
       const logout = await response.json();
       window.location.reload();
       // navigate("/home");

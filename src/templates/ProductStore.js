@@ -12,7 +12,8 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function ProductStore() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState({});
@@ -120,8 +121,8 @@ export default function ProductStore() {
           credentials: "include",
         }
       );
-      const data = await response.json();
-      console.log("data", data);
+      const removeFromWishlist = await response.json();
+      toast.success(removeFromWishlist?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -141,6 +142,7 @@ export default function ProductStore() {
         }
       );
       const itemDelete = await response.json();
+      toast.success(itemDelete?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -164,6 +166,19 @@ export default function ProductStore() {
 
   return (
     <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
       <TextField
         onChange={(e) => setSearchItem(e.target.value)}
         placeholder="Search"

@@ -5,6 +5,8 @@ import { IP } from "./constants";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function HomePage() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
@@ -62,6 +64,7 @@ export default function HomePage() {
         }
       );
       const viewNotifs = await response.json();
+      toast.success(viewNotifs?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -109,7 +112,7 @@ export default function HomePage() {
   }, []);
 
   const openProductInfo = (productId) => {
-    navigate(`/store/product/${productId}`, {state:productId})
+    navigate(`/store/product/${productId}`, { state: productId });
   };
 
   const truncateText = (text, maxLength) => {
@@ -120,119 +123,137 @@ export default function HomePage() {
   };
 
   return (
-    <div
-      class="cont"
-      style={{ background: "black", height: "100vh", color: "white" }}
-    >
-      <div style={{ position: "relative" }}>
-        <IconButton
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            fontSize: "60px",
-            color: "#0bd2de",
-          }}
-          onClick={(e) => handleOpenNotifications(e)}
-        >
-          <NotificationsIcon style={{ fontSize: "35px" }} />
-        </IconButton>
-        {allNotifications?.[0] && (
-          <>
-            <Menu
-              anchorEl={menuAnchorEl}
-              open={isMenuOpen}
-              onClose={() => setIsMenuOpen(false)}
-            >
-              {allNotifications?.map((value, index) => {
-                return (
-                  <MenuItem
-                    key={value._id}
-                    onClick={() => handleSeeNotification(value._id)}
-                  >
-                    {value?.message}
-                  </MenuItem>
-                );
-              })}
-            </Menu>
-            <p style={{ position: "absolute", top: "10px", right: "14px" }}>
-              {
-                allNotifications?.filter(
-                  (notification) => notification.status === "unread"
-                ).length // Filter unread notifications
-              }
-            </p>
-          </>
-        )}
-        <div
-          class="wlcm-msg"
-          style={{ border: "1px solid black", paddingLeft: "20px" }}
-        >
-          <h1 style={{ marginTop: "40px", fontSize: "60px" }}>
-            Welcome to the Workout Hub
-          </h1>
-          <p>Get In, Get Fit, Get On with Life!</p>
-        </div>
-        {/* <!--slide show--> */}
-        <>
-          {top5Recommendation?.data && (
+    <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
+      <div
+        class="cont"
+        style={{ background: "black", height: "100vh", color: "white" }}
+      >
+        <div style={{ position: "relative" }}>
+          <IconButton
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              fontSize: "60px",
+              color: "#0bd2de",
+            }}
+            onClick={(e) => handleOpenNotifications(e)}
+          >
+            <NotificationsIcon style={{ fontSize: "35px" }} />
+          </IconButton>
+          {allNotifications?.[0] && (
             <>
-              <h3>Top 5 products in our store</h3>
-              <div className="d-flex flex-wrap justify-content-center align-items-center">
-                {top5Recommendation?.data?.map((value, index) => {
+              <Menu
+                anchorEl={menuAnchorEl}
+                open={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+              >
+                {allNotifications?.map((value, index) => {
                   return (
-                    <>
-                      <div
-                        className="card m-3"
-                        style={{ width: "18rem", height: "400px" }}
-                      >
-                        <img
-                          className="img-fluid"
-                          src={value.image}
-                          alt="Card image cap"
-                          style={{
-                            objectFit: "cover",
-                            width: "300px",
-                            height: "200px",
-                          }}
-                          onClick={() => openProductInfo(value?._id)}
-                        />
-                        <div className="card-body">
-                          <h5 className="card-title">{value.name}</h5>
-                          <h6 className="card-title" value={value.description}>
-                            {truncateText(value.description, 70)}
-                          </h6>
-                          <p className="card-text">{value.price}</p>
-                          <p className="card-text">{value.avgRating}</p>
-                        </div>
-                      </div>
-                    </>
+                    <MenuItem
+                      key={value._id}
+                      onClick={() => handleSeeNotification(value._id)}
+                    >
+                      {value?.message}
+                    </MenuItem>
                   );
                 })}
-              </div>
+              </Menu>
+              <p style={{ position: "absolute", top: "10px", right: "14px" }}>
+                {
+                  allNotifications?.filter(
+                    (notification) => notification.status === "unread"
+                  ).length // Filter unread notifications
+                }
+              </p>
             </>
           )}
-        </>
-        <div class="stage">
-          <div class="container">
-            <div class="ring">
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-              <div class="img"></div>
-            </div>
+          <div
+            class="wlcm-msg"
+            style={{ border: "1px solid black", paddingLeft: "20px" }}
+          >
+            <h1 style={{ marginTop: "40px", fontSize: "60px" }}>
+              Welcome to the Workout Hub
+            </h1>
+            <p>Get In, Get Fit, Get On with Life!</p>
           </div>
-          {/* slideshow end */}
-        </div>
+          {/* <!--slide show--> */}
+          <>
+            {top5Recommendation?.data && (
+              <>
+                <h3>Top 5 products in our store</h3>
+                <div className="d-flex flex-wrap justify-content-center align-items-center">
+                  {top5Recommendation?.data?.map((value, index) => {
+                    return (
+                      <>
+                        <div
+                          className="card m-3"
+                          style={{ width: "18rem", height: "400px" }}
+                        >
+                          <img
+                            className="img-fluid"
+                            src={value.image}
+                            alt="Card image cap"
+                            style={{
+                              objectFit: "cover",
+                              width: "300px",
+                              height: "200px",
+                            }}
+                            onClick={() => openProductInfo(value?._id)}
+                          />
+                          <div className="card-body">
+                            <h5 className="card-title">{value.name}</h5>
+                            <h6
+                              className="card-title"
+                              value={value.description}
+                            >
+                              {truncateText(value.description, 70)}
+                            </h6>
+                            <p className="card-text">{value.price}</p>
+                            <p className="card-text">{value.avgRating}</p>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </>
+          <div class="stage">
+            <div class="container">
+              <div class="ring">
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+                <div class="img"></div>
+              </div>
+            </div>
+            {/* slideshow end */}
+          </div>
 
-        {/* manasi pls decorate */}
+          {/* manasi pls decorate */}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

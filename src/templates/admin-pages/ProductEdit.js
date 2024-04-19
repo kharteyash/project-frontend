@@ -13,7 +13,8 @@ import {
   Radio,
   Typography,
 } from "@mui/material";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function EditDetailsDialog(props) {
@@ -57,12 +58,8 @@ function EditDetailsDialog(props) {
           credentials: "include",
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to update details");
-      }
-
-      const data = await response.json();
+      const updateDetails = await response.json();
+      toast.success(updateDetails?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -274,7 +271,8 @@ export default function ProductEdit() {
           credentials: "include",
         }
       );
-      const data = await response.json();
+      const deleteReview = await response.json();
+      toast.success(deleteReview?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -306,6 +304,19 @@ export default function ProductEdit() {
 
   return (
     <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
       <div>
         <button onClick={() => handleEditDetails()}>Edit Details</button>
         <button onClick={() => handleDeleteDetails()}>Delete Product</button>

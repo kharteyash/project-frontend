@@ -16,7 +16,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Wishlist() {
   const [allWishlist, setAllWishlist] = useState({});
   const wishlist = async () => {
@@ -43,7 +44,6 @@ export default function Wishlist() {
   }, []);
 
   const moveToCart = async (event, data) => {
-    console.log("data",data)
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/wishlist/${data?._id}/moveToCart`,
@@ -52,15 +52,11 @@ export default function Wishlist() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const itemMove = await response.json();
-      console.log("item deleted", itemMove);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
+      toast.success(itemMove?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -68,7 +64,7 @@ export default function Wishlist() {
   };
 
   const handleDeleteItem = async (event, data) => {
-    console.log("data",data?._id)
+    console.log("data", data?._id);
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/wishlist/${data?._id}/removeItem`,
@@ -77,15 +73,11 @@ export default function Wishlist() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const itemDelete = await response.json();
-      console.log("user deleted", itemDelete);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
+      toast.success(itemDelete?.message)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -96,11 +88,16 @@ export default function Wishlist() {
     {
       accessorKey: "image",
       header: "Image",
-      Cell:({row}) =>(
+      Cell: ({ row }) => (
         <>
-          <img src={row?.original?.image} height={"100px"} width={"100px"} style={{objectFit:"cover"}} />
+          <img
+            src={row?.original?.image}
+            height={"100px"}
+            width={"100px"}
+            style={{ objectFit: "cover" }}
+          />
         </>
-      )
+      ),
     },
     {
       accessorKey: "name",
@@ -116,13 +113,11 @@ export default function Wishlist() {
       Cell: ({ row }) => (
         <>
           <IconButton>
-            <DeleteIcon
-            onClick={(e) => handleDeleteItem(e, row?.original)}
-            />
+            <DeleteIcon onClick={(e) => handleDeleteItem(e, row?.original)} />
           </IconButton>
           <IconButton>
             <ShoppingCartCheckoutIcon
-            onClick={(e) => moveToCart(e, row?.original)}
+              onClick={(e) => moveToCart(e, row?.original)}
             />
           </IconButton>
         </>
@@ -131,6 +126,19 @@ export default function Wishlist() {
   ];
   return (
     <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
       {allWishlist?.data && (
         <WMTable
           columns={columns}

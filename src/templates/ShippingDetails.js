@@ -81,9 +81,7 @@ export default function ShippingInfo() {
           credentials: "include",
         }
       );
-
       const data = await response.json();
-      console.log(data);
       navigate("/paymentInfo");
     } catch (error) {
       console.error("Error:", error);

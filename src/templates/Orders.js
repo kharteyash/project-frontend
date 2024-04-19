@@ -3,15 +3,14 @@ import WMTable from "../ui-components/table";
 import { IP } from "./constants";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCardIcon from "@mui/icons-material/AddCard";
-import {IconButton} from "@mui/material"
+import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 export default function Orders() {
-  const [myOrders, setMyOrders] = useState({});
-  const [myAllOrders, setMyAllOrders] = useState({});
-  const getMyOrders = async () => {
+  const [userDetails, setUserDetails] = useState({});
+  const details = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/users/view/orders`, {
+      const response = await fetch(`http://${IP}:5000/api/users/get-details`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -19,6 +18,34 @@ export default function Orders() {
         // body: JSON.stringify(details),
         credentials: "include",
       });
+
+      const data = await response.json();
+      setUserDetails(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const role = userDetails?.data?.role;
+
+  const [myOrders, setMyOrders] = useState({});
+  const [myAllOrders, setMyAllOrders] = useState({});
+
+  const handleBuyAgain = (orderId) => {
+    // navigate
+  };
+  const getMyOrders = async () => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/${role}s/view/orders`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setMyOrders(data);
     } catch (error) {
@@ -26,31 +53,25 @@ export default function Orders() {
     }
   };
 
-
   const getMyAllOrders = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/users/view/orders/history`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(details),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/${role}s/view/orders/history`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setMyAllOrders(data);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  useEffect(() => {
-    getMyOrders();
-    getMyAllOrders();
-  }, []);
-
-  const handleBuyAgain = (orderId) => {
-    // navigate
-  }
 
   const columns = [
     {
@@ -75,11 +96,14 @@ export default function Orders() {
     {
       header: "Check Status",
       Cell: ({ row }) => (
-        <>{row?.original?.orderStatus === 'Placed' ? 
+        <>
+          {row?.original?.orderStatus === "Placed" ? (
             <IconButton value={"Check Order Status"}>
               <ArrowCircleRightIcon />
             </IconButton>
-            : ''}
+          ) : (
+            ""
+          )}
         </>
       ),
     },
@@ -106,15 +130,27 @@ export default function Orders() {
     {
       header: "Buy Again",
       Cell: ({ row }) => (
-        <>{row?.original?.orderStatus === 'Delivered' ? 
+        <>
+          {row?.original?.orderStatus === "Delivered" ? (
             <IconButton value={"Pending Payment"}>
-              <AddCardIcon onClick={()=>handleBuyAgain(row?.original?._id)}/>
+              <AddCardIcon onClick={() => handleBuyAgain(row?.original?._id)} />
             </IconButton>
-            : ''}
+          ) : (
+            ""
+          )}
         </>
       ),
     },
   ];
+
+  useEffect(() => {
+    details();
+  }, []);
+
+  useEffect(() => {
+    getMyOrders();
+    getMyAllOrders();
+  }, [role]);
 
   return (
     <div>
