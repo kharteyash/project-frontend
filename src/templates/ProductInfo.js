@@ -78,6 +78,7 @@ export default function ProductInfo() {
   const productId = location?.state;
   const [productInfo, setProductInfo] = useState({});
   const [reviews, setReviews] = useState({});
+  const [aprioriRecommendation, setAprioriRecommendation] = useState({});
   const [seeReview, setSeeReview] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const product = async () => {
@@ -137,13 +138,32 @@ export default function ProductInfo() {
     }
   };
 
+  const apriori = async () => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/products/products/${productId}}/recommendation/freqBuy`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      setAprioriRecommendation(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
     product();
     review();
+    apriori();
   }, []);
 
   const handleAddToCart = async () => {
-    console.log("productId", productId);
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/products/${productId}/addToCart`,

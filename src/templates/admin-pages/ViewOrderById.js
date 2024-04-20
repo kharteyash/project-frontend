@@ -175,8 +175,10 @@ export default function ViewOrderById() {
               );
             })}
           </Menu>
-          <button onClick={() => handleCompleteOrder()}>Order Completed</button>
         </>
+      )}
+      {order?.orderStatus === "Approved" && (
+        <button onClick={() => handleCompleteOrder()}>Complete Order</button>
       )}
     </>
   );

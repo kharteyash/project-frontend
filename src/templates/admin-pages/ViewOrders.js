@@ -17,6 +17,8 @@ import {
 export default function ViewOrders() {
   const navigate = useNavigate();
   const [placedOrders, setPlacedOrders] = useState({});
+  const [approvedOrders, setApprovedOrders] = useState({});
+  const [shippedOrders, setShippedOrders] = useState({});
   const [deliveredOrders, setDeliveredOrders] = useState({});
 
   const getPlacedOrders = async () => {
@@ -31,6 +33,39 @@ export default function ViewOrders() {
       });
       const data = await response.json();
       setPlacedOrders(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getShippedOrders = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/shipping`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(details),
+        credentials: "include",
+      });
+      const data = await response.json();
+      setShippedOrders(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const getApprovedOrders = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/approved`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(details),
+        credentials: "include",
+      });
+      const data = await response.json();
+      setApprovedOrders(data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -54,6 +89,8 @@ export default function ViewOrders() {
   };
   useEffect(() => {
     getPlacedOrders();
+    getShippedOrders();
+    getApprovedOrders();
     getDeliveredOrders();
   }, []);
 
@@ -112,6 +149,24 @@ export default function ViewOrders() {
             data={placedOrders?.data}
             columns={columns}
             tableTitle={"Placed Orders"}
+          />
+        </>
+      )}
+      {shippedOrders?.data && (
+        <>
+          <WMTable
+            data={shippedOrders?.data}
+            columns={columns}
+            tableTitle={"Shipped Orders"}
+          />
+        </>
+      )}
+      {approvedOrders?.data && (
+        <>
+          <WMTable
+            data={approvedOrders?.data}
+            columns={columns}
+            tableTitle={"Approved Orders"}
           />
         </>
       )}
