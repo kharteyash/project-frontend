@@ -178,7 +178,7 @@ export default function ViewOrderById() {
           <button onClick={() => handleCompleteOrder()}>Complete Order</button>
         </>
       )}
-      {order?.orderStatus === "Approved" && (
+      {order?.orderStatus === "Approved" && (<></>
       )}
     </>
   );
