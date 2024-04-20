@@ -77,7 +77,7 @@ export default function Wishlist() {
         }
       );
       const itemDelete = await response.json();
-      toast.success(itemDelete?.message)
+      toast.success(itemDelete?.message);
     } catch (error) {
       console.error("Error:", error);
     }

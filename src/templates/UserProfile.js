@@ -25,11 +25,11 @@ export default function UserProfile() {
   useEffect(() => {
     details();
   }, []);
-console.log("details",userDetails)
   return (
     <div>
       <div>
-        <h1>Welcome {userDetails?.data?.firstName} {userDetails?.data?.lastName} !
+        <h1>
+          Welcome {userDetails?.data?.firstName} {userDetails?.data?.lastName} !
         </h1>
       </div>
       <ProfilePage />

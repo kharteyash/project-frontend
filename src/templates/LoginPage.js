@@ -45,9 +45,9 @@ export default function LoginForm() {
 
       const data = await response.json();
       setUserDetails(data);
-        details();
-        navigate("/home", { userDetails });
-        window.location.reload();
+      details();
+      navigate("/home", { userDetails });
+      window.location.reload();
     } catch (error) {
       console.error("Error:", error);
     }

@@ -204,12 +204,12 @@ export default function RecommendationPage() {
     }
   };
   const truncateText = (text, maxLength) => {
-      if (!text) return "";
-      if (text.length <= maxLength) {
-        return text;
-      }
-      return text.substring(0, maxLength) + "...";
+    if (!text) return "";
+    if (text.length <= maxLength) {
+      return text;
     }
+    return text.substring(0, maxLength) + "...";
+  };
 
   const openProductInfo = (productId) => {
     if (productId) {
@@ -433,7 +433,10 @@ export default function RecommendationPage() {
                     />
                     <div className="card-body">
                       <h5 className="card-title">{value.product.name}</h5>
-                      <h6 className="card-title" value={value.product.description}>
+                      <h6
+                        className="card-title"
+                        value={value.product.description}
+                      >
                         {truncateText(value.product.description, 70)}
                       </h6>
                       <p className="card-text">{value.product.price}</p>
@@ -471,7 +474,10 @@ export default function RecommendationPage() {
                     />
                     <div className="card-body">
                       <h5 className="card-title">{value.product.name}</h5>
-                      <h6 className="card-title" value={value.product.description}>
+                      <h6
+                        className="card-title"
+                        value={value.product.description}
+                      >
                         {truncateText(value.product.description, 70)}
                       </h6>
                       <p className="card-text">{value.product.price}</p>
@@ -509,7 +515,10 @@ export default function RecommendationPage() {
                     />
                     <div className="card-body">
                       <h5 className="card-title">{value.product.name}</h5>
-                      <h6 className="card-title" value={value.product.description}>
+                      <h6
+                        className="card-title"
+                        value={value.product.description}
+                      >
                         {truncateText(value.product.description, 70)}
                       </h6>
                       <p className="card-text">{value.product.price}</p>

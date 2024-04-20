@@ -15,7 +15,7 @@ export default function PaymentInfo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-        paymentMethod,
+      paymentMethod,
     };
     try {
       const response = await fetch(`http://${IP}:5000/api/users/buy/products`, {
@@ -65,7 +65,7 @@ export default function PaymentInfo() {
             </RadioGroup>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Submit" />
           </Grid>
         </Grid>
       </form>

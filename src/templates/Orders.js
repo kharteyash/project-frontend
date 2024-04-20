@@ -16,7 +16,6 @@ export default function Orders() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
 
@@ -41,7 +40,6 @@ export default function Orders() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
       const data = await response.json();
@@ -60,7 +58,6 @@ export default function Orders() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -80,7 +77,6 @@ export default function Orders() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -100,7 +96,6 @@ export default function Orders() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -117,7 +112,6 @@ export default function Orders() {
 
   const columns = [
     {
-      // accessorKey: "product.image",
       header: "Items",
       Cell: ({ row }) => (
         <>

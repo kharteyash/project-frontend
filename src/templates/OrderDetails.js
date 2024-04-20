@@ -6,10 +6,9 @@ import { TextField } from "@mui/material";
 
 export default function OrderDetails() {
   const location = useLocation();
-  console.log("locatiojn", location?.state);
   const details = location?.state?.details;
   const role = location?.state?.role;
-    const [enterOTP, setEnterOTP] = useState();
+  const [enterOTP, setEnterOTP] = useState();
   const handleSendOTP = async () => {
     try {
       const response = await fetch(
@@ -29,10 +28,10 @@ export default function OrderDetails() {
     }
   };
 
-  const handleVerifyOTP = async() => {
+  const handleVerifyOTP = async () => {
     const formData = {
-        otp: enterOTP,
-    }
+      otp: enterOTP,
+    };
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/orders/${details?._id}/verifyOTP`,
@@ -62,7 +61,7 @@ export default function OrderDetails() {
             </h1>
             <h1>{details?.shippingInfo?.phoneNo}</h1>
           </>
-        )}  
+        )}
         <h2>Items Ordered :</h2>
         {details?.orderItems?.map((value, index) => {
           return (
@@ -96,8 +95,8 @@ export default function OrderDetails() {
       {role === "employee" && (
         <>
           <button onClick={() => handleSendOTP()}>Send OTP</button>
-          <TextField onChange={(e)=>setEnterOTP(e.target.value)}/>
-          <button onClick={()=>handleVerifyOTP()}>Verify OTP</button>
+          <TextField onChange={(e) => setEnterOTP(e.target.value)} />
+          <button onClick={() => handleVerifyOTP()}>Verify OTP</button>
         </>
       )}
     </div>

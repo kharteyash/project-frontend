@@ -151,7 +151,6 @@ export default function Cart() {
       header: "Product Name",
     },
     {
-      // accessorKey: "quantity",
       header: "Quantity",
       Cell: ({ row }) => (
         <>
@@ -193,11 +192,6 @@ export default function Cart() {
               onClick={(e) => handleDeleteItem(e, row?.original?.product?._id)}
             />
           </IconButton>
-          {/* <IconButton>
-            <ShoppingCartCheckoutIcon
-            // onClick={(e) => moveToCart(e, row?.original)}
-            />
-          </IconButton> */}
         </>
       ),
     },

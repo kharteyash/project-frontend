@@ -197,6 +197,7 @@ export default function HomePage() {
                 <h3>Top 5 products in our store</h3>
                 <div className="d-flex flex-wrap justify-content-center align-items-center">
                   {top5Recommendation?.data?.map((value, index) => {
+                    if (!value) return null;
                     return (
                       <>
                         <div
