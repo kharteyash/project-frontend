@@ -219,10 +219,6 @@ export default function RecommendationPage() {
     }
   };
 
-  // useEffect(() => {
-  //   // exercises();
-  // }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -261,6 +257,7 @@ export default function RecommendationPage() {
           <h3>Goal Gender</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {goalGenderRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -338,6 +335,7 @@ export default function RecommendationPage() {
           <h3>City country</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {cityCountryRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -376,6 +374,7 @@ export default function RecommendationPage() {
           <h3>Product goal</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {productGoalRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -414,6 +413,7 @@ export default function RecommendationPage() {
           <h3>prev purchase</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {prevPurchaseRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -455,6 +455,7 @@ export default function RecommendationPage() {
           <h3>prev search</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {prevSearchRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -496,6 +497,7 @@ export default function RecommendationPage() {
           <h3>recently viewed</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {recentlyViewRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -537,6 +539,7 @@ export default function RecommendationPage() {
           <h3>timeline</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {timelineRecommendation?.data?.lastMonth?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
@@ -574,6 +577,7 @@ export default function RecommendationPage() {
           <h3>Exercises for you</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {exerciseRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
               return (
                 <>
                   <div
