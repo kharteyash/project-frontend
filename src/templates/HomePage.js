@@ -82,7 +82,6 @@ export default function HomePage() {
       notifications();
     }
   }, [userDetails?.data]);
-  console.log("allNotifs", allNotifications);
   // <style>
   //   .css-hip9hq-MuiPaper-root-MuiAppBar-root {
 
@@ -96,7 +95,6 @@ export default function HomePage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -112,7 +110,7 @@ export default function HomePage() {
   }, []);
 
   const openProductInfo = (productId) => {
-    navigate(`/store/product/${productId}`, { state: productId });
+    navigate(`/store/product/${productId}`, { state: {productId, userDetails} });
   };
 
   const truncateText = (text, maxLength) => {
@@ -194,7 +192,7 @@ export default function HomePage() {
           <>
             {top5Recommendation?.data && (
               <>
-                <h3>Top 5 products in our store</h3>
+                <h3>Top products in our store</h3>
                 <div className="d-flex flex-wrap justify-content-center align-items-center">
                   {top5Recommendation?.data?.map((value, index) => {
                     if (!value) return null;

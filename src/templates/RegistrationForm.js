@@ -15,6 +15,38 @@ export default function RegistrationForm() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (
+      !userName ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !cpassword
+    ) {
+      alert("Please fill in all fields");
+      return;
+    }
+    if (password !== cpassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+  const lettersOnlyRegex = /^[a-zA-Z]+$/;
+  const userNameRegex = /^[a-zA-Z]/;
+  if (!userNameRegex.test(userName)) {
+    alert("Enter valid User Name");
+    return;
+  }
+
+  if (!lettersOnlyRegex.test(firstName)) {
+    alert("First name should contain only letters");
+    return;
+  }
+
+  if (!lettersOnlyRegex.test(lastName)) {
+    alert("Last name should contain only letters");
+    return;
+  }
 
     const formData = {
       userName,
@@ -58,7 +90,6 @@ export default function RegistrationForm() {
             <Grid item xs={12} class="ip_bx">
               <input
                 type="text"
-                // placeholder="Enter Username"
                 id="userName"
                 name="userName"
                 fullWidth
@@ -69,7 +100,6 @@ export default function RegistrationForm() {
             <Grid item xs={12} class="ip_bx">
               <input
                 type="text"
-                // placeholder="Enter First name"
                 id="firstName"
                 name="firstName"
                 fullWidth
@@ -80,7 +110,6 @@ export default function RegistrationForm() {
             <Grid item xs={12} class="ip_bx">
               <input
                 type="text"
-                // placeholder="Enter last name"
                 id="lastName"
                 name="lastName"
                 fullWidth
@@ -91,7 +120,6 @@ export default function RegistrationForm() {
             <Grid item xs={12} class="ip_bx">
               <input
                 type="email"
-                // placeholder="Enter email"
                 id="email"
                 name="email"
                 fullWidth
@@ -101,7 +129,6 @@ export default function RegistrationForm() {
             </Grid>
             <Grid item xs={12} class="ip_bx">
               <input
-                // placeholder="Enter Password"
                 id="password"
                 name="password"
                 type="password"
@@ -112,7 +139,6 @@ export default function RegistrationForm() {
             </Grid>
             <Grid item xs={12} class="ip_bx">
               <input
-                // placeholder="Enter Confirm Password"
                 name="cpassword"
                 type="password"
                 fullWidth

@@ -19,7 +19,6 @@ export default function LoginForm() {
         },
         credentials: "include",
       });
-
       const data = await response.json();
     } catch (error) {
       console.error("Error:", error);
@@ -28,7 +27,6 @@ export default function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = {
       userName,
       password,
@@ -42,12 +40,15 @@ export default function LoginForm() {
         body: JSON.stringify(formData),
         credentials: "include",
       });
-
-      const data = await response.json();
-      setUserDetails(data);
-      details();
-      navigate("/home", { userDetails });
-      window.location.reload();
+      if (response.ok) {
+        const data = await response.json();
+        setUserDetails(data);
+        details();
+        navigate("/home");
+        window.location.reload();
+      } else {
+        alert("Incorrect username or password");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -68,7 +69,6 @@ export default function LoginForm() {
               <Grid item xs={12} class="ip_bx">
                 <input
                   type="text"
-                  // placeholder="Enter Username"
                   id="userName"
                   name="username"
                   fullWidth
@@ -78,7 +78,6 @@ export default function LoginForm() {
               </Grid>
               <Grid item xs={12} class="ip_bx">
                 <input
-                  // placeholder="Enter Password"
                   id="password"
                   name="password"
                   type="password"

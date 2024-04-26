@@ -11,9 +11,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 
-function ImageDialog({ open, imageId, imageURL, onClose }) {
-
+function ImageDialog({ open, imageId, imageURL, onClose, images }) {
   const handleDeleteImage = async () => {
     try {
       const response = await fetch(
@@ -29,10 +29,7 @@ function ImageDialog({ open, imageId, imageURL, onClose }) {
       );
 
       const imageDelete = await response.json();
-      console.log("image deleted", imageDelete);
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
+      images();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -42,16 +39,19 @@ function ImageDialog({ open, imageId, imageURL, onClose }) {
     <Dialog open={open} onClose={onClose}>
       <div style={{ textAlign: "center" }}>
         <div className="dialog-content">
-          <span className="close" >
-            &times;
+          <span className="close">
+            <CancelPresentationIcon style={{ color: "red", margin: "2px" }} />
           </span>
           <img
             src={imageURL}
             alt="Selected Image"
-            style={{ maxWidth: "100%", maxHeight: "100%" }}
+            style={{ maxWidth: "100%", maxHeight: "100%", padding: "2px" }}
           />
         </div>
-        <DeleteIcon onClick={() =>handleDeleteImage()} />
+        <DeleteIcon
+          onClick={() => handleDeleteImage()}
+          style={{ color: "#0083f9", margin: "3px" }}
+        />
       </div>
     </Dialog>
   );
@@ -59,9 +59,9 @@ function ImageDialog({ open, imageId, imageURL, onClose }) {
 
 export default function AddImages() {
   const [allImages, setAllImages] = useState({});
-  const [selectedImage, setSelectedImage] = useState(null); // State to track the selected image
+  const [selectedImage, setSelectedImage] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const [imageURL, setImageURL] = useState();
   const images = async () => {
@@ -92,37 +92,40 @@ export default function AddImages() {
   };
 
   const handleCloseImage = () => {
-    setSelectedImage(null); // Clear the selected image URL
-    setOpenDialog(false); // Close the dialog box
+    setSelectedImage(null);
+    setOpenDialog(false);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const form = e.target;
     const formData = new FormData(form);
-    
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/gallery/addImage`, {
-        method: 'POST',
-        body: formData
-      });
-      
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/gallery/addImage`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const data = await response.json();
-      
-      if (response.ok) {
-        setMessage(data.message);
-      } else {
-        throw new Error(data.error.message);
-      }
+      images();
     } catch (error) {
       setMessage(`Error: ${error.message}`);
     }
   };
 
-
   return (
-    <div>
-      <div className="d-flex flex-wrap justify-content-center align-items-center">
+    <div
+      style={{
+        background: "linear-gradient(45deg , #0bd2de , #0083f9)",
+        border: "1px solid #0083f9",
+      }}
+    >
+      <div
+        className="d-flex flex-wrap justify-content-center align-items-center"
+        style={{ marginTop: "20px" }}
+      >
         {allImages?.data?.map((value, index) => {
           return (
             <div
@@ -132,6 +135,10 @@ export default function AddImages() {
                 height: "200px",
                 overflow: "hidden",
                 cursor: "pointer",
+                padding: "1px",
+                margin: "13px",
+                borderRadius: "10px",
+                boxShadow: "0px 9px 30px -15px rgb(0 0 0)",
               }}
               onClick={() => handleOpenImage(value?._id, value?.imgurl)}
             >
@@ -143,6 +150,7 @@ export default function AddImages() {
                   objectFit: "cover",
                   width: "300px",
                   height: "200px",
+                  borderRadius: "10px",
                 }}
               />
             </div>
@@ -155,15 +163,59 @@ export default function AddImages() {
           imageId={selectedImage}
           imageURL={imageURL}
           onClose={handleCloseImage}
+          images={images}
         />
       )}
-      <div>
-      <form id="imageUploadForm" onSubmit={handleSubmit}>
-        <input type="file" name="image" accept="image/*" />
-        <button type="submit">Submit</button>
-      </form>
-      <div id="message">{message}</div>
-    </div>
+      <div style={{ height: "100px" }}>
+        <form
+          id="imageUploadForm"
+          onSubmit={handleSubmit}
+          style={{
+            width: "30%",
+            display: "flex",
+            marginLeft: "auto",
+            marginRight: "auto",
+            padding: "10px",
+            marginTop: "10px",
+            height: "60px",
+          }}
+        >
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            style={{
+              border: "1px solid white",
+              marginRight: "20px",
+              height: "40px",
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              height: "40px",
+              borderRadius: "7px",
+              boxShadow: "0px 9px 30px -15px rgb(1 1 1)",
+              background: "linear-gradient(45deg , #0bd2de , #0083f9)",
+              color: "white",
+              border: "none",
+            }}
+          >
+            Submit
+          </button>
+        </form>
+        <div
+          id="message"
+          style={{
+            width: "30%",
+            marginLeft: "auto",
+            marginRight: "auto",
+            textAlign: "center",
+          }}
+        >
+          {message}
+        </div>
+      </div>
     </div>
   );
 }
