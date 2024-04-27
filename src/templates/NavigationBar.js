@@ -49,6 +49,7 @@ import ContactUS from "./ContactUS";
 import ViewGrievance from "./admin-pages/ViewGrievance";
 import GrievanceDetails from "./admin-pages/GrievanceDetails";
 import OrderDetails from "./OrderDetails";
+import PushUpDetector from "./exercises/Pushup";
 
 export default function NavigationBar() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -67,7 +68,6 @@ export default function NavigationBar() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
 
@@ -120,7 +120,6 @@ export default function NavigationBar() {
             ) : (
               <></>
             )}
-
             {(userDetails?.data?._id && userDetails?.data?.role === "admin") ||
             (userDetails?.data?._id &&
               userDetails?.data?.role === "superadmin") ? (
@@ -239,6 +238,7 @@ export default function NavigationBar() {
           <Route path="/view-grievance" element={<ViewGrievance />} />
           <Route path="/grievance-details/:id" element={<GrievanceDetails />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
+          {/* <Route path="/exercises/pushup" element={<PushUpDetector />} /> */}
         </Routes>
       </Router>
     </>

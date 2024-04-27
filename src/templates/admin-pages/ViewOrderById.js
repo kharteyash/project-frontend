@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import "../../templates/css/OrderDetail.css";
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import {
   Typography,
@@ -109,77 +114,103 @@ export default function ViewOrderById() {
     }
   };
   return (
-    <>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition="Bounce"
-      />
-      <div>
-        <h1>
-          Name : {order?.user?.firstName} {order?.user?.lastName}
-        </h1>
-        <h1>{order?.shippingInfo?.phoneNo}</h1>
-        <h2>Items Ordered :</h2>
-        {order?.orderItems?.map((value, index) => {
-          return (
-            <>
-              <h3>
-                {value?.name}
-                {" | "}
-                {"Price : "}
-                {value?.netprice}
-              </h3>
-            </>
-          );
-        })}
-        <h3>
-          <br></br>
-          Final Price (including gst) : <CurrencyRupeeIcon />
-          {order?.subtotalPrice}
-        </h3>
+    <div id="cont">
+      <>
+        <ToastContainer
+          position="bottom-left"
+          autoClose={1000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition="Bounce"
+        />
+        <div id="card-body">
+          <Card id="card">
+            <Typography variant="h4" color="#0083f9" padding="10px">
+              {order?.user?.firstName} {order?.user?.lastName}
+            </Typography>
 
-        <h3>Order Status : {orderById?.data?.orderStatus}</h3>
-        <h3>Payment method : {order?.paymentMethod}</h3>
-        <br></br>
-        <h2>Shipping Info :</h2>
-        <h5>Address : {order?.shippingInfo?.address}</h5>
-        <h5>City : {order?.shippingInfo?.city}</h5>
-        <h5>Pincode : {order?.shippingInfo?.pincode}</h5>
-        <h5>State : {order?.shippingInfo?.state}</h5>
-        <h5>country : {order?.shippingInfo?.country}</h5>
-      </div>
-      {order?.orderStatus === "Placed" && (
-        <>
-          <button onClick={(e) => handleOpenMenu(e)}>
-            Assign Delivery Person
-          </button>
-          <Menu
-            anchorEl={menuAnchorEl}
-            open={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-          >
-            {delboyData?.data?.map((value, index) => {
-              return (
-                <MenuItem onClick={() => handleAssignOrder(value?._id)}>
-                  {value?.userName}
-                </MenuItem>
-              );
-            })}
-          </Menu>
-          <button onClick={() => handleCompleteOrder()}>Complete Order</button>
-        </>
-      )}
-      {order?.orderStatus === "Approved" && (<></>
-      )}
-    </>
+            <Typography color="#1e89e7" paddingLeft="10px">
+              Order No: {order?.shippingInfo?.phoneNo}
+            </Typography>
+            <div id="items">
+              <Typography variant="body1">Items Ordered :</Typography>
+
+              {order?.orderItems?.map((value, index) => {
+                return (
+                  <>
+                    <Typography variant="body1">
+                      {value?.name}
+                      {" | "}
+                      {"Price : "}
+                      {value?.netprice}
+                    </Typography>
+                  </>
+                );
+              })}
+            </div>
+            <div id="psp">
+              <Typography variant="body1">
+                <br></br>
+                Final Price (including gst) : <CurrencyRupeeIcon />
+                {order?.subtotalPrice}
+              </Typography>
+
+              <Typography variant="body1">
+                Order Status : {orderById?.data?.orderStatus}
+              </Typography>
+              <Typography variant="body1">
+                Payment method : {order?.paymentMethod}
+              </Typography>
+            </div>
+
+            <br></br>
+            <Divider color="#333" />
+            <div id="shipinfo">
+              <Typography>Shipping Info :</Typography>
+              <Typography>
+                Address : {order?.shippingInfo?.address}
+                <br />
+                City : {order?.shippingInfo?.city}
+                <br />
+                Pincode : {order?.shippingInfo?.pincode}
+                <br />
+                State : {order?.shippingInfo?.state}
+                <br />
+                Country : {order?.shippingInfo?.country}
+              </Typography>
+            </div>
+          </Card>
+        </div>
+        {order?.orderStatus === "Placed" && (
+          <>
+            <button onClick={(e) => handleOpenMenu(e)}>
+              Assign Delivery Person
+            </button>
+            <Menu
+              anchorEl={menuAnchorEl}
+              open={isMenuOpen}
+              onClose={() => setIsMenuOpen(false)}
+            >
+              {delboyData?.data?.map((value, index) => {
+                return (
+                  <MenuItem onClick={() => handleAssignOrder(value?._id)}>
+                    {value?.userName}
+                  </MenuItem>
+                );
+              })}
+            </Menu>
+            <button onClick={() => handleCompleteOrder()}>
+              Order Completed
+            </button>
+          </>
+        )}
+      </>
+    </div>
   );
 }

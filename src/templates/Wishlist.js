@@ -29,7 +29,6 @@ export default function Wishlist() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -94,7 +93,11 @@ export default function Wishlist() {
             src={row?.original?.image}
             height={"100px"}
             width={"100px"}
-            style={{ objectFit: "cover" }}
+            style={{
+              objectFit: "cover",
+              borderRadius: "10px",
+              boxShadow: "0px 9px 30px -15px rgb(0 0 0)",
+            }}
           />
         </>
       ),
@@ -112,14 +115,20 @@ export default function Wishlist() {
       accessorKey: "actions",
       Cell: ({ row }) => (
         <>
-          <IconButton>
-            <DeleteIcon onClick={(e) => handleDeleteItem(e, row?.original)} />
-          </IconButton>
-          <IconButton>
-            <ShoppingCartCheckoutIcon
-              onClick={(e) => moveToCart(e, row?.original)}
-            />
-          </IconButton>
+          <div style={{}}>
+            <IconButton>
+              <DeleteIcon
+                onClick={(e) => handleDeleteItem(e, row?.original)}
+                style={{ color: "#0bd2de" }}
+              />
+            </IconButton>
+            <IconButton>
+              <ShoppingCartCheckoutIcon
+                onClick={(e) => moveToCart(e, row?.original)}
+                style={{ color: "#0083f9" }}
+              />
+            </IconButton>
+          </div>
         </>
       ),
     },
@@ -139,13 +148,16 @@ export default function Wishlist() {
         theme="dark"
         transition="Bounce"
       />
-      {allWishlist?.data && (
-        <WMTable
-          columns={columns}
-          data={allWishlist?.data}
-          tableTitle={"Wishlist"}
-        />
-      )}
+      <div style={{ background: "blue" }}>
+        {allWishlist?.data && (
+          <WMTable
+            sx={{ color: "pink" }}
+            columns={columns}
+            data={allWishlist?.data}
+            tableTitle={"Wishlist"}
+          />
+        )}
+      </div>
     </>
   );
 }

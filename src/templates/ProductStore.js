@@ -16,9 +16,25 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function ProductStore() {
   const navigate = useNavigate();
+  const [userDetails, setUserDetails] = useState({});
   const [allProducts, setAllProducts] = useState({});
   const [searchItem, setSearchItem] = useState("");
   const [pageNo, setPageNo] = useState(1);
+  const details = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/users/get-details`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await response.json();
+      setUserDetails(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   const products = async () => {
     try {
       const response = await fetch(
@@ -60,9 +76,15 @@ export default function ProductStore() {
     products();
   }, [searchItem, pageNo]);
 
-  const openProductInfo = (productId) => {
+  useEffect(()=>{
+    details();
+  },[])
+
+  const openProductInfo = (value) => {
+    const productId = value?._id;
+    console.log("productId",productId)
     if (productId) {
-      navigate(`product/${productId}`, { state: productId });
+      navigate(`product/${productId}`, { state: { productId, value } });
     } else {
       console.error("Product name is empty or invalid.");
     }
@@ -165,6 +187,9 @@ export default function ProductStore() {
   };
 
   return (
+
+    
+    
     <>
       <ToastContainer
         position="bottom-left"
@@ -179,12 +204,29 @@ export default function ProductStore() {
         theme="dark"
         transition="Bounce"
       />
-      <TextField
-        onChange={(e) => setSearchItem(e.target.value)}
-        placeholder="Search"
-      />
-      <IconButton onClick={() => handleSearchItem()}>🔍</IconButton>
+      
       <div>
+      <>
+    <div class="text-center" >
+       <div id="cover">
+          <div class="tb">
+
+          <div class="td"><input type="text"
+          onChange={(e) => setSearchItem(e.target.value)}
+          style={{
+          borderRadius: "10px",border:"none" }}
+          placeholder="Search"/></div>
+
+          <div class="td" id="s-cover"><button onClick={() => handleSearchItem()}>
+            <div id="s-circle"></div>
+            <span id="ns"></span>
+          </button></div>
+    
+     
+          </div>{/tb ends/ }
+       </div>{/* cover ends*/}
+    </div>{/text centerends/}
+    </>
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           {allProducts?.data?.map((value, index) => {
             return (
@@ -192,11 +234,12 @@ export default function ProductStore() {
                 className="card m-3"
                 style={{
                   width: "18rem",
-                  height: "460px",
+                  height: "490px",
                   boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
                   borderRadius: "20px",
                   marginTop: "20px",
                   border: "1px solid lightgrey",
+                  
                 }}
               >
                 <img
@@ -231,7 +274,7 @@ export default function ProductStore() {
                     </IconButton>
                   )}
                   <h5 className="card-title">{value.name}</h5>
-                  <p className="card-title" value={value.description}>
+                  <p className="card-title" value={value.description} style={{height:"60px"}}>
                     {truncateText(value.description, 70)}
                   </p>
                   <h6 className="card-text">&#8360; {value.price}</h6>
@@ -247,6 +290,9 @@ export default function ProductStore() {
                         style={{
                           background:
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
+                            border:"none",
+                            boxShadow:"0px",
+                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)"
                         }}
                       >
                         Add to Cart
@@ -260,6 +306,8 @@ export default function ProductStore() {
                         style={{
                           background:
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
+                            border:"none",
+                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)"
                         }}
                       >
                         Remove from Cart
@@ -273,9 +321,9 @@ export default function ProductStore() {
         </div>
       </div>
       <div>
-        <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
-        <button onClick={() => handleNextPage()}>Next</button>
+        <button id="pg-btn" onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
+        <button id="pg-btn" onClick={() => handleNextPage()}>Next</button>
       </div>
-    </>
-  );
+    </>
+  );
 }

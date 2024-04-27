@@ -1,23 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { IP } from "../constants";
-import PropTypes from "prop-types";
 import WMTable from "../../ui-components/table";
-import DeleteIcon from "@mui/icons-material/Delete";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import Box from "@mui/material/Box";
 import {
-  Dialog,
-  DialogTitle,
-  Grid,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
 } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router-dom";
-
 
 export default function AllUsers() {
   const [allUserDetails, setAllUserDetails] = useState({});
@@ -29,7 +18,6 @@ export default function AllUsers() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
       const data = await response.json();
@@ -69,7 +57,7 @@ export default function AllUsers() {
       accessorKey: "actions",
       Cell: ({ row }) => (
         <>
-          <IconButton>
+          <IconButton style={{ color: "#3498DB" }}>
             <ArrowCircleRightIcon
               onClick={() => handleOpenUserDetails(row?.original)}
             />
@@ -80,16 +68,29 @@ export default function AllUsers() {
   ];
 
   return (
-    <div>
+    <Box
+      sx={{ flexGrow: 1 }}
+      style={{
+        background: "linear-gradient(45deg , #0bd2de , #0083f9)",
+        justifyContent: "center",
+        display: "flex",
+        height: "100%",
+        width: "100%",
+        padding: "20px",
+        marginTop: "-1px",
+      }}
+    >
       {allUserDetails?.data && (
         <>
-          <WMTable
-            columns={columns}
-            data={allUserDetails?.data}
-            tableTitle={"All Users"}
-          />
+          <div style={{ width: "95%" }}>
+            <WMTable
+              columns={columns}
+              data={allUserDetails?.data}
+              tableTitle={"All Users"}
+            />
+          </div>
         </>
       )}
-    </div>
+    </Box>
   );
 }

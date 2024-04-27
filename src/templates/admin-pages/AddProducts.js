@@ -25,11 +25,11 @@ function AddProductDialog(props) {
   const [weight, setWeight] = useState(null);
   const [productGoal, setProductGoal] = useState(null);
   const [category, setCategory] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null); 
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
@@ -41,11 +41,14 @@ function AddProductDialog(props) {
     formData.append("image", selectedImage);
 
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/products/addProducts`, {
-        method: "POST",
-        body: formData,
-        credentials: "include", 
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/products/addProducts`,
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to Add product");
       }
@@ -62,73 +65,98 @@ function AddProductDialog(props) {
         <DialogTitle id="title">Add Product</DialogTitle>
         <form onSubmit={handleSubmit}>
           <div class="prodent">
-          <TextField
-            placeholder="Enter Product Name"
-            class="prod-detl"
-            id="name"
-            name="name"
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            placeholder="Enter Product price"
-            class="prod-detl"
-            id="price"
-            name="price"
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <TextField
-            placeholder="Enter Product Description"
-            class="prod-detl"
-            id="description"
-            name="description"
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <TextField
-            placeholder="Enter Product stock"
-            class="prod-detl"
-            id="stock"
-            name="stock"
-            onChange={(e) => setStock(e.target.value)}
-          />
-          <TextField
-            placeholder="Enter Product Weight"
-            class="prod-detl"
-            id="weight"
-            name="weight"
-            onChange={(e) => setWeight(e.target.value)}
-          />
+            <TextField
+              placeholder="Enter Product Name"
+              class="prod-detl"
+              id="name"
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              placeholder="Enter Product price"
+              class="prod-detl"
+              id="price"
+              name="price"
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            <TextField
+              placeholder="Enter Product Description"
+              class="prod-detl"
+              id="description"
+              name="description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <TextField
+              placeholder="Enter Product stock"
+              class="prod-detl"
+              id="stock"
+              name="stock"
+              onChange={(e) => setStock(e.target.value)}
+            />
+            <TextField
+              placeholder="Enter Product Weight"
+              class="prod-detl"
+              id="weight"
+              name="weight"
+              onChange={(e) => setWeight(e.target.value)}
+            />
           </div>
           <div class="rad">
-          <div class="goal">
-          <InputLabel>Product Goal</InputLabel>
-          <RadioGroup
-            aria-label="productGoal"
-            name="productGoal"
-            id="productGoal"
-            onChange={(e) => setProductGoal(e.target.value)}
-          >
-            <FormControlLabel value="bulk" control={<Radio />} label="bulk" />
-            <FormControlLabel value="cut" control={<Radio />} label="cut" />
-            <FormControlLabel value="lean" control={<Radio />} label="lean" />
-          </RadioGroup>
+            <div class="goal">
+              <InputLabel>Product Goal</InputLabel>
+              <RadioGroup
+                aria-label="productGoal"
+                name="productGoal"
+                id="productGoal"
+                onChange={(e) => setProductGoal(e.target.value)}
+              >
+                <FormControlLabel
+                  value="bulk"
+                  control={<Radio />}
+                  label="bulk"
+                />
+                <FormControlLabel value="cut" control={<Radio />} label="cut" />
+                <FormControlLabel
+                  value="lean"
+                  control={<Radio />}
+                  label="lean"
+                />
+              </RadioGroup>
+            </div>
+            <div class="cat">
+              <InputLabel>Product Category</InputLabel>
+              <RadioGroup
+                aria-label="category"
+                name="category"
+                id="category"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <FormControlLabel
+                  value="Eatables"
+                  control={<Radio />}
+                  label="Eatables"
+                />
+                <FormControlLabel
+                  value="Equipments"
+                  control={<Radio />}
+                  label="Equipments"
+                />
+                <FormControlLabel
+                  value="Accessories"
+                  control={<Radio />}
+                  label="Accessories"
+                />
+              </RadioGroup>
+            </div>
           </div>
-          <div class="cat">
-          <InputLabel>Product Category</InputLabel>
-          <RadioGroup
-            aria-label="category"
-            name="category"
-            id="category"
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <FormControlLabel value="Eatables" control={<Radio />} label="Eatables" />
-            <FormControlLabel value="Equipments" control={<Radio />} label="Equipments" />
-            <FormControlLabel value="Accessories" control={<Radio />} label="Accessories" />
-          </RadioGroup>
-          </div>
-          </div>
-          <input id="file" type="file" name="image" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} />
-          <input type="submit" value="Add Product"/>
-         
+          <input
+            id="file"
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={(e) => setSelectedImage(e.target.files[0])}
+          />
+          <input type="submit" value="Add Product" />
         </form>
       </Dialog>
     </>
@@ -143,13 +171,16 @@ export default function AddProducts() {
 
   const products = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/products?page=${pageNo}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/products?page=${pageNo}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setAllProducts(data);
     } catch (error) {
@@ -185,7 +216,7 @@ export default function AddProducts() {
   };
 
   const handleNextPage = () => {
-      setPageNo(pageNo + 1);
+    setPageNo(pageNo + 1);
   };
   const handlePrevPage = () => {
     if (pageNo > 1) {
@@ -200,12 +231,12 @@ export default function AddProducts() {
             return (
               <div
                 className="card m-3"
-                style={{ 
-                  width: "18rem", 
-                  height: "430px" ,
-                  borderRadius:"10px",
+                style={{
+                  width: "18rem",
+                  height: "430px",
+                  borderRadius: "10px",
                   boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
-                  border:"none"
+                  border: "none",
                 }}
               >
                 <img
@@ -216,7 +247,7 @@ export default function AddProducts() {
                     objectFit: "cover",
                     width: "300px",
                     height: "200px",
-                    borderRadius: "10px 10px 0px 0px"
+                    borderRadius: "10px 10px 0px 0px",
                   }}
                   onClick={() => openProductInfo(value._id)}
                 />
@@ -233,14 +264,20 @@ export default function AddProducts() {
           })}
         </div>
 
-        <button id="add-prd" onClick={() => handleOpenDialog()}>ADD PRODUCTS</button>
-      
-      <div class="btns">
-        <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
-        <button onClick={() => handleNextPage()}>Next</button>
+        <button id="add-prd" onClick={() => handleOpenDialog()}>
+          ADD PRODUCTS
+        </button>
+
+        <div class="btns">
+          <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
+          <button onClick={() => handleNextPage()}>Next</button>
+        </div>
+        <AddProductDialog
+          open={openDialog}
+          onClose={handleClose}
+          products={products}
+        />
       </div>
-      <AddProductDialog open={openDialog} onClose={handleClose} products={products}/>
-      </div>
-    </>
-  );
+    </>
+  );
 }

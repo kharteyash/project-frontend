@@ -6,7 +6,7 @@ import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
 
 export default function ViewGrievance() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [allGrievances, setAllGrievances] = useState();
 
   const viewAllGrievances = async () => {
@@ -28,21 +28,19 @@ export default function ViewGrievance() {
     }
   };
   useState(() => {
-      viewAllGrievances();
-    }, []);
+    viewAllGrievances();
+  }, []);
 
-    const handleOpenUserDetails = (data) => {
-        console.log("data",data)
-        navigate(`/grievance-details/${data?._id}`, {state:data?._id})
-    }
-    
+  const handleOpenUserDetails = (data) => {
+    navigate(`/grievance-details/${data?._id}`, { state: data?._id });
+  };
+
   const columns = [
     {
-    //   accessorKey: "user.firstName",
       header: "User Id",
-      Cell : ({row}) => (
+      Cell: ({ row }) => (
         <>
-            {row?.original?.user?.firstName}  {row?.original?.user?.lastName}
+          {row?.original?.user?.firstName} {row?.original?.user?.lastName}
         </>
       ),
     },
@@ -53,28 +51,46 @@ export default function ViewGrievance() {
     {
       accessorKey: "actions",
       header: "Actions",
-      Cell :({row}) =>(
+      Cell: ({ row }) => (
         <>
-            <IconButton>
+          <IconButton>
             <ArrowCircleRightIcon
+              style={{ color: "#0083f9" }}
               onClick={() => handleOpenUserDetails(row?.original)}
             />
-            </IconButton>
+          </IconButton>
         </>
-      )
+      ),
     },
-]
+  ];
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(45deg , #0bd2de , #0083f9)",
+        width: "100%",
+        height: "100%",
+        padding: "20px",
+        height: "100vh",
+      }}
+    >
       <>
-        {allGrievances && (
-          <WMTable
-            columns={columns}
-            data={allGrievances?.data}
-            tableTitle={"All Grievances"}
-          />
-        )}
+        <div
+          style={{
+            width: "80%",
+            margin: "auto",
+            marginTop: "20px",
+            boxShadow: "0px 9px 30px -15px rgb(0 0 0)",
+          }}
+        >
+          {allGrievances && (
+            <WMTable
+              columns={columns}
+              data={allGrievances?.data}
+              tableTitle={"All Grievances"}
+            />
+          )}
+        </div>
       </>
     </div>
   );

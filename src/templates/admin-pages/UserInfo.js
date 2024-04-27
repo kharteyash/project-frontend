@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useRouteError } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import "../../templates/css/Userp.css";
 import WMTable from "../../ui-components/table";
 import { IP } from "../constants";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,7 +20,6 @@ export default function UserInfo() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -118,22 +118,17 @@ export default function UserInfo() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
-
       const userDelete = await response.json();
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <div>
+    <div class="conti">
       <ToastContainer
         position="bottom-left"
         autoClose={1000}
@@ -146,40 +141,61 @@ export default function UserInfo() {
         pauseOnHover
         theme="dark"
         transition="Bounce"
+        style={{ border: "3px solid red" }}
       />
       <>
-        <h2>
-          Name : {userInfo?.firstName} {userInfo?.lastName} (
-          {userInfo?.userName})
-        </h2>
-        <h2>Email : {userInfo?.email}</h2>
-        <h3>Role : {userInfo?.role}</h3>
-        {!(userInfo?.role === "admin" || userInfo?.role === "superadmin") ? (
-          <button onClick={() => handleMakeAdmin()}>Make Admin</button>
-        ) : (
-          <button onClick={() => handleMakeUser()}>Make User</button>
-        )}
-        {userInfo?._id && (
-          <button onClick={() => handleDeleteUser()}>Delete User</button>
-        )}
-      </>
-      {userInfo?.orderHistory && (
-        <WMTable
-          data={userInfo?.orders}
-          tableTitle={"All Orders"}
-          columns={columns}
-        />
-      )}
+        <div class="udetail">
+          <div class="info">
+            <h2>
+              Name : {userInfo?.firstName} {userInfo?.lastName} (
+              {userInfo?.userName})
+            </h2>
+            <h2>Email : {userInfo?.email}</h2>
+            <h3>Role : {userInfo?.role}</h3>
+          </div>
 
-      {userInfo?.notifications && (
-        <WMTable
-          data={userInfo?.notifications}
-          tableTitle={"All Notifications"}
-          columns={notifColumns}
-        />
-      )}
-      <input type="text" />
-      <input type="submit" value={"Send Notification"} />
+          <div class="botns">
+            {!(
+              userInfo?.role === "admin" || userInfo?.role === "superadmin"
+            ) ? (
+              <button class="botn" onClick={() => handleMakeAdmin()}>
+                Make Admin
+              </button>
+            ) : (
+              <button class="botn" onClick={() => handleMakeUser()}>
+                Make User
+              </button>
+            )}
+            {userInfo?._id && (
+              <button class="botn" onClick={() => handleDeleteUser()}>
+                Delete User
+              </button>
+            )}
+          </div>
+        </div>
+      </>
+      <div class="all-orders">
+        {userInfo?.orderHistory && (
+          <WMTable
+            data={userInfo?.orders}
+            tableTitle={"All Orders"}
+            columns={columns}
+          />
+        )}
+      </div>
+      <div class="all-notifs">
+        {userInfo?.notifications && (
+          <WMTable
+            data={userInfo?.notifications}
+            tableTitle={"All Notifications"}
+            columns={notifColumns}
+          />
+        )}
+      </div>
+      <div class="notif">
+        <input id="notif-txt" type="text" />
+        <input id="butn" type="submit" value={"Send Notification"} />
+      </div>
     </div>
   );
 }

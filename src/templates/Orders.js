@@ -7,7 +7,7 @@ import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
 export default function Orders() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
   const details = async () => {
     try {
@@ -30,9 +30,25 @@ export default function Orders() {
   const [myOrders, setMyOrders] = useState({});
   const [myAllOrders, setMyAllOrders] = useState({});
 
-  const handleBuyAgain = (orderId) => {
-    // navigate
+  const handleBuyAgain = async (orderId) => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/orders/${orderId}/buyagain`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const buyAgain = await response.json();
+      navigate("/cart")
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
   const getUserMyOrders = async () => {
     try {
       const response = await fetch(`http://${IP}:5000/api/users/view/orders`, {
@@ -107,8 +123,8 @@ export default function Orders() {
   };
 
   const handleOpenOrder = (details) => {
-    navigate(`/order-details/${details?._id}`, {state:{details,role}})
-  }
+    navigate(`/order-details/${details?._id}`, { state: { details, role } });
+  };
 
   const columns = [
     {
@@ -133,7 +149,10 @@ export default function Orders() {
       header: "Check Status",
       Cell: ({ row }) => (
         <>
-          <IconButton value={"Check Order Status"} onClick={()=>handleOpenOrder(row?.original)}>
+          <IconButton
+            value={"Check Order Status"}
+            onClick={() => handleOpenOrder(row?.original)}
+          >
             <ArrowCircleRightIcon />
           </IconButton>
         </>

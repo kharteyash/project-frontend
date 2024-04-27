@@ -23,11 +23,9 @@ function ImageDialog({ open, imageId, imageURL, onClose, images }) {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
-
       const imageDelete = await response.json();
       images();
     } catch (error) {

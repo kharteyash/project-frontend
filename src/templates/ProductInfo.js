@@ -75,7 +75,8 @@ function ReviewDialog(props) {
 
 export default function ProductInfo() {
   const location = useLocation();
-  const productId = location?.state;
+  const productId = location?.state?.productId;
+  const userDetails = location?.state?.userDetails;
   const [productInfo, setProductInfo] = useState({});
   const [reviews, setReviews] = useState({});
   const [aprioriRecommendation, setAprioriRecommendation] = useState({});
@@ -141,7 +142,7 @@ export default function ProductInfo() {
   const apriori = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/users/view/products/products/${productId}}/recommendation/freqBuy`,
+        `http://${IP}:5000/api/users/view/products/products/recommendation/sequence`,
         {
           method: "GET",
           headers: {
@@ -175,7 +176,8 @@ export default function ProductInfo() {
           credentials: "include",
         }
       );
-      const data = await response.json();
+      const addToCart = await response.json();
+      toast.success(addToCart?.message)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -267,7 +269,7 @@ export default function ProductInfo() {
                   <span>&#8360; {productInfo?.data?.product?.price}</span>
                   {productInfo?.data?.inCart ? (
                     <button
-                      onClick={() => handleRemoveFromCart()}
+                      onClick={() => {userDetails && handleRemoveFromCart()}}
                       class="add_cart"
                     >
                       Remove from cart
@@ -285,7 +287,7 @@ export default function ProductInfo() {
                 <button onClick={() => handleReviews()} class="sa-reviews">
                   {!seeReview ? "See All Reviews" : "Hide Reviews"}
                 </button>
-                <button onClick={() => handleOpenDialog()} class="a-reviews">
+                <button onClick={() =>{userDetails && handleOpenDialog()}} class="a-reviews">
                   Add Review
                 </button>
                 {seeReview ? (

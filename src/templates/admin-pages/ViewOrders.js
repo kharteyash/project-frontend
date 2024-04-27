@@ -6,6 +6,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router-dom";
+import "../../templates/css/ViewOrders.css";
 import {
   Typography,
   Dialog,
@@ -23,14 +24,17 @@ export default function ViewOrders() {
 
   const getPlacedOrders = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/placed`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(details),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/orders/placed`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setPlacedOrders(data);
     } catch (error) {
@@ -40,14 +44,17 @@ export default function ViewOrders() {
 
   const getShippedOrders = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/shipping`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(details),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/orders/shipping`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setShippedOrders(data);
     } catch (error) {
@@ -56,14 +63,17 @@ export default function ViewOrders() {
   };
   const getApprovedOrders = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/approved`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(details),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/orders/approved`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setApprovedOrders(data);
     } catch (error) {
@@ -73,14 +83,17 @@ export default function ViewOrders() {
 
   const getDeliveredOrders = async () => {
     try {
-      const response = await fetch(`http://${IP}:5000/api/admin/view/orders/delivered`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(details),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/orders/delivered`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(details),
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       setDeliveredOrders(data);
     } catch (error) {
@@ -94,8 +107,6 @@ export default function ViewOrders() {
     getDeliveredOrders();
   }, []);
 
-
-
   const handleViewOrder = (order) => {
     navigate(`/view-order/${order?._id}`, { state: order });
   };
@@ -104,8 +115,7 @@ export default function ViewOrders() {
       header: "User",
       Cell: ({ row }) => (
         <>
-          {row?.original?.user?.firstName}{" "}
-          {row?.original?.user?.lastName}
+          {row?.original?.user?.firstName} {row?.original?.user?.lastName}
         </>
       ),
     },
@@ -142,43 +152,51 @@ export default function ViewOrders() {
     },
   ];
   return (
-    <div>
-      {placedOrders?.data && (
-        <>
-          <WMTable
-            data={placedOrders?.data}
-            columns={columns}
-            tableTitle={"Placed Orders"}
-          />
-        </>
-      )}
-      {shippedOrders?.data && (
-        <>
-          <WMTable
-            data={shippedOrders?.data}
-            columns={columns}
-            tableTitle={"Shipped Orders"}
-          />
-        </>
-      )}
-      {approvedOrders?.data && (
-        <>
-          <WMTable
-            data={approvedOrders?.data}
-            columns={columns}
-            tableTitle={"Approved Orders"}
-          />
-        </>
-      )}
-      {deliveredOrders?.data && (
-        <>
-          <WMTable
-            data={deliveredOrders?.data}
-            columns={columns}
-            tableTitle={"Delivered Orders"}
-          />
-        </>
-      )}
+    <div class="voc">
+      <div class="plcd-orders">
+        {placedOrders?.data && (
+          <>
+            <WMTable
+              data={placedOrders?.data}
+              columns={columns}
+              tableTitle={"Placed Orders"}
+            />
+          </>
+        )}
+      </div>
+      <div class="plcd-orders">
+        {shippedOrders?.data && (
+          <>
+            <WMTable
+              data={shippedOrders?.data}
+              columns={columns}
+              tableTitle={"Shipped Orders"}
+            />
+          </>
+        )}
+      </div>
+      <div class="plcd-orders">
+        {approvedOrders?.data && (
+          <>
+            <WMTable
+              data={approvedOrders?.data}
+              columns={columns}
+              tableTitle={"Approved Orders"}
+            />
+          </>
+        )}
+      </div>
+      <div class="plcd-orders">
+        {deliveredOrders?.data && (
+          <>
+            <WMTable
+              data={deliveredOrders?.data}
+              columns={columns}
+              tableTitle={"Delivered Orders"}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }

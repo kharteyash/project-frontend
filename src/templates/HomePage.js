@@ -106,7 +106,7 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    top5Purchase();
+    // top5Purchase();
   }, []);
 
   const openProductInfo = (productId) => {

@@ -67,7 +67,6 @@ function EditDetailsDialog(props) {
 
   return (
     <>
-      {/* <Grid container xs={12} lg={12} md={12}> */}
       <Dialog
         open={props?.open}
         onClose={props?.onClose}
@@ -146,7 +145,6 @@ function EditDetailsDialog(props) {
           onClick={() => handleUpdateDetails()}
         />
       </Dialog>
-      {/* </Grid> */}
     </>
   );
 }
@@ -163,16 +161,11 @@ function DeleteProduct(props) {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
-
       const productDelete = await response.json();
       navigate("/add-products");
-      // if (!userDetails?.data?.refreshToken) {
-      //   navigate("/");
-      // }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -239,25 +232,6 @@ export default function ProductEdit() {
     product();
     review();
   }, []);
-
-  const handleAddToCart = async () => {
-    try {
-      const response = await fetch(
-        `http://${IP}:5000/api/users/view/products/${productId}/addToCart`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-    } catch (error) {
-      console.error("Error:", error);
-    }
-    product();
-  };
 
   const handleDeleteReview = async (reviewId) => {
     try {
@@ -328,7 +302,7 @@ export default function ProductEdit() {
           style={{ objectFit: "cover" }}
         />
 
-        <div>
+        <div style={{ border: "3px solid pink" }}>
           <h1>{productInfo?.data?.name}</h1>
 
           <h3>{productInfo?.data?.description}</h3>
