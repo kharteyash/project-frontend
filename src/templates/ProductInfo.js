@@ -75,7 +75,7 @@ function ReviewDialog(props) {
 
 export default function ProductInfo() {
   const location = useLocation();
-  const productId = location?.state?.productId;
+ const productId = location?.state;
   const userDetails = location?.state?.userDetails;
   const [productInfo, setProductInfo] = useState({});
   const [reviews, setReviews] = useState({});
@@ -267,9 +267,9 @@ export default function ProductInfo() {
 
                 <h2 class="price">
                   <span>&#8360; {productInfo?.data?.product?.price}</span>
-                  {productInfo?.data?.inCart ? (
+                  {productInfo?.data?.inCart && userDetails?.data?._id ? (
                     <button
-                      onClick={() => {userDetails && handleRemoveFromCart()}}
+                      onClick={() => handleRemoveFromCart()}
                       class="add_cart"
                     >
                       Remove from cart
