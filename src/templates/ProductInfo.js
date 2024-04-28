@@ -384,7 +384,7 @@ export default function ProductInfo() {
         {/*   prod-cont ends */}
       </main>
       <div>
-        {aprioriRecommendation && (
+        {aprioriRecommendation?.data && (
           <>
             <h3>Products Frequently Bought Together</h3>
             <br></br>
