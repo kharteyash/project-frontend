@@ -7,9 +7,6 @@ export default function RecommendationPage() {
   const navigate = useNavigate();
   const [bmiRecommendation, setBmiRecommendation] = useState({});
   const [goalGenderRecommendation, setGoalGenderRecommendation] = useState({});
-  const [cityCountryRecommendation, setCityCountryRecommendation] = useState(
-    {}
-  );
   const [productGoalRecommendation, setProductGoalRecommendation] = useState(
     {}
   );
@@ -59,26 +56,6 @@ export default function RecommendationPage() {
       );
       const data = await response.json();
       setGoalGenderRecommendation(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const cityCountry = async () => {
-    try {
-      const response = await fetch(
-        `http://${IP}:5000/api/users/view/products/recommendation/cityCountry`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // body: JSON.stringify(details),
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-      setCityCountryRecommendation(data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -228,7 +205,6 @@ export default function RecommendationPage() {
           prevSearch(),
           prevPurchase(),
           productGoal(),
-          cityCountry(),
           ageHeightWeight(),
           goalGender(),
           exercises(),
@@ -296,45 +272,6 @@ export default function RecommendationPage() {
           <h3>Age Height Weight</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {bmiRecommendation?.data?.map((value, index) => {
-              if (!value) return null;
-              return (
-                <>
-                  <div
-                    className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
-                  >
-                    <img
-                      className="img-fluid"
-                      src={value.image}
-                      alt="Card image cap"
-                      style={{
-                        objectFit: "cover",
-                        width: "300px",
-                        height: "200px",
-                      }}
-                      onClick={() => openProductInfo(value._id)}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
-                      </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
-                    </div>
-                  </div>
-                </>
-              );
-            })}
-          </div>
-        </>
-      )}
-      <br></br>
-      {cityCountryRecommendation?.data && (
-        <>
-          <h3>City country</h3>
-          <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {cityCountryRecommendation?.data?.map((value, index) => {
               if (!value) return null;
               return (
                 <>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IP } from "./constants";
 import "../templates/css/Product.css";
 import StarIcon from "@mui/icons-material/Star";
@@ -74,6 +74,7 @@ function ReviewDialog(props) {
 }
 
 export default function ProductInfo() {
+  const navigate = useNavigate();
   const location = useLocation();
   const productId = location?.state;
   const [userDetails, setUserDetails] = useState({});
@@ -160,7 +161,7 @@ export default function ProductInfo() {
   const apriori = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/users/view/products/products/recommendation/sequence`,
+        `http://${IP}:5000/api/users/view/products/products/${productId}/recommendation/freqBuy`,
         {
           method: "GET",
           headers: {
@@ -234,6 +235,18 @@ export default function ProductInfo() {
 
   const handleClose = () => {
     setOpenDialog(false);
+  };
+
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + "...";
+  };
+
+  const openProduct = (prodId) => {
+    navigate(`/store/product/${prodId}`, { state: prodId });
+    window.location.reload();
   };
 
   return (
@@ -321,7 +334,6 @@ export default function ProductInfo() {
                 {seeReview ? (
                   <div class="r-text">
                     <h3>Reviews</h3>
-
                     {reviews?.data?.map((value, index) => {
                       return (
                         <>
@@ -356,7 +368,6 @@ export default function ProductInfo() {
                 ) : (
                   <></>
                 )}
-
                 <ReviewDialog
                   open={openDialog}
                   productId={productId}
@@ -372,6 +383,57 @@ export default function ProductInfo() {
         </div>
         {/*   prod-cont ends */}
       </main>
+      <div>
+        {aprioriRecommendation && (
+          <>
+            <h3>Products Frequently Bought Together</h3>
+            <br></br>
+            <div className="d-flex flex-wrap justify-content-center align-items-center">
+              {aprioriRecommendation?.data?.map((value, index) => {
+                return (
+                  <>
+                    <div
+                      className="card m-3"
+                      style={{
+                        width: "18rem",
+                        height: "400px",
+                        boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                        borderRadius: "20px",
+                        marginTop: "20px",
+                        border: "1px solid lightgrey",
+                      }}
+                    >
+                      <img
+                        className="img-fluid"
+                        src={value.image}
+                        alt="Card image cap"
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "200px",
+                          borderRadius: "20px 20px 0px 0px",
+                        }}
+                        onClick={() => openProduct(value._id)}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{value.name}</h5>
+                        <p className="card-title" value={value.description}>
+                          {truncateText(value.description, 70)}
+                        </p>
+                        <h6 className="card-text">&#8360; {value.price}</h6>
+                        <p className="card-text">
+                          {value.avgRating} / 5{" "}
+                          <StarIcon style={{ color: "#FFC300" }} />
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 }
