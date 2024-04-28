@@ -75,8 +75,8 @@ function ReviewDialog(props) {
 
 export default function ProductInfo() {
   const location = useLocation();
- const productId = location?.state;
-  const userDetails = location?.state?.userDetails;
+  const productId = location?.state;
+  const [userDetails, setUserDetails] = useState({});
   const [productInfo, setProductInfo] = useState({});
   const [reviews, setReviews] = useState({});
   const [aprioriRecommendation, setAprioriRecommendation] = useState({});
@@ -100,6 +100,24 @@ export default function ProductInfo() {
       console.error("Error:", error);
     }
   };
+
+  const details = async () => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/users/get-details`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      setUserDetails(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleRemoveFromCart = async () => {
     try {
       const response = await fetch(
@@ -162,6 +180,7 @@ export default function ProductInfo() {
     product();
     review();
     apriori();
+    details();
   }, []);
 
   const handleAddToCart = async () => {
@@ -177,7 +196,7 @@ export default function ProductInfo() {
         }
       );
       const addToCart = await response.json();
-      toast.success(addToCart?.message)
+      toast.success(addToCart?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -267,17 +286,24 @@ export default function ProductInfo() {
 
                 <h2 class="price">
                   <span>&#8360; {productInfo?.data?.product?.price}</span>
-                  {productInfo?.data?.inCart && userDetails?.data?._id ? (
-                    <button
-                      onClick={() => handleRemoveFromCart()}
-                      class="add_cart"
-                    >
-                      Remove from cart
-                    </button>
-                  ) : (
-                    <button onClick={() => handleAddToCart()} class="add_cart">
-                      Add to cart
-                    </button>
+                  {userDetails?.data?._id && (
+                    <>
+                      {productInfo?.data?.inCart ? (
+                        <button
+                          onClick={() => handleRemoveFromCart()}
+                          class="add_cart"
+                        >
+                          Remove from cart
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleAddToCart()}
+                          class="add_cart"
+                        >
+                          Add to cart
+                        </button>
+                      )}
+                    </>
                   )}
                 </h2>
               </div>
@@ -287,9 +313,11 @@ export default function ProductInfo() {
                 <button onClick={() => handleReviews()} class="sa-reviews">
                   {!seeReview ? "See All Reviews" : "Hide Reviews"}
                 </button>
-                <button onClick={() =>{userDetails && handleOpenDialog()}} class="a-reviews">
-                  Add Review
-                </button>
+                {userDetails?.data?._id && (
+                  <button onClick={() => handleOpenDialog()} class="a-reviews">
+                    Add Review
+                  </button>
+                )}
                 {seeReview ? (
                   <div class="r-text">
                     <h3>Reviews</h3>
