@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function ProductStore() {
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState({});
+  const [aprioriRecommendation, setAprioriRecommendation] = useState({});
   const [searchItem, setSearchItem] = useState("");
   const [pageNo, setPageNo] = useState(1);
   const products = async () => {
@@ -129,6 +130,25 @@ export default function ProductStore() {
     products();
   };
 
+  const apriori = async () => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/products/products/recommendation/sequence`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      setAprioriRecommendation(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleRemoveFromCart = async (event, data) => {
     try {
       const response = await fetch(
@@ -162,6 +182,14 @@ export default function ProductStore() {
     if (pageNo > 1) {
       setPageNo(pageNo - 1);
     }
+  };
+
+  useEffect(() => {
+    apriori();
+  }, []);
+
+  const openProduct = (productId) => {
+    navigate(`product/${productId}`, { state: productId });
   };
 
   return (
@@ -275,6 +303,57 @@ export default function ProductStore() {
       <div>
         <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
         <button onClick={() => handleNextPage()}>Next</button>
+      </div>
+      <div>
+        {aprioriRecommendation?.data && (
+          <>
+            <h3>Recommendations for your last bought product</h3>
+            <br></br>
+            <div className="d-flex flex-wrap justify-content-center align-items-center">
+              {aprioriRecommendation?.data?.map((value, index) => {
+                return (
+                  <>
+                    <div
+                      className="card m-3"
+                      style={{
+                        width: "18rem",
+                        height: "400px",
+                        boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                        borderRadius: "20px",
+                        marginTop: "20px",
+                        border: "1px solid lightgrey",
+                      }}
+                    >
+                      <img
+                        className="img-fluid"
+                        src={value.image}
+                        alt="Card image cap"
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "200px",
+                          borderRadius: "20px 20px 0px 0px",
+                        }}
+                        onClick={() => openProduct(value._id)}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{value.name}</h5>
+                        <p className="card-title" value={value.description}>
+                          {truncateText(value.description, 70)}
+                        </p>
+                        <h6 className="card-text">&#8360; {value.price}</h6>
+                        <p className="card-text">
+                          {value.avgRating} / 5{" "}
+                          <StarIcon style={{ color: "#FFC300" }} />
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </>
   );

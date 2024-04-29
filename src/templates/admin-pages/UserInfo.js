@@ -196,6 +196,12 @@ export default function UserInfo() {
         <input id="notif-txt" type="text" />
         <input id="butn" type="submit" value={"Send Notification"} />
       </div>
+<>
+        <button>Find Similar Users</button>
+        <button>Give Custom Recommendations</button>
+</>
+
+
     </div>
   );
 }

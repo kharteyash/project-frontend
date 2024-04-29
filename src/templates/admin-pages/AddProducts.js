@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 
 function AddProductDialog(props) {
-  const products = props?.products();
+  const products = props?.products;
   const [name, setName] = useState(null);
   const [price, setPrice] = useState(null);
   const [description, setDescription] = useState(null);
@@ -188,10 +188,6 @@ export default function AddProducts() {
     }
   };
 
-  useEffect(() => {
-    products();
-  }, [pageNo]);
-
   const openProductInfo = (productId) => {
     if (productId) {
       navigate(`product/${productId}`, { state: productId });
@@ -223,6 +219,11 @@ export default function AddProducts() {
       setPageNo(pageNo - 1);
     }
   };
+
+  useEffect(() => {
+    products();
+  }, [pageNo]);
+  
   return (
     <>
       <div class="cont">
@@ -263,15 +264,13 @@ export default function AddProducts() {
             );
           })}
         </div>
-
-        <button id="add-prd" onClick={() => handleOpenDialog()}>
-          ADD PRODUCTS
-        </button>
-
         <div class="btns">
           <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
           <button onClick={() => handleNextPage()}>Next</button>
         </div>
+        <button id="add-prd" onClick={() => handleOpenDialog()}>
+          ADD PRODUCTS
+        </button>
         <AddProductDialog
           open={openDialog}
           onClose={handleClose}

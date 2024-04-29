@@ -49,7 +49,8 @@ import ContactUS from "./ContactUS";
 import ViewGrievance from "./admin-pages/ViewGrievance";
 import GrievanceDetails from "./admin-pages/GrievanceDetails";
 import OrderDetails from "./OrderDetails";
-import PushUpDetector from "./exercises/Pushup";
+import AllExercises from "./AllExercises";
+import Sentiments from "./admin-pages/Sentiments";
 
 export default function NavigationBar() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -238,7 +239,9 @@ export default function NavigationBar() {
           <Route path="/view-grievance" element={<ViewGrievance />} />
           <Route path="/grievance-details/:id" element={<GrievanceDetails />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
-          {/* <Route path="/exercises/pushup" element={<PushUpDetector />} /> */}
+          <Route path="/exercises" element={<AllExercises />} />
+          <Route path="/get-sentiments" element={<Sentiments />} />
+          {/* <Route path="/exercises/:type" component={ShoulderPress} /> */}
         </Routes>
       </Router>
     </>
