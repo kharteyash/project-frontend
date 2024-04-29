@@ -5,6 +5,7 @@ import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
 
+
 export default function ViewGrievance() {
     const navigate = useNavigate();
   const [allGrievances, setAllGrievances] = useState();
@@ -57,6 +58,7 @@ export default function ViewGrievance() {
         <>
             <IconButton>
             <ArrowCircleRightIcon
+            style={{color:"#0083f9"}}
               onClick={() => handleOpenUserDetails(row?.original)}
             />
             </IconButton>
@@ -66,8 +68,22 @@ export default function ViewGrievance() {
 ]
 
   return (
-    <div>
+    <div 
+    style={{
+      background:"linear-gradient(45deg , #0bd2de , #0083f9)",
+      width:"100%",
+      height:"100%",
+      padding:"20px",
+      height:"100vh"
+    }}>
       <>
+      <div style={{
+        width:"80%",
+        margin:"auto",
+        marginTop:"20px",
+        boxShadow: "0px 9px 30px -15px rgb(0 0 0)",
+
+      }}>
         {allGrievances && (
           <WMTable
             columns={columns}
@@ -75,6 +91,7 @@ export default function ViewGrievance() {
             tableTitle={"All Grievances"}
           />
         )}
+        </div>
       </>
     </div>
   );

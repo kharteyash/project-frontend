@@ -3,6 +3,7 @@ import WMTable from "../ui-components/table";
 import { IP } from "./constants";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCardIcon from "@mui/icons-material/AddCard";
+import "../templates/css/ViewOrders.css";
 import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
@@ -140,7 +141,7 @@ export default function Orders() {
       Cell: ({ row }) => (
         <>
           <IconButton value={"Check Order Status"} onClick={()=>handleOpenOrder(row?.original)}>
-            <ArrowCircleRightIcon />
+            <ArrowCircleRightIcon style={{color:"#0083f9"}}/>
           </IconButton>
         </>
       ),
@@ -171,7 +172,7 @@ export default function Orders() {
         <>
           {row?.original?.orderStatus === "Delivered" ? (
             <IconButton value={"Pending Payment"}>
-              <AddCardIcon onClick={() => handleBuyAgain(row?.original?._id)} />
+              <AddCardIcon style={{color:"#0083f9"}} onClick={() => handleBuyAgain(row?.original?._id)} />
             </IconButton>
           ) : (
             ""
@@ -196,7 +197,8 @@ export default function Orders() {
   }, [role]);
 
   return (
-    <div>
+    <div class="voc">
+      <div class="plcd-orders">
       {myOrders?.data && (
         <WMTable
           columns={columns}
@@ -204,6 +206,9 @@ export default function Orders() {
           data={myOrders?.data}
         />
       )}
+      </div>
+
+      <div class="deli-orders">
 
       {myAllOrders?.data && (
         <WMTable
@@ -212,6 +217,7 @@ export default function Orders() {
           data={myAllOrders?.data}
         />
       )}
+      </div>
     </div>
   );
 }

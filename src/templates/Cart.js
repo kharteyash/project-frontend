@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IP } from "./constants";
 import PropTypes from "prop-types";
 import WMTable from "../ui-components/table";
+import "../templates/css/Cart.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -155,15 +156,17 @@ export default function Cart() {
       header: "Quantity",
       Cell: ({ row }) => (
         <>
-          <Grid>
+          <Grid container direction="row">
             <IconButton>
               <ArrowCircleUpIcon
+              style={{color:"#0083f9"}}
                 onClick={(e) => handleAddQty(e, row?.original?.product?._id)}
               />
             </IconButton>
             <Typography ml={2}>{row?.original?.quantity}</Typography>
             <IconButton>
               <ArrowCircleDownIcon
+              style={{color:"#0083f9"}}
                 onClick={(e) => handleSubQty(e, row?.original?.product?._id)}
               />
             </IconButton>
@@ -190,6 +193,7 @@ export default function Cart() {
         <>
           <IconButton>
             <DeleteIcon
+            style={{color:"#0083f9"}}
               onClick={(e) => handleDeleteItem(e, row?.original?.product?._id)}
             />
           </IconButton>
@@ -204,6 +208,7 @@ export default function Cart() {
   ];
   return (
     <>
+    <div class="cartcont">
       <ToastContainer
         position="bottom-left"
         autoClose={1000}
@@ -219,15 +224,19 @@ export default function Cart() {
       />
       {allCart?.data ? (
         <>
-          <WMTable columns={columns} data={allCart?.data} tableTitle={"Cart"} />
-          <button onClick={() => handleDeleteAll()}>Delete All</button>
-          <button onClick={() => handleBuyAll()}>Buy all</button>
+        <div class="cartp">
+          <WMTable columns={columns} data={allCart?.data} tableTitle={"Cart"} /></div>
+          <div class="buyall">
+          <button class="cartbtn" onClick={() => handleDeleteAll()}>Delete All</button>
+          <button class="cartbtn" onClick={() => handleBuyAll()}>Buy all</button>
+          </div>
         </>
       ) : (
         <>
           <h1>No Items in Cart</h1>
         </>
       )}
+      </div>
     </>
   );
 }

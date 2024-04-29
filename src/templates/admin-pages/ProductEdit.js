@@ -328,7 +328,7 @@ export default function ProductEdit() {
           style={{ objectFit: "cover" }}
         />
 
-        <div>
+        <div style={{border:"3px solid pink"}}>
           <h1>{productInfo?.data?.name}</h1>
 
           <h3>{productInfo?.data?.description}</h3>

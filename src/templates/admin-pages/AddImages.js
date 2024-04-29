@@ -11,6 +11,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 
 function ImageDialog({ open, imageId, imageURL, onClose }) {
 
@@ -29,7 +30,7 @@ function ImageDialog({ open, imageId, imageURL, onClose }) {
       );
 
       const imageDelete = await response.json();
-      console.log("image deleted", imageDelete);
+      console.log("Image deleted", imageDelete);
       // if (!userDetails?.data?.refreshToken) {
       //   navigate("/");
       // }
@@ -40,18 +41,18 @@ function ImageDialog({ open, imageId, imageURL, onClose }) {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" , }}>
         <div className="dialog-content">
           <span className="close" >
-            &times;
+            <CancelPresentationIcon style={{color:"red",margin:"2px"}}/>
           </span>
           <img
             src={imageURL}
             alt="Selected Image"
-            style={{ maxWidth: "100%", maxHeight: "100%" }}
+            style={{ maxWidth: "100%", maxHeight: "100%", padding:"2px" }}
           />
         </div>
-        <DeleteIcon onClick={() =>handleDeleteImage()} />
+        <DeleteIcon onClick={() =>handleDeleteImage()} style={{color:"#0083f9", margin:"3px"}}/>
       </div>
     </Dialog>
   );
@@ -121,8 +122,8 @@ export default function AddImages() {
 
 
   return (
-    <div>
-      <div className="d-flex flex-wrap justify-content-center align-items-center" style={{border:"3px solid red"}}>
+    <div style={{background:"linear-gradient(45deg , #0bd2de , #0083f9)",border:"1px solid #0083f9"}}>
+      <div className="d-flex flex-wrap justify-content-center align-items-center" style={{marginTop:"20px"}}>
         {allImages?.data?.map((value, index) => {
           return (
             <div
@@ -132,6 +133,10 @@ export default function AddImages() {
                 height: "200px",
                 overflow: "hidden",
                 cursor: "pointer",
+                padding: "1px",
+                margin: "13px",
+                borderRadius: "10px",
+                boxShadow: "0px 9px 30px -15px rgb(0 0 0)",
               }}
               onClick={() => handleOpenImage(value?._id, value?.imgurl)}
             >
@@ -143,6 +148,8 @@ export default function AddImages() {
                   objectFit: "cover",
                   width: "300px",
                   height: "200px",
+                  borderRadius: "10px",
+                  
                 }}
               />
             </div>
@@ -157,12 +164,19 @@ export default function AddImages() {
           onClose={handleCloseImage}
         />
       )}
-      <div>
-      <form id="imageUploadForm" onSubmit={handleSubmit}>
-        <input type="file" name="image" accept="image/*" />
-        <button type="submit">Submit</button>
+      <div style={{height:"100px", }}>
+      <form id="imageUploadForm" onSubmit={handleSubmit} style={{width:"30%",display:"flex",marginLeft:"auto",marginRight:"auto",padding:"10px",marginTop:"10px",height:"60px", }}>
+
+        <input type="file" name="image" accept="image/*" style={{ border:"1px solid white", marginRight:"20px",height:"40px"}}/>
+
+        <button type="submit" style={{ height:"40px",borderRadius: "7px",
+        boxShadow: "0px 9px 30px -15px rgb(1 1 1)",
+        background: "linear-gradient(45deg , #0bd2de , #0083f9)",
+        color:"white",
+        border:"none"
+        }}>Submit</button>
       </form>
-      <div id="message">{message}</div>
+      <div id="message" style={{width:"30%",marginLeft:"auto",marginRight:"auto",textAlign:"center",}}>{message}</div>
     </div>
     </div>
   );

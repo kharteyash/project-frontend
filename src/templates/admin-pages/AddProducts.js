@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IP } from "../constants";
+import "../../templates/css/Addprod.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
@@ -60,38 +61,47 @@ function AddProductDialog(props) {
   return (
     <>
       <Dialog open={props?.open} onClose={props?.onClose}>
-        <DialogTitle>Add Product</DialogTitle>
+        <DialogTitle id="title">Add Product</DialogTitle>
         <form onSubmit={handleSubmit}>
+          <div class="prodent">
           <TextField
             placeholder="Enter Product Name"
+            class="prod-detl"
             id="name"
             name="name"
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
             placeholder="Enter Product price"
+            class="prod-detl"
             id="price"
             name="price"
             onChange={(e) => setPrice(e.target.value)}
           />
           <TextField
             placeholder="Enter Product Description"
+            class="prod-detl"
             id="description"
             name="description"
             onChange={(e) => setDescription(e.target.value)}
           />
           <TextField
             placeholder="Enter Product stock"
+            class="prod-detl"
             id="stock"
             name="stock"
             onChange={(e) => setStock(e.target.value)}
           />
           <TextField
             placeholder="Enter Product Weight"
+            class="prod-detl"
             id="weight"
             name="weight"
             onChange={(e) => setWeight(e.target.value)}
           />
+          </div>
+          <div class="rad">
+          <div class="goal">
           <InputLabel>Product Goal</InputLabel>
           <RadioGroup
             aria-label="productGoal"
@@ -103,6 +113,8 @@ function AddProductDialog(props) {
             <FormControlLabel value="cut" control={<Radio />} label="cut" />
             <FormControlLabel value="lean" control={<Radio />} label="lean" />
           </RadioGroup>
+          </div>
+          <div class="cat">
           <InputLabel>Product Category</InputLabel>
           <RadioGroup
             aria-label="category"
@@ -114,8 +126,11 @@ function AddProductDialog(props) {
             <FormControlLabel value="Equipments" control={<Radio />} label="Equipments" />
             <FormControlLabel value="Accessories" control={<Radio />} label="Accessories" />
           </RadioGroup>
-          <input type="file" name="image" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} />
+          </div>
+          </div>
+          <input id="file" type="file" name="image" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} />
           <input type="submit" value="Add Product"/>
+         
         </form>
       </Dialog>
     </>
@@ -182,13 +197,19 @@ export default function AddProducts() {
   };
   return (
     <>
-      <div>
+      <div class="cont">
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           {allProducts?.data?.map((value, index) => {
             return (
               <div
                 className="card m-3"
-                style={{ width: "18rem", height: "430px" }}
+                style={{ 
+                  width: "18rem", 
+                  height: "430px" ,
+                  borderRadius:"10px",
+                  boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                  border:"none"
+                }}
               >
                 <img
                   className="img-fluid"
@@ -198,6 +219,7 @@ export default function AddProducts() {
                     objectFit: "cover",
                     width: "300px",
                     height: "200px",
+                    borderRadius: "10px 10px 0px 0px"
                   }}
                   onClick={() => openProductInfo(value._id)}
                 />
@@ -206,20 +228,22 @@ export default function AddProducts() {
                   <h6 className="card-title">
                     {truncateText(value.description, 100)}
                   </h6>
-                  <p className="card-text">{value.price}</p>
+                  <p className="card-text">&#8360; {value.price}</p>
                   <p className="card-text">{value.avgRating}</p>
                 </div>
               </div>
             );
           })}
         </div>
-        <button onClick={() => handleOpenDialog()}>Add Products</button>
-      </div>
-      <div>
+
+        <button id="add-prd" onClick={() => handleOpenDialog()}>ADD PRODUCTS</button>
+      
+      <div class="btns">
         <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
         <button onClick={() => handleNextPage()}>Next</button>
       </div>
       <AddProductDialog open={openDialog} onClose={handleClose} />
+      </div>
     </>
   );
 }

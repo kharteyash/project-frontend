@@ -107,9 +107,9 @@ export default function HomePage() {
     }
   };
 
-  useEffect(() => {
-    top5Purchase();
-  }, []);
+  // useEffect(() => {
+  //   top5Purchase();
+  // }, []);
 
   const openProductInfo = (productId) => {
     navigate(`/store/product/${productId}`, { state: productId });
@@ -136,12 +136,13 @@ export default function HomePage() {
         pauseOnHover
         theme="dark"
         transition="Bounce"
+       
       />
       <div
         class="cont"
-        style={{ background: "black", height: "100vh", color: "white" }}
+        style={{ background: "#1C2833",  color: "white", height:"100vh"}}
       >
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative" ,}}>
           <IconButton
             style={{
               position: "absolute",
@@ -183,9 +184,9 @@ export default function HomePage() {
           )}
           <div
             class="wlcm-msg"
-            style={{ border: "1px solid black", paddingLeft: "20px" }}
+            style={{border:"1px solid #1C2833",paddingLeft: "20px",  }}
           >
-            <h1 style={{ marginTop: "40px", fontSize: "60px" }}>
+            <h1 style={{ marginTop: "40px", fontSize: "60px", color:"#0bd2de" }}>
               Welcome to the Workout Hub
             </h1>
             <p>Get In, Get Fit, Get On with Life!</p>
@@ -195,13 +196,13 @@ export default function HomePage() {
             {top5Recommendation?.data && (
               <>
                 <h3>Top 5 products in our store</h3>
-                <div className="d-flex flex-wrap justify-content-center align-items-center">
+                <div className="d-flex flex-wrap justify-content-center align-items-center"  style={{border:"1px solid yellow"}}>
                   {top5Recommendation?.data?.map((value, index) => {
                     return (
                       <>
                         <div
                           className="card m-3"
-                          style={{ width: "18rem", height: "400px" }}
+                          style={{ width: "15rem", height: "400px",border:"2px solid lightblue" }}
                         >
                           <img
                             className="img-fluid"

@@ -8,14 +8,17 @@ import {
   Button,
   Typography,
   IconButton,
+  Divider,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IP } from "./constants.js";
+import "../templates/css/Profile.css";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Paper from '@mui/material/Paper'
 export default function ProfilePage() {
   const [profileDetails, setProfileDetails] = useState({});
 
@@ -84,6 +87,7 @@ export default function ProfilePage() {
 
   return (
     <>
+    <div class="cont">
       <ToastContainer
         position="bottom-left"
         autoClose={1000}
@@ -97,27 +101,48 @@ export default function ProfilePage() {
         theme="dark"
         transition="Bounce"
       />
+      <div id="prof">
+      <Paper elevation={3} id="prop">
+      <div id="title">
       <h1>User Profile</h1>
+
+      <div style={{paddingLeft:"800px"}}>
       <IconButton onClick={() => handleProfileEdit()}>
-        {!editDetails ? <EditIcon /> : <CloseIcon />}
+        {!editDetails ? <EditIcon id="edit"/> : <CloseIcon />}
       </IconButton>
+      </div>
+      </div>
+      <Divider color="#333"/>
       {!editDetails ? (
         <>
-          <InputLabel>Age :</InputLabel>
-          {profileDetails?.data?.age}
-          <InputLabel>Height :</InputLabel>
-          {profileDetails?.data?.height}
-          <InputLabel>Weight :</InputLabel>
-          {profileDetails?.data?.weight}
-          <InputLabel>Gender :</InputLabel>
-          {profileDetails?.data?.gender}
-          <InputLabel>Goal :</InputLabel>
-          {profileDetails?.data?.goal}
-          <InputLabel>City :</InputLabel>
-          {profileDetails?.data?.city}
-          <InputLabel>Country :</InputLabel>
-          {profileDetails?.data?.country}
+        <div class="det">
+        <ul class="content_list">
+          <li><span><InputLabel>Age :</InputLabel></span>{profileDetails?.data?.age}</li>
+          <li><span><InputLabel>Height :</InputLabel></span>{profileDetails?.data?.height}</li>
+          <li><span><InputLabel>Weight :</InputLabel></span>{profileDetails?.data?.weight}</li>
+          <li><span><InputLabel>Gender :</InputLabel></span>{profileDetails?.data?.gender}</li>
+          <li><span><InputLabel>Goal :</InputLabel></span>{profileDetails?.data?.goal}</li>
+          <li><span><InputLabel>City :</InputLabel></span>{profileDetails?.data?.city}</li>
+          <li><span><InputLabel>Country :</InputLabel></span>{profileDetails?.data?.country}</li>
+        </ul>
+        </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
         </>
+     
+      
+      
       ) : (
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2} justifyContent="center">
@@ -230,6 +255,9 @@ export default function ProfilePage() {
           </Grid>
         </form>
       )}
+</Paper>
+</div>
+</div>
     </>
   );
 }

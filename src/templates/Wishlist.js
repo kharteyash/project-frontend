@@ -107,7 +107,7 @@ export default function Wishlist() {
       accessorKey: "actions",
       Cell: ({ row }) => (
         <>
-        <div style={{border:"2px solid green"}}>
+        <div style={{}}>
           <IconButton>
             <DeleteIcon
             onClick={(e) => handleDeleteItem(e, row?.original)}
@@ -140,7 +140,7 @@ export default function Wishlist() {
         theme="dark"
         transition="Bounce"
       />
-    <div style={{border:"2px solid red", background:"blue"}}>
+    <div style={{background:"blue"}}>
       {allWishlist?.data && (
         <WMTable
         sx={{color:"pink"}} 

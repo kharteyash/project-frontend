@@ -249,8 +249,7 @@ export default function ProductInfo() {
                     <button
                       onClick={() => handleRemoveFromCart()}
                       class="add_cart"
-                    >
-                      Remove from cart
+                    >Remove from cart
                     </button>
                   ) : (
                     <button onClick={() => handleAddToCart()} class="add_cart">

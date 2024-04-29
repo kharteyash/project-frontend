@@ -81,7 +81,7 @@ export default function AllUsers() {
   ];
 
   return (
-    <Box sx={{ flexGrow: 1 }} style={{background:"linear-gradient(45deg , #0bd2de , #0083f9)",  justifyContent:"center",display:"flex", height:"100vh", width:"100%",padding:"20px",marginTop:"-1px"}}>
+    <Box sx={{ flexGrow: 1 }} style={{background:"linear-gradient(45deg , #0bd2de , #0083f9)",  justifyContent:"center",display:"flex", height:"100%", width:"100%",padding:"20px",marginTop:"-1px"}}>
       {allUserDetails?.data && (
         <>
         <div style={{width:"95%"}}>

@@ -6,6 +6,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router-dom";
+import "../../templates/css/ViewOrders.css";
 import {
   Typography,
   Dialog,
@@ -97,6 +98,7 @@ export default function ViewOrders() {
         <>
           <IconButton>
             <ArrowCircleRightIcon
+              style={{color:"#0083f9"}}
               onClick={() => handleViewOrder(row?.original)}
             />
           </IconButton>
@@ -105,7 +107,9 @@ export default function ViewOrders() {
     },
   ];
   return (
-    <div>
+    <div class="voc">
+      
+      <div class="plcd-orders">
       {placedOrders?.data && (
         <>
           <WMTable
@@ -115,6 +119,9 @@ export default function ViewOrders() {
           />
         </>
       )}
+      </div>
+
+      <div class="deli-orders">
       {deliveredOrders?.data && (
         <>
           <WMTable
@@ -124,6 +131,9 @@ export default function ViewOrders() {
           />
         </>
       )}
+      </div>
+
+     
     </div>
   );
 }

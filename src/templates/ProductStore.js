@@ -5,6 +5,7 @@ import Favorite from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import "../templates/css/Store.css";
 import StarIcon from "@mui/icons-material/Star";
+
 import {
   Dialog,
   DialogTitle,
@@ -165,6 +166,8 @@ export default function ProductStore() {
   };
 
   return (
+
+    
     
     <>
       <ToastContainer
@@ -180,20 +183,29 @@ export default function ProductStore() {
         theme="dark"
         transition="Bounce"
       />
-    <div class="text-center" style={{border:"1px solid black"}}>
-      <TextField
-        onChange={(e) => setSearchItem(e.target.value)}
-        style={{
-        borderRadius: "10px",border:"none" }}
-        placeholder="Search"
-        // sx={{
-          
-        // }}
-      />
-      <IconButton onClick={() => handleSearchItem()}>🔍</IconButton>
-      </div>
-
+      
       <div>
+      <>
+    <div class="text-center" >
+       <div id="cover">
+          <div class="tb">
+
+          <div class="td"><input type="text"
+          onChange={(e) => setSearchItem(e.target.value)}
+          style={{
+          borderRadius: "10px",border:"none" }}
+          placeholder="Search"/></div>
+
+          <div class="td" id="s-cover"><button onClick={() => handleSearchItem()}>
+            <div id="s-circle"></div>
+            <span id="ns"></span>
+          </button></div>
+    
+     
+          </div>{/*tb ends*/ }
+       </div>{/* cover ends*/}
+    </div>{/*text centerends*/}
+    </>
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           {allProducts?.data?.map((value, index) => {
             return (
@@ -201,11 +213,12 @@ export default function ProductStore() {
                 className="card m-3"
                 style={{
                   width: "18rem",
-                  height: "460px",
+                  height: "490px",
                   boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
                   borderRadius: "20px",
                   marginTop: "20px",
                   border: "1px solid lightgrey",
+                  
                 }}
               >
                 <img
@@ -240,7 +253,7 @@ export default function ProductStore() {
                     </IconButton>
                   )}
                   <h5 className="card-title">{value.name}</h5>
-                  <p className="card-title" value={value.description}>
+                  <p className="card-title" value={value.description} style={{height:"60px"}}>
                     {truncateText(value.description, 70)}
                   </p>
                   <h6 className="card-text">&#8360; {value.price}</h6>
@@ -286,9 +299,9 @@ export default function ProductStore() {
           })}
         </div>
       </div>
-      <div>
-        <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
-        <button onClick={() => handleNextPage()}>Next</button>
+      <div class="pg-btns">
+        <button id="pg-btn" onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
+        <button id="pg-btn" onClick={() => handleNextPage()}>Next</button>
       </div>
     </>
   );

@@ -3,6 +3,14 @@ import { useLocation } from "react-router";
 import { IP } from "../constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import "../../templates/css/GreivanceD.css";
+import Typography from '@mui/material/Typography';
+
 export default function GrievanceDetails() {
   const location = useLocation();
   const [grievanceDetails, setGrievanceDetails] = useState();
@@ -58,7 +66,7 @@ export default function GrievanceDetails() {
   };
 
   return (
-    <div>
+    <div id="gd">
       <ToastContainer
         position="bottom-left"
         autoClose={1000}
@@ -73,24 +81,38 @@ export default function GrievanceDetails() {
         transition="Bounce"
       />
       <>
-        <h1>
+      <div id="card-body">
+      <Card sx={{ minWidth: 100 }}>
+      <CardContent>
+      <Typography gutterBottom variant="h5">
           Name : {grievanceDetails?.data?.user?.firstName}{" "}
           {grievanceDetails?.data?.user?.lastName}
-        </h1>
-        <h1>Concern : {grievanceDetails?.data?.gtype}</h1>
+        </Typography>
+        <Typography variant="body3" color="text.secondary">Concern : {grievanceDetails?.data?.gtype}</Typography>
 
-        <h3>Message : {grievanceDetails?.data?.message}</h3>
-      </>
+        <Typography variant="body2" color="#0083f9">Message : {grievanceDetails?.data?.message}</Typography>
+      </CardContent>
       {grievanceDetails?.data?.gtype === "employement_request" && (
         <>
-          <button value="Yes" onClick={() => handleClick("Yes")}>
+        <CardActions>
+        <Box component="span" id="bx">
+          <Button class="bttn" value="Yes" size="small" onClick={() => handleClick("Yes")}>
             Yes
-          </button>
-          <button value="No" onClick={() => handleClick("No")}>
+          </Button>
+          <Button class="bttn" value="No" size="small" onClick={() => handleClick("No")}>
             No
-          </button>
+          </Button>
+          </Box>
+          </CardActions>
         </>
       )}
+      </Card>
+      
+      </div>
+      
+        
+      </>
+      
     </div>
   );
 }

@@ -1,0 +1,18 @@
+.ocont{
+    border: 1px solid lightblue;
+    background-color: lightblue;
+    padding: 50px;
+    height: 100vh;
+    width: 100%;
+}
+
+#card-body{
+    border-radius: 5px;
+}
+.prods{
+    
+    padding: 5px;
+    width: 80%;
+    margin: auto;
+    
+}

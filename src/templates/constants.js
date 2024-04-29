@@ -30,5 +30,7 @@
 
 
 //kharte home
-export const IP = '192.168.29.83'
+// export const IP = '192.168.29.83'
 
+// manasi ip
+export const IP = '192.168.30.181'
