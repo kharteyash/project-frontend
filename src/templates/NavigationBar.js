@@ -22,7 +22,6 @@ import {
   IconButton,
 } from "@mui/material";
 import RegistrationForm from "./RegistrationForm";
-import ProfilePage from "./ProfilePage";
 import HomePage from "./HomePage";
 import LoginPage from "./LoginPage";
 import "../templates/css/NavigationBar.css";
@@ -51,6 +50,7 @@ import GrievanceDetails from "./admin-pages/GrievanceDetails";
 import OrderDetails from "./OrderDetails";
 import AllExercises from "./AllExercises";
 import Sentiments from "./admin-pages/Sentiments";
+import Churn from "./admin-pages/Churn";
 
 export default function NavigationBar() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -179,22 +179,26 @@ export default function NavigationBar() {
               open={isMenuOpen}
               onClose={() => setIsMenuOpen(false)}
             >
-              <MenuItem>
-                <Link to="/profile">Profile</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/orders">Orders</Link>
-              </MenuItem>
+              {(userDetails?.data?._id && userDetails?.data?.role === "user") ||
+              (userDetails?.data?._id &&
+                userDetails?.data?.role === "employee") ? (
+                <>
+                  <MenuItem>
+                    <Link to="/profile">Profile</Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link to="/orders">Orders</Link>
+                  </MenuItem>
+                </>
+              ) : (
+                <></>
+              )}
               {(userDetails?.data?._id &&
                 userDetails?.data?.role === "admin") ||
               (userDetails?.data?._id &&
                 userDetails?.data?.role === "superadmin") ? (
                 <MenuItem>
-                  <Link
-                    to="/view-grievance"
-                  >
-                    View Grievance
-                  </Link>
+                  <Link to="/view-grievance">View Grievance</Link>
                 </MenuItem>
               ) : (
                 <MenuItem>
@@ -241,6 +245,7 @@ export default function NavigationBar() {
           <Route path="/order-details/:id" element={<OrderDetails />} />
           <Route path="/exercises" element={<AllExercises />} />
           <Route path="/get-sentiments" element={<Sentiments />} />
+          <Route path="/get-churn" element={<Churn />} />
           {/* <Route path="/exercises/:type" component={ShoulderPress} /> */}
         </Routes>
       </Router>

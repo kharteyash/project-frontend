@@ -5,15 +5,15 @@ import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
 
-export default function Sentiments() {
-  const [seeNegative, setSeeNegative] = useState(false);
-  const [negativeUsers, setNegativeUsers] = useState({});
+export default function Churn() {
+  const [seeChurn, setSeeChurn] = useState(false);
+  const [churnedUsers, setChurnedUsers] = useState({});
   const navigate = useNavigate();
 
-  const handleRunSentiments = async () => {
+  const handleRunChurn = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/admin/view/sentiments`,
+        `http://${IP}:5000/api/admin/view/churned`,
         {
           method: "PUT",
           headers: {
@@ -22,16 +22,16 @@ export default function Sentiments() {
           credentials: "include",
         }
       );
-      const getSentiment = await response.json();
-      setSeeNegative(true);
+      const getChurn = await response.json();
+      setSeeChurn(true);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  const handleGetSentiments = async () => {
+  const handleGetChurnedUsers = async () => {
     try {
       const response = await fetch(
-        `http://${IP}:5000/api/admin/view/sentiments/getUsers`,
+        `http://${IP}:5000/api/admin/view/churned/getUsers`,
         {
           method: "GET",
           headers: {
@@ -40,8 +40,8 @@ export default function Sentiments() {
           credentials: "include",
         }
       );
-      const getSentiment = await response.json();
-      setNegativeUsers(getSentiment);
+      const getChurn = await response.json();
+      setChurnedUsers(getChurn);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -53,7 +53,7 @@ export default function Sentiments() {
 
   const columns = [
     {
-      accessorKey: "user",
+      accessorKey: "userName",
       header: "User Name",
     },
     {
@@ -80,33 +80,33 @@ export default function Sentiments() {
   ];
 
   return (
-    <>
+    <div>
       <div>
-        {!seeNegative ? (
+        {!seeChurn ? (
           <button
             onClick={() => {
-              handleRunSentiments();
+              handleRunChurn();
             }}
           >
-            Get Sentiment
+            Get Churn Details
           </button>
         ) : (
           <button
             onClick={() => {
-              handleGetSentiments();
+              handleGetChurnedUsers();
             }}
           >
-            See Negative Users
+            See Churned Users
           </button>
         )}
       </div>
-      {negativeUsers?.data && (
+      {churnedUsers?.data && (
         <WMTable
-          tableTitle={"Users with Negative Sentiments"}
-          data={negativeUsers?.data}
+          tableTitle={"Users with Churn Possibility"}
+          data={churnedUsers?.data}
           columns={columns}
         />
       )}
-    </>
+    </div>
   );
 }

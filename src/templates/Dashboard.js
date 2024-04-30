@@ -75,6 +75,12 @@ export default function Dashboard() {
                       SENTIMENTS
                     </Link>
                   </Item>
+
+                  <Item class="tab">
+                    <Link to="/get-churn" class="links">
+                      CHURN
+                    </Link>
+                  </Item>
                 </Item>
               </>
             </Item>

@@ -21,6 +21,10 @@ export default function ViewOrders() {
   const [approvedOrders, setApprovedOrders] = useState({});
   const [shippedOrders, setShippedOrders] = useState({});
   const [deliveredOrders, setDeliveredOrders] = useState({});
+  const [viewplacedOrders, setviewPlacedOrders] = useState({});
+  const [viewapprovedOrders, setviewApprovedOrders] = useState({});
+  const [viewshippedOrders, setviewShippedOrders] = useState({});
+  const [viewdeliveredOrders, setviewDeliveredOrders] = useState({});
 
   const getPlacedOrders = async () => {
     try {
@@ -31,12 +35,13 @@ export default function ViewOrders() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const data = await response.json();
-      setPlacedOrders(data);
+      setviewPlacedOrders(data);
+      const array = data?.data;
+      setPlacedOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -51,12 +56,13 @@ export default function ViewOrders() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const data = await response.json();
-      setShippedOrders(data);
+      setviewShippedOrders(data);
+      const array = data?.data;
+      setShippedOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -70,12 +76,13 @@ export default function ViewOrders() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const data = await response.json();
-      setApprovedOrders(data);
+      setviewApprovedOrders(data);
+      const array = data?.data;
+      setApprovedOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -90,12 +97,13 @@ export default function ViewOrders() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
       const data = await response.json();
-      setDeliveredOrders(data);
+      setviewDeliveredOrders(data);
+      const array = data?.data;
+      setDeliveredOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -154,10 +162,10 @@ export default function ViewOrders() {
   return (
     <div class="voc">
       <div class="plcd-orders">
-        {placedOrders?.data && (
+        {viewplacedOrders?.data && (
           <>
             <WMTable
-              data={placedOrders?.data}
+              data={placedOrders}
               columns={columns}
               tableTitle={"Placed Orders"}
             />
@@ -165,10 +173,10 @@ export default function ViewOrders() {
         )}
       </div>
       <div class="plcd-orders">
-        {shippedOrders?.data && (
+        {viewshippedOrders?.data && (
           <>
             <WMTable
-              data={shippedOrders?.data}
+              data={shippedOrders}
               columns={columns}
               tableTitle={"Shipped Orders"}
             />
@@ -176,10 +184,10 @@ export default function ViewOrders() {
         )}
       </div>
       <div class="plcd-orders">
-        {approvedOrders?.data && (
+        {viewapprovedOrders?.data && (
           <>
             <WMTable
-              data={approvedOrders?.data}
+              data={approvedOrders}
               columns={columns}
               tableTitle={"Approved Orders"}
             />
@@ -187,10 +195,10 @@ export default function ViewOrders() {
         )}
       </div>
       <div class="plcd-orders">
-        {deliveredOrders?.data && (
+        {viewdeliveredOrders?.data && (
           <>
             <WMTable
-              data={deliveredOrders?.data}
+              data={deliveredOrders}
               columns={columns}
               tableTitle={"Delivered Orders"}
             />

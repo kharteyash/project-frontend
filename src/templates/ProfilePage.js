@@ -9,7 +9,8 @@ import {
   Typography,
   IconButton,
   Paper,
-  Divider
+  Divider,
+  Autocomplete,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IP } from "./constants.js";
@@ -20,7 +21,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function ProfilePage() {
   const [profileDetails, setProfileDetails] = useState({});
-
   const [editDetails, setEditDetails] = useState(false);
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
@@ -31,19 +31,127 @@ export default function ProfilePage() {
   const [country, setCountry] = useState("");
   const navigate = useNavigate();
 
+  const cities = [
+    {
+      city: "Navi Mumbai",
+      state: "Maharashtra",
+      country: "India",
+    },
+    {
+      city: "Mumbai",
+      state: "Maharashtra",
+      country: "India",
+    },
+    {
+      city: "Delhi",
+      state: "Delhi",
+      country: "India",
+    },
+    {
+      city: "Bangalore",
+      state: "Karnataka",
+      country: "India",
+    },
+    {
+      city: "Kolkata",
+      state: "West Bengal",
+      country: "India",
+    },
+    {
+      city: "Chennai",
+      state: "Tamil Nadu",
+      country: "India",
+    },
+    {
+      city: "Hyderabad",
+      state: "Telangana",
+      country: "India",
+    },
+    {
+      city: "Pune",
+      state: "Maharashtra",
+      country: "India",
+    },
+    {
+      city: "Ahmedabad",
+      state: "Gujarat",
+      country: "India",
+    },
+    {
+      city: "Surat",
+      state: "Gujarat",
+      country: "India",
+    },
+    {
+      city: "Jaipur",
+      state: "Rajasthan",
+      country: "India",
+    },
+    {
+      city: "Lucknow",
+      state: "Uttar Pradesh",
+      country: "India",
+    },
+    {
+      city: "Kanpur",
+      state: "Uttar Pradesh",
+      country: "India",
+    },
+    {
+      city: "Nagpur",
+      state: "Maharashtra",
+      country: "India",
+    },
+    {
+      city: "Patna",
+      state: "Bihar",
+      country: "India",
+    },
+    {
+      city: "Indore",
+      state: "Madhya Pradesh",
+      country: "India",
+    },
+    {
+      city: "Thane",
+      state: "Maharashtra",
+      country: "India",
+    },
+    {
+      city: "Bhopal",
+      state: "Madhya Pradesh",
+      country: "India",
+    },
+    {
+      city: "Visakhapatnam",
+      state: "Andhra Pradesh",
+      country: "India",
+    },
+    {
+      city: "Vadodara",
+      state: "Gujarat",
+      country: "India",
+    },
+    {
+      city: "Firozabad",
+      state: "Uttar Pradesh",
+      country: "India",
+    },
+  ];
+
   const handleProfileEdit = () => {
     setEditDetails(!editDetails);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      age,
-      weight,
-      height,
-      goal,
-      gender,
-      city,
-      country,
+      age : age || profileDetails?.data?.age,
+      weight : weight || profileDetails?.data?.weight,
+      height: height || profileDetails?.data?.height,
+      goal : goal || profileDetails?.data?.goal,
+      gender: gender || profileDetails?.data?.gender,
+      city: city || profileDetails?.data?.city,
+      country: country || profileDetails?.data?.country,
     };
     try {
       const response = await fetch(`http://${IP}:5000/api/users/profile`, {
@@ -70,7 +178,6 @@ export default function ProfilePage() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
       const data = await response.json();
@@ -83,6 +190,17 @@ export default function ProfilePage() {
   useEffect(() => {
     getProfileDetails();
   }, []);
+
+  const options =
+    cities?.map((option) => {
+      const firstLetter = option?.city[0].toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        ...option,
+      };
+    });
+
+  console.log("options", options);
 
   return (
     <>
@@ -249,13 +367,25 @@ export default function ProfilePage() {
                   </Grid>
                   <Grid item xs={12}>
                     <InputLabel>Enter your City</InputLabel>
-                    <TextField
+                    {/* <TextField
                       placeholder="Enter City"
                       id="city"
                       name="city"
                       fullWidth
                       defaultValue={profileDetails?.data?.city}
                       onChange={(e) => setCity(e.target.value)}
+                    /> */}
+                    <Autocomplete
+                      id="grouped-demo"
+                      options={options.sort(
+                        (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+                      )}
+                      groupBy={(option) => option?.firstLetter}
+                      getOptionLabel={(option) => option?.city}
+                      onSelect={(e) => setCity(e.target.value)}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Enter City" />
+                      )}
                     />
                   </Grid>
                   <Grid item xs={12}>

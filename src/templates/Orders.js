@@ -30,6 +30,9 @@ export default function Orders() {
   const [myOrders, setMyOrders] = useState({});
   const [myAllOrders, setMyAllOrders] = useState({});
 
+  const [viewmyOrders, setviewMyOrders] = useState({});
+  const [viewmyAllOrders, setviewMyAllOrders] = useState({});
+
   const handleBuyAgain = async (orderId) => {
     try {
       const response = await fetch(
@@ -59,7 +62,9 @@ export default function Orders() {
         credentials: "include",
       });
       const data = await response.json();
-      setMyOrders(data);
+      setviewMyOrders(data);
+      const array = data?.data;
+      setMyOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -78,7 +83,9 @@ export default function Orders() {
         }
       );
       const data = await response.json();
-      setMyOrders(data);
+      setviewMyOrders(data);
+      const array = data?.data;
+      setMyOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -97,7 +104,9 @@ export default function Orders() {
         }
       );
       const data = await response.json();
-      setMyAllOrders(data);
+      setviewMyAllOrders(data);
+      const array = data?.data;
+      setMyAllOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -116,7 +125,9 @@ export default function Orders() {
         }
       );
       const data = await response.json();
-      setMyAllOrders(data);
+      setviewMyAllOrders(data);
+      const array = data?.data;
+      setMyAllOrders([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -210,7 +221,7 @@ export default function Orders() {
 
   return (
     <div>
-      {myOrders?.data && (
+      {viewmyOrders?.data && (
         <WMTable
           columns={columns}
           tableTitle={"Current Orders"}
@@ -218,7 +229,7 @@ export default function Orders() {
         />
       )}
 
-      {myAllOrders?.data && (
+      {viewmyAllOrders?.data && (
         <WMTable
           columns={historyColumns}
           tableTitle={"Order History"}
