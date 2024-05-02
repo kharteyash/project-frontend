@@ -76,7 +76,7 @@ function ReviewDialog(props) {
 export default function ProductInfo() {
   const navigate = useNavigate();
   const location = useLocation();
-  const productId = location?.state;
+  const productId = location?.state?.productId;
   const [userDetails, setUserDetails] = useState({});
   const [productInfo, setProductInfo] = useState({});
   const [reviews, setReviews] = useState({});

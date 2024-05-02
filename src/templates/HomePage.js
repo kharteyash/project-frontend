@@ -106,11 +106,14 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    // top5Purchase();
+    top5Purchase();
   }, []);
 
   const openProductInfo = (productId) => {
-    navigate(`/store/product/${productId}`, { state: {productId, userDetails} });
+    console.log(productId)
+    navigate(`/store/product/${productId}`, {
+      state: { productId, userDetails },
+    });
   };
 
   const truncateText = (text, maxLength) => {
@@ -137,7 +140,7 @@ export default function HomePage() {
       />
       <div
         class="cont"
-        style={{ background: "black", height: "100vh", color: "white" }}
+        style={{ background: "#1C2833", color: "white", height: "100vh" }}
       >
         <div style={{ position: "relative" }}>
           <IconButton
@@ -181,9 +184,11 @@ export default function HomePage() {
           )}
           <div
             class="wlcm-msg"
-            style={{ border: "1px solid black", paddingLeft: "20px" }}
+            style={{ border: "1px solid #1C2833", paddingLeft: "20px" }}
           >
-            <h1 style={{ marginTop: "40px", fontSize: "60px" }}>
+            <h1
+              style={{ marginTop: "40px", fontSize: "60px", color: "#0bd2de" }}
+            >
               Welcome to the Workout Hub
             </h1>
             <p>Get In, Get Fit, Get On with Life!</p>
@@ -192,15 +197,20 @@ export default function HomePage() {
           <>
             {top5Recommendation?.data && (
               <>
-                <h3>Top products in our store</h3>
-                <div className="d-flex flex-wrap justify-content-center align-items-center">
+                <h3>Top 5 products in our store</h3>
+                <div
+                  className="d-flex flex-wrap justify-content-center align-items-center"
+                >
                   {top5Recommendation?.data?.map((value, index) => {
-                    if (!value) return null;
                     return (
                       <>
                         <div
                           className="card m-3"
-                          style={{ width: "18rem", height: "400px" }}
+                          style={{
+                            width: "15rem",
+                            height: "400px",
+                            border: "2px solid lightblue",
+                          }}
                         >
                           <img
                             className="img-fluid"

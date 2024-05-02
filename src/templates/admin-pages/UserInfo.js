@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function UserInfo() {
   const location = useLocation();
   const [userDets, setUserDets] = useState();
+  const [notifMessage, setNotifMessage] = useState();
   const userInfo = userDets?.data;
   const userDetails = location?.state;
 
@@ -109,6 +110,7 @@ export default function UserInfo() {
       console.error("Error:", error);
     }
   };
+
   const handleDeleteUser = async () => {
     try {
       const response = await fetch(
@@ -122,6 +124,30 @@ export default function UserInfo() {
         }
       );
       const userDelete = await response.json();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleSendNotifs = async () => {
+    const formData = {
+      message: notifMessage,
+    };
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${userDetails?._id}/sendNot`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
+      const notifs = await response.json();
+      toast.success(notifs?.message);
+      details();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -141,7 +167,6 @@ export default function UserInfo() {
         pauseOnHover
         theme="dark"
         transition="Bounce"
-        style={{ border: "3px solid red" }}
       />
       <>
         <div class="udetail">
@@ -193,15 +218,22 @@ export default function UserInfo() {
         )}
       </div>
       <div class="notif">
-        <input id="notif-txt" type="text" />
-        <input id="butn" type="submit" value={"Send Notification"} />
+        <input
+          id="notif-txt"
+          type="text"
+          onChange={(e) => setNotifMessage(e.target.value)}
+        />
+        <input
+          id="butn"
+          type="submit"
+          value={"Send Notification"}
+          onClick={() => handleSendNotifs()}
+        />
       </div>
-<>
+      <>
         <button>Find Similar Users</button>
         <button>Give Custom Recommendations</button>
-</>
-
-
+      </>
     </div>
   );
 }

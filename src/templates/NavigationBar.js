@@ -51,6 +51,7 @@ import OrderDetails from "./OrderDetails";
 import AllExercises from "./AllExercises";
 import Sentiments from "./admin-pages/Sentiments";
 import Churn from "./admin-pages/Churn";
+import Exercises from "./Exercises";
 
 export default function NavigationBar() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -114,6 +115,13 @@ export default function NavigationBar() {
             <Link to="/store" className="nav-link">
               Store
             </Link>
+            {userDetails?.data?._id ? (
+              <Link to="/exercises" className="nav-link">
+                Exercise
+              </Link>
+            ) : (
+              <></>
+            )}
             {!userDetails?.data?._id ? (
               <Link to="/login" className="nav-link">
                 Login
@@ -243,10 +251,10 @@ export default function NavigationBar() {
           <Route path="/view-grievance" element={<ViewGrievance />} />
           <Route path="/grievance-details/:id" element={<GrievanceDetails />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
-          <Route path="/exercises" element={<AllExercises />} />
+          {/* <Route path="/exercises" element={<AllExercises />} /> */}
           <Route path="/get-sentiments" element={<Sentiments />} />
           <Route path="/get-churn" element={<Churn />} />
-          {/* <Route path="/exercises/:type" component={ShoulderPress} /> */}
+          <Route path="/exercises" element={<Exercises />} />
         </Routes>
       </Router>
     </>
