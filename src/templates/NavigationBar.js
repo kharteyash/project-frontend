@@ -52,6 +52,7 @@ import AllExercises from "./AllExercises";
 import Sentiments from "./admin-pages/Sentiments";
 import Churn from "./admin-pages/Churn";
 import Exercises from "./Exercises";
+import CartAbandon from "./admin-pages/CartAbandon";
 
 export default function NavigationBar() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -116,9 +117,9 @@ export default function NavigationBar() {
               Store
             </Link>
             {userDetails?.data?._id ? (
-              <Link to="/exercises" className="nav-link">
+              <a href="https://aqua-kristi-35.tiiny.site/" className="nav-link">
                 Exercise
-              </Link>
+              </a>
             ) : (
               <></>
             )}
@@ -254,7 +255,8 @@ export default function NavigationBar() {
           {/* <Route path="/exercises" element={<AllExercises />} /> */}
           <Route path="/get-sentiments" element={<Sentiments />} />
           <Route path="/get-churn" element={<Churn />} />
-          <Route path="/exercises" element={<Exercises />} />
+          <Route path="/get-cartAbandon" element={<CartAbandon />} />
+          {/* <Route path="/exercises" element={<Exercises />} /> */}
         </Routes>
       </Router>
     </>

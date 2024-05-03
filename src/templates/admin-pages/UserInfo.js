@@ -5,10 +5,14 @@ import WMTable from "../../ui-components/table";
 import { IP } from "../constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import { IconButton } from "@mui/material";
+
 export default function UserInfo() {
   const location = useLocation();
   const [userDets, setUserDets] = useState();
   const [notifMessage, setNotifMessage] = useState();
+  const [similar, setSimilar] = useState();
   const userInfo = userDets?.data;
   const userDetails = location?.state;
 
@@ -31,9 +35,60 @@ export default function UserInfo() {
     }
   };
 
+  const similarUsers = async () => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${userDetails?._id}/findSim`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      setSimilar(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
     details();
   }, []);
+
+  const similarColumns = [
+    {
+      header: "Name",
+      Cell: ({ row }) => (
+        <>
+          {row?.original?.firstName} {row?.original?.lastName}
+        </>
+      ),
+    },
+    {
+      header: "Products bought",
+      Cell: ({ row }) => (
+        <>
+          {row?.original?.intersectionProducts.map((value, index) => {
+            return (
+              <>
+                <p>
+                  {value?.product?.name}
+                  <>
+                    <IconButton>
+                      <ArrowCircleRightIcon />
+                    </IconButton>
+                  </>
+                </p>
+              </>
+            );
+          })}
+        </>
+      ),
+    },
+  ];
 
   const columns = [
     {
@@ -231,9 +286,18 @@ export default function UserInfo() {
         />
       </div>
       <>
-        <button>Find Similar Users</button>
+        <button onClick={() => similarUsers()}>Find Similar Users</button>
         <button>Give Custom Recommendations</button>
       </>
+      <div class="all-notifs">
+        {similar?.data && (
+          <WMTable
+            data={similar?.data}
+            tableTitle={"Similar Users"}
+            columns={similarColumns}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -81,6 +81,12 @@ export default function Dashboard() {
                       CHURN
                     </Link>
                   </Item>
+
+                  <Item class="tab">
+                    <Link to="/get-cartAbandon" class="links">
+                      CART ABANDONNED
+                    </Link>
+                  </Item>
                 </Item>
               </>
             </Item>

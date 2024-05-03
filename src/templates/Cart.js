@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IP } from "./constants";
 import PropTypes from "prop-types";
 import WMTable from "../ui-components/table";
+import "../templates/css/Cart.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -33,7 +34,6 @@ export default function Cart() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
       const data = await response.json();
@@ -95,7 +95,6 @@ export default function Cart() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -108,7 +107,6 @@ export default function Cart() {
   };
 
   const handleSubQty = async (event, data) => {
-    console.log("data", data);
     try {
       const response = await fetch(
         `http://${IP}:5000/api/users/view/cart/${data}/subQty`,
@@ -117,7 +115,6 @@ export default function Cart() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -129,7 +126,23 @@ export default function Cart() {
     cart();
   };
 
-  const handleBuyAll = () => {
+  const handleBuyAll = async() => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/buy`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const checkout = await response.json();
+      toast.success(checkout?.message);
+    } catch (error) {
+      console.error("Error:", error);
+    }
     navigate("/shippingDetails");
   };
 
@@ -188,7 +201,8 @@ export default function Cart() {
       Cell: ({ row }) => (
         <>
           <IconButton>
-            <DeleteIcon
+          <DeleteIcon
+            style={{color:"#0083f9"}}
               onClick={(e) => handleDeleteItem(e, row?.original?.product?._id)}
             />
           </IconButton>
@@ -213,9 +227,21 @@ export default function Cart() {
       />
       {allCart?.data ? (
         <>
-          <WMTable columns={columns} data={allCart?.data} tableTitle={"Cart"} />
-          <button onClick={() => handleDeleteAll()}>Delete All</button>
-          <button onClick={() => handleBuyAll()}>Buy all</button>
+          <div class="cartp">
+            <WMTable
+              columns={columns}
+              data={allCart?.data}
+              tableTitle={"Cart"}
+            />
+          </div>
+          <div class="buyall">
+            <button class="cartbtn" onClick={() => handleDeleteAll()}>  
+              Delete All
+            </button>
+            <button class="cartbtn" onClick={() => handleBuyAll()}>
+              Buy all
+            </button>
+          </div>
         </>
       ) : (
         <>

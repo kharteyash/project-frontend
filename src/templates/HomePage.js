@@ -112,7 +112,7 @@ export default function HomePage() {
   const openProductInfo = (productId) => {
     console.log(productId)
     navigate(`/store/product/${productId}`, {
-      state: { productId, userDetails },
+      state: productId,
     });
   };
 
@@ -140,7 +140,7 @@ export default function HomePage() {
       />
       <div
         class="cont"
-        style={{ background: "#1C2833", color: "white", height: "100vh" }}
+        style={{ background: "#1C2833", color: "white" }}
       >
         <div style={{ position: "relative" }}>
           <IconButton
