@@ -29,6 +29,10 @@ export default function ProfilePage() {
   const [goal, setGoal] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
+  const [systolicBp, setSystolicBp] = useState("");
+  const [diastolicBp, setDiastolicBp] = useState("");
+  const [diabetes, setDiabetes] = useState("");
+  const [cholesterol, setCholesterol] = useState("");
   const navigate = useNavigate();
 
   const cities = [
@@ -152,6 +156,10 @@ export default function ProfilePage() {
       gender: gender || profileDetails?.data?.gender,
       city: city || profileDetails?.data?.city,
       country: country || profileDetails?.data?.country,
+      systolicBp: systolicBp || profileDetails?.data?.systolicBp,
+      cholesterol: cholesterol || profileDetails?.data?.cholesterol,
+      diabetes: diabetes || profileDetails?.data?.diabetes,
+      diastolicBp: diastolicBp || profileDetails?.data?.diastolicBp
     };
     try {
       const response = await fetch(`http://${IP}:5000/api/users/profile`, {
@@ -397,6 +405,47 @@ export default function ProfilePage() {
                       fullWidth
                       defaultValue={profileDetails?.data?.country}
                       onChange={(e) => setCountry(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <InputLabel>Enter Your Systolic BP</InputLabel>
+                    <TextField
+                      placeholder="Enter your Systolic BP"
+                      id="systolicBp"
+                      name="systolicBp"
+                      fullWidth
+                      defaultValue={profileDetails?.data?.systolicBp}
+                      onChange={(e) => setSystolicBp(e.target.value)}
+                    />
+                  </Grid><Grid item xs={12} sm={6}>
+                    <InputLabel>Enter Your Diastolic BP</InputLabel>
+                    <TextField
+                      placeholder="Enter Your Diastolic BP"
+                      id="diastolicBp"
+                      name="diastolicBp"
+                      fullWidth
+                      defaultValue={profileDetails?.data?.diastolicBp}
+                      onChange={(e) => setDiastolicBp(e.target.value)}
+                    />
+                  </Grid><Grid item xs={12} sm={6}>
+                    <InputLabel>Enter Your Cholestrol Level</InputLabel>
+                    <TextField
+                      placeholder="Enter your Cholestrol Level"
+                      id="cholesterol"
+                      name="cholesterol"
+                      fullWidth
+                      defaultValue={profileDetails?.data?.cholesterol}
+                      onChange={(e) => setCholesterol(e.target.value)}
+                    />
+                  </Grid><Grid item xs={12} sm={6}>
+                    <InputLabel>Enter Your Sugar Level(Diabetes)</InputLabel>
+                    <TextField
+                      placeholder="Enter your sugar Level"
+                      id="diabetes"
+                      name="diabetes"
+                      fullWidth
+                      defaultValue={profileDetails?.data?.diabetes}
+                      onChange={(e) => setDiabetes(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
