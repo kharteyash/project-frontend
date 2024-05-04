@@ -140,7 +140,7 @@ export default function HomePage() {
       />
       <div
         class="cont"
-        style={{ background: "#1C2833", color: "white" }}
+        style={{ background: "#1C2833", color: "white", height: "1300px" }}
       >
         <div style={{ position: "relative" }}>
           <IconButton

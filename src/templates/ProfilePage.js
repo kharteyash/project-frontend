@@ -29,119 +29,119 @@ export default function ProfilePage() {
   const [goal, setGoal] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-  const [systolicBp, setSystolicBp] = useState("");
-  const [diastolicBp, setDiastolicBp] = useState("");
-  const [diabetes, setDiabetes] = useState("");
-  const [cholesterol, setCholesterol] = useState("");
+  const [systolicBp, setSystolicBp] = useState();
+  const [diastolicBp, setDiastolicBp] = useState();
+  const [diabetes, setDiabetes] = useState();
+  const [cholesterol, setCholesterol] = useState();
   const navigate = useNavigate();
 
-  const cities = [
-    {
-      city: "Navi Mumbai",
-      state: "Maharashtra",
-      country: "India",
-    },
-    {
-      city: "Mumbai",
-      state: "Maharashtra",
-      country: "India",
-    },
-    {
-      city: "Delhi",
-      state: "Delhi",
-      country: "India",
-    },
-    {
-      city: "Bangalore",
-      state: "Karnataka",
-      country: "India",
-    },
-    {
-      city: "Kolkata",
-      state: "West Bengal",
-      country: "India",
-    },
-    {
-      city: "Chennai",
-      state: "Tamil Nadu",
-      country: "India",
-    },
-    {
-      city: "Hyderabad",
-      state: "Telangana",
-      country: "India",
-    },
-    {
-      city: "Pune",
-      state: "Maharashtra",
-      country: "India",
-    },
-    {
-      city: "Ahmedabad",
-      state: "Gujarat",
-      country: "India",
-    },
-    {
-      city: "Surat",
-      state: "Gujarat",
-      country: "India",
-    },
-    {
-      city: "Jaipur",
-      state: "Rajasthan",
-      country: "India",
-    },
-    {
-      city: "Lucknow",
-      state: "Uttar Pradesh",
-      country: "India",
-    },
-    {
-      city: "Kanpur",
-      state: "Uttar Pradesh",
-      country: "India",
-    },
-    {
-      city: "Nagpur",
-      state: "Maharashtra",
-      country: "India",
-    },
-    {
-      city: "Patna",
-      state: "Bihar",
-      country: "India",
-    },
-    {
-      city: "Indore",
-      state: "Madhya Pradesh",
-      country: "India",
-    },
-    {
-      city: "Thane",
-      state: "Maharashtra",
-      country: "India",
-    },
-    {
-      city: "Bhopal",
-      state: "Madhya Pradesh",
-      country: "India",
-    },
-    {
-      city: "Visakhapatnam",
-      state: "Andhra Pradesh",
-      country: "India",
-    },
-    {
-      city: "Vadodara",
-      state: "Gujarat",
-      country: "India",
-    },
-    {
-      city: "Firozabad",
-      state: "Uttar Pradesh",
-      country: "India",
-    },
-  ];
+  // const cities = [
+  //   {
+  //     city: "Navi Mumbai",
+  //     state: "Maharashtra",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Mumbai",
+  //     state: "Maharashtra",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Delhi",
+  //     state: "Delhi",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Bangalore",
+  //     state: "Karnataka",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Kolkata",
+  //     state: "West Bengal",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Chennai",
+  //     state: "Tamil Nadu",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Hyderabad",
+  //     state: "Telangana",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Pune",
+  //     state: "Maharashtra",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Ahmedabad",
+  //     state: "Gujarat",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Surat",
+  //     state: "Gujarat",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Jaipur",
+  //     state: "Rajasthan",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Lucknow",
+  //     state: "Uttar Pradesh",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Kanpur",
+  //     state: "Uttar Pradesh",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Nagpur",
+  //     state: "Maharashtra",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Patna",
+  //     state: "Bihar",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Indore",
+  //     state: "Madhya Pradesh",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Thane",
+  //     state: "Maharashtra",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Bhopal",
+  //     state: "Madhya Pradesh",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Visakhapatnam",
+  //     state: "Andhra Pradesh",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Vadodara",
+  //     state: "Gujarat",
+  //     country: "India",
+  //   },
+  //   {
+  //     city: "Firozabad",
+  //     state: "Uttar Pradesh",
+  //     country: "India",
+  //   },
+  // ];
 
   const handleProfileEdit = () => {
     setEditDetails(!editDetails);
@@ -156,10 +156,10 @@ export default function ProfilePage() {
       gender: gender || profileDetails?.data?.gender,
       city: city || profileDetails?.data?.city,
       country: country || profileDetails?.data?.country,
-      systolicBp: systolicBp || profileDetails?.data?.systolicBp,
-      cholesterol: cholesterol || profileDetails?.data?.cholesterol,
-      diabetes: diabetes || profileDetails?.data?.diabetes,
-      diastolicBp: diastolicBp || profileDetails?.data?.diastolicBp
+      systolicBp: Number(systolicBp) || profileDetails?.data?.systolicBp,
+      cholesterol: Number(cholesterol) || profileDetails?.data?.cholesterol,
+      diabetes: Number(diabetes) || profileDetails?.data?.diabetes,
+      diastolicBp: Number(diastolicBp) || profileDetails?.data?.diastolicBp
     };
     try {
       const response = await fetch(`http://${IP}:5000/api/users/profile`, {
@@ -199,16 +199,14 @@ export default function ProfilePage() {
     getProfileDetails();
   }, []);
 
-  const options =
-    cities?.map((option) => {
-      const firstLetter = option?.city[0].toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-        ...option,
-      };
-    });
-
-  console.log("options", options);
+  // const options =
+  //   cities?.map((option) => {
+  //     const firstLetter = option?.city[0].toUpperCase();
+  //     return {
+  //       firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+  //       ...option,
+  //     };
+  //   });
 
   return (
     <>
@@ -284,6 +282,30 @@ export default function ProfilePage() {
                       </span>
                       {profileDetails?.data?.country}
                     </li>
+                    <li>
+                      <span>
+                        <InputLabel>Systolic BP :</InputLabel>
+                      </span>
+                      {profileDetails?.data?.systolicBp}
+                    </li>
+                    <li>
+                      <span>
+                        <InputLabel>Diastolic BP :</InputLabel>
+                      </span>
+                      {profileDetails?.data?.diastolicBp}
+                    </li>
+                    <li>
+                      <span>
+                        <InputLabel>Diabetes :</InputLabel>
+                      </span>
+                      {profileDetails?.data?.diabetes}
+                    </li>
+                    <li>
+                      <span>
+                        <InputLabel>Cholestrol :</InputLabel>
+                      </span>
+                      {profileDetails?.data?.cholesterol}
+                    </li>
                   </ul>
                 </div>
               </>
@@ -295,7 +317,6 @@ export default function ProfilePage() {
                     <TextField
                       placeholder="Enter Age"
                       id="age"
-                      name="age"
                       fullWidth
                       defaultValue={profileDetails?.data?.age}
                       onChange={(e) => setAge(e.target.value)}
@@ -306,7 +327,6 @@ export default function ProfilePage() {
                     <TextField
                       placeholder="Enter Weight"
                       id="weight"
-                      name="weight"
                       fullWidth
                       defaultValue={profileDetails?.data?.weight}
                       onChange={(e) => setWeight(e.target.value)}
@@ -317,7 +337,6 @@ export default function ProfilePage() {
                     <TextField
                       placeholder="Enter Height"
                       id="height"
-                      name="height"
                       fullWidth
                       defaultValue={profileDetails?.data?.height}
                       onChange={(e) => setHeight(e.target.value)}
@@ -327,9 +346,7 @@ export default function ProfilePage() {
                     <InputLabel>Enter Your Gender</InputLabel>
                     <RadioGroup
                       aria-label="gender"
-                      name="gender"
                       id="gender"
-                      // value={gender}
                       defaultValue={profileDetails?.data?.gender}
                       onChange={(e) => setGender(e.target.value)}
                     >
@@ -349,9 +366,7 @@ export default function ProfilePage() {
                     <InputLabel>Enter Your Goal</InputLabel>
                     <RadioGroup
                       aria-label="goal"
-                      name="goal"
                       id="goal"
-                      // value={goal}
                       selected={profileDetails?.data?.goal}
                       defaultValue={profileDetails?.data?.goal}
                       onChange={(e) => setGoal(e.target.value)}
@@ -375,15 +390,14 @@ export default function ProfilePage() {
                   </Grid>
                   <Grid item xs={12}>
                     <InputLabel>Enter your City</InputLabel>
-                    {/* <TextField
+                    <TextField
                       placeholder="Enter City"
                       id="city"
-                      name="city"
                       fullWidth
                       defaultValue={profileDetails?.data?.city}
                       onChange={(e) => setCity(e.target.value)}
-                    /> */}
-                    <Autocomplete
+                    />
+                    {/* <Autocomplete
                       id="grouped-demo"
                       options={options.sort(
                         (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
@@ -394,14 +408,13 @@ export default function ProfilePage() {
                       renderInput={(params) => (
                         <TextField {...params} label="Enter City" />
                       )}
-                    />
+                    /> */}
                   </Grid>
                   <Grid item xs={12}>
                     <InputLabel>Enter Country</InputLabel>
                     <TextField
                       placeholder="Enter Country"
                       id="country"
-                      name="country"
                       fullWidth
                       defaultValue={profileDetails?.data?.country}
                       onChange={(e) => setCountry(e.target.value)}
@@ -412,7 +425,6 @@ export default function ProfilePage() {
                     <TextField
                       placeholder="Enter your Systolic BP"
                       id="systolicBp"
-                      name="systolicBp"
                       fullWidth
                       defaultValue={profileDetails?.data?.systolicBp}
                       onChange={(e) => setSystolicBp(e.target.value)}
@@ -422,7 +434,6 @@ export default function ProfilePage() {
                     <TextField
                       placeholder="Enter Your Diastolic BP"
                       id="diastolicBp"
-                      name="diastolicBp"
                       fullWidth
                       defaultValue={profileDetails?.data?.diastolicBp}
                       onChange={(e) => setDiastolicBp(e.target.value)}
@@ -432,7 +443,6 @@ export default function ProfilePage() {
                     <TextField
                       placeholder="Enter your Cholestrol Level"
                       id="cholesterol"
-                      name="cholesterol"
                       fullWidth
                       defaultValue={profileDetails?.data?.cholesterol}
                       onChange={(e) => setCholesterol(e.target.value)}
@@ -442,7 +452,6 @@ export default function ProfilePage() {
                     <TextField
                       placeholder="Enter your sugar Level"
                       id="diabetes"
-                      name="diabetes"
                       fullWidth
                       defaultValue={profileDetails?.data?.diabetes}
                       onChange={(e) => setDiabetes(e.target.value)}

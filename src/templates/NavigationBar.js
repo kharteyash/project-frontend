@@ -110,18 +110,29 @@ export default function NavigationBar() {
             <Link to="/home" className="nav-link">
               Home
             </Link>
-            <Link to="/gallery" className="nav-link">
-              Gallery
-            </Link>
-            <Link to="/store" className="nav-link">
-              Store
-            </Link>
-            {userDetails?.data?._id ? (
-              <a href="https://aqua-kristi-35.tiiny.site/" className="nav-link">
-                Exercise
-              </a>
-            ) : (
+            {userDetails?.role === "admin" ||
+            userDetails?.data?.role === "superadmin" ||
+            userDetails?.data?.role === "employee" ? (
               <></>
+            ) : (
+              <>
+                <Link to="/gallery" className="nav-link">
+                  Gallery
+                </Link>
+                <Link to="/store" className="nav-link">
+                  Store
+                </Link>
+                {userDetails?.data?._id ? (
+                  <a
+                    href="https://indigo-crystal-95.tiiny.site/"
+                    className="nav-link"
+                  >
+                    Exercise
+                  </a>
+                ) : (
+                  <></>
+                )}
+              </>
             )}
             {!userDetails?.data?._id ? (
               <Link to="/login" className="nav-link">
@@ -139,33 +150,41 @@ export default function NavigationBar() {
             ) : (
               ""
             )}
-            {userDetails?.data?._id ? (
-              <>
-                <Link to="/wishlist">
-                  <LoyaltyIcon
-                    style={{
-                      fontSize: "35px",
-                      position: "absolute",
-                      right: "150px",
-                      top: "8px",
-                      color: "#0bd2de",
-                    }}
-                  />
-                </Link>
-                <Link to="/cart">
-                  <ShoppingCartIcon
-                    style={{
-                      fontSize: "32px",
-                      position: "absolute",
-                      right: "80px",
-                      top: "10px",
-                      color: "#0bd2de",
-                    }}
-                  />
-                </Link>
-              </>
-            ) : (
+            {userDetails?.role === "admin" ||
+            userDetails?.data?.role === "superadmin" ||
+            userDetails?.data?.role === "employee" ? (
               <></>
+            ) : (
+              <>
+                {userDetails?.data?._id ? (
+                  <>
+                    <Link to="/wishlist">
+                      <LoyaltyIcon
+                        style={{
+                          fontSize: "35px",
+                          position: "absolute",
+                          right: "150px",
+                          top: "8px",
+                          color: "#0bd2de",
+                        }}
+                      />
+                    </Link>
+                    <Link to="/cart">
+                      <ShoppingCartIcon
+                        style={{
+                          fontSize: "32px",
+                          position: "absolute",
+                          right: "80px",
+                          top: "10px",
+                          color: "#0bd2de",
+                        }}
+                      />
+                    </Link>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
             )}
             {userDetails?.data?._id ? (
               <IconButton

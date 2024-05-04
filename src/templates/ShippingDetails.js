@@ -9,6 +9,7 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
+import "../templates/css/Shipdetail.css";
 import React, { useEffect, useState } from "react";
 import { IP } from "./constants.js";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +33,6 @@ export default function ShippingInfo() {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(details),
         credentials: "include",
       });
       const data = await response.json();
@@ -93,101 +93,108 @@ export default function ShippingInfo() {
   };
   return (
     <>
-      <h1>Shipping Details</h1>
+      <div class="shipcont">
+        <div class="title">
+          {" "}
+          <h1>Shipping Details</h1>
+          <IconButton onClick={() => handleEditToggle()}>
+            {!editDetails ? (
+              <EditIcon style={{ color: "#0083f9" }} />
+            ) : (
+              <CloseIcon />
+            )}
+          </IconButton>
+        </div>
 
-      <IconButton onClick={() => handleEditToggle()}>
-        {!editDetails ? <EditIcon /> : <CloseIcon />}
-      </IconButton>
-      <form onSubmit={handleSubmit}>
-        {!editDetails ? (
-          <>
-            <InputLabel>Phone Number</InputLabel>
-            <Typography>{allShippingDetails?.data?.phoneNo}</Typography>
-            <InputLabel>Address</InputLabel>
-            <Typography>{allShippingDetails?.data?.address}</Typography>
-            <InputLabel>City</InputLabel>
-            <Typography>{allShippingDetails?.data?.city}</Typography>
-            <InputLabel>Pincode</InputLabel>
-            <Typography>{allShippingDetails?.data?.pincode}</Typography>
-            <InputLabel>State</InputLabel>
-            <Typography>{allShippingDetails?.data?.state}</Typography>
-            <InputLabel>Country</InputLabel>
-            <Typography>{allShippingDetails?.data?.country}</Typography>
-          </>
-        ) : (
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Enter Your Phone Number</InputLabel>
-              <TextField
-                placeholder="Enter Phone Number"
-                id="phoneNo"
-                name="phoneNo"
-                fullWidth
-                defaultValue={allShippingDetails?.data?.phoneNo}
-                onChange={(e) => setPhoneNo(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Enter Your Address</InputLabel>
-              <TextField
-                placeholder="Enter Address"
-                id="address"
-                name="address"
-                fullWidth
-                defaultValue={allShippingDetails?.data?.address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Enter Your City</InputLabel>
-              <TextField
-                placeholder="Enter City"
-                id="city"
-                name="city"
-                fullWidth
-                defaultValue={allShippingDetails?.data?.city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Enter Your Pincode</InputLabel>
-              <TextField
-                placeholder="Enter Pincode"
-                id="pincode"
-                name="pincode"
-                fullWidth
-                defaultValue={allShippingDetails?.data?.pincode}
-                onChange={(e) => setPincode(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Enter Your State</InputLabel>
-              <TextField
-                placeholder="Enter State"
-                id="state"
-                name="state"
-                fullWidth
-                defaultValue={allShippingDetails?.data?.state}
-                onChange={(e) => setState(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Enter Your Country</InputLabel>
-              <TextField
-                placeholder="Enter Country"
-                id="country"
-                name="country"
-                fullWidth
-                defaultValue={allShippingDetails?.data?.country}
-                onChange={(e) => setCountry(e.target.value)}
-              />
-            </Grid>
-          </Grid>
-        )}
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          {!editDetails ? (
+            <>
+              <InputLabel>Phone Number</InputLabel>
+              <Typography>{allShippingDetails?.data?.phoneNo}</Typography>
+              <InputLabel>Address</InputLabel>
+              <Typography>{allShippingDetails?.data?.address}</Typography>
+              <InputLabel>City</InputLabel>
+              <Typography>{allShippingDetails?.data?.city}</Typography>
+              <InputLabel>Pincode</InputLabel>
+              <Typography>{allShippingDetails?.data?.pincode}</Typography>
+              <InputLabel>State</InputLabel>
+              <Typography>{allShippingDetails?.data?.state}</Typography>
+              <InputLabel>Country</InputLabel>
+              <Typography>{allShippingDetails?.data?.country}</Typography>
+            </>
+          ) : (
+            <div class="fillform">
+              <Grid container spacing={1} justifyContent="center">
+                <Grid item xs={12} sm={6}>
+                  <InputLabel id="lbl">Enter Your Phone Number</InputLabel>
+                  <TextField
+                    placeholder="Enter Phone Number"
+                    id="phoneNo"
+                    name="phoneNo"
+                    class="textf"
+                    defaultValue={allShippingDetails?.data?.phoneNo}
+                    onChange={(e) => setPhoneNo(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <InputLabel id="lbl">Enter Your Address</InputLabel>
+                  <TextField
+                    placeholder="Enter Address"
+                    id="address"
+                    name="address"
+                    defaultValue={allShippingDetails?.data?.address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <InputLabel id="lbl">Enter Your City</InputLabel>
+                  <TextField
+                    placeholder="Enter City"
+                    id="city"
+                    name="city"
+                    defaultValue={allShippingDetails?.data?.city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <InputLabel id="lbl">Enter Your Pincode</InputLabel>
+                  <TextField
+                    placeholder="Enter Pincode"
+                    id="pincode"
+                    name="pincode"
+                    defaultValue={allShippingDetails?.data?.pincode}
+                    onChange={(e) => setPincode(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <InputLabel id="lbl">Enter Your State</InputLabel>
+                  <TextField
+                    placeholder="Enter State"
+                    id="state"
+                    name="state"
+                    defaultValue={allShippingDetails?.data?.state}
+                    onChange={(e) => setState(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} id="gr">
+                  <InputLabel id="lbl">Enter Your Country</InputLabel>
+                  <TextField
+                    placeholder="Enter Country"
+                    id="country"
+                    name="country"
+                    defaultValue={allShippingDetails?.data?.country}
+                    onChange={(e) => setCountry(e.target.value)}
+                  />
+                </Grid>
+              </Grid>
+            </div>
+          )}
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </form>
+      </div>
+      {/*shipcont */}
     </>
   );
 }

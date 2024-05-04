@@ -217,6 +217,27 @@ export default function RecommendationPage() {
     fetchData();
   }, []);
 
+  const handleOpenExercise = (exerciseName) => {
+    if (exerciseName === "Squat") {
+      window.location.href = "https://indigo-crystal-95.tiiny.site/Squat.html";
+    }
+    if (exerciseName === "Shoulder Press") {
+      window.location.href =
+        "https://indigo-crystal-95.tiiny.site/ShoulderPress.html";
+    }
+    if (exerciseName === "Bicep Curl") {
+      window.location.href =
+        "https://indigo-crystal-95.tiiny.site/bicep_curl.html";
+    }
+    if (exerciseName === "Dead Lift") {
+      window.location.href =
+        "https://indigo-crystal-95.tiiny.site/Deadlift.html";
+    }
+    if (exerciseName === "Pushup") {
+      window.location.href = "https://indigo-crystal-95.tiiny.site/pushup.html";
+    }
+  };
+
   if (!render) {
     return (
       <>
@@ -242,7 +263,7 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.image}
+                      src={value?.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
@@ -252,12 +273,12 @@ export default function RecommendationPage() {
                       onClick={() => openProductInfo(value._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value?.description}>
+                        {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -281,7 +302,7 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.image}
+                      src={value?.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
@@ -291,12 +312,12 @@ export default function RecommendationPage() {
                       onClick={() => openProductInfo(value._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value?.description}>
+                        {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -320,7 +341,7 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.image}
+                      src={value?.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
@@ -330,12 +351,12 @@ export default function RecommendationPage() {
                       onClick={() => openProductInfo(value._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value?.description}>
+                        {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value.price}</p>
-                      <p className="card-text">{value.avgRating}</p>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -359,25 +380,25 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.product.image}
+                      src={value?.product?.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
                         width: "300px",
                         height: "200px",
                       }}
-                      onClick={() => openProductInfo(value.product._id)}
+                      onClick={() => openProductInfo(value?.product._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.product.name}</h5>
+                      <h5 className="card-title">{value?.product?.name}</h5>
                       <h6
                         className="card-title"
-                        value={value.product.description}
+                        value={value?.product?.description}
                       >
-                        {truncateText(value.product.description, 70)}
+                        {truncateText(value?.product?.description, 70)}
                       </h6>
-                      <p className="card-text">{value.product.price}</p>
-                      <p className="card-text">{value.product.avgRating}</p>
+                      <p className="card-text">{value?.product?.price}</p>
+                      <p className="card-text">{value?.product?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -401,25 +422,25 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.product.image}
+                      src={value?.product?.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
                         width: "300px",
                         height: "200px",
                       }}
-                      onClick={() => openProductInfo(value.product._id)}
+                      onClick={() => openProductInfo(value?.product._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.product.name}</h5>
+                      <h5 className="card-title">{value?.product?.name}</h5>
                       <h6
                         className="card-title"
-                        value={value.product.description}
+                        value={value?.product?.description}
                       >
-                        {truncateText(value.product.description, 70)}
+                        {truncateText(value?.product?.description, 70)}
                       </h6>
-                      <p className="card-text">{value.product.price}</p>
-                      <p className="card-text">{value.product.avgRating}</p>
+                      <p className="card-text">{value?.product?.price}</p>
+                      <p className="card-text">{value?.product?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -443,25 +464,22 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.image}
+                      src={value?.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
                         width: "300px",
                         height: "200px",
                       }}
-                      onClick={() => openProductInfo(value.product._id)}
+                      onClick={() => openProductInfo(value?._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.product.name}</h5>
-                      <h6
-                        className="card-title"
-                        value={value.product.description}
-                      >
-                        {truncateText(value.product.description, 70)}
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value?.description}>
+                        {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value.product.price}</p>
-                      <p className="card-text">{value.product.avgRating}</p>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -474,6 +492,7 @@ export default function RecommendationPage() {
       {timelineRecommendation?.data && (
         <>
           <h3>timeline</h3>
+          <h4>Last Month</h4>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {timelineRecommendation?.data?.lastMonth?.map((value, index) => {
               if (!value) return null;
@@ -485,22 +504,90 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.image}
+                      src={value?.image}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
                         width: "300px",
                         height: "200px",
                       }}
-                      onClick={() => openProductInfo(value._id)}
+                      onClick={() => openProductInfo(value?._id)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      {/* <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
-                      </h6> */}
-                      <p className="card-text">{value.price}</p>
-                      {/* <p className="card-text">{value.avgRating}</p> */}
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value.description}>
+                        {truncateText(value?.description, 70)}
+                      </h6>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+          <h4>Last 2 Weeks</h4>
+          <div className="d-flex flex-wrap justify-content-center align-items-center">
+            {timelineRecommendation?.data?.last2Weeks?.map((value, index) => {
+              if (!value) return null;
+              return (
+                <>
+                  <div
+                    className="card m-3"
+                    style={{ width: "18rem", height: "400px" }}
+                  >
+                    <img
+                      className="img-fluid"
+                      src={value?.image}
+                      alt="Card image cap"
+                      style={{
+                        objectFit: "cover",
+                        width: "300px",
+                        height: "200px",
+                      }}
+                      onClick={() => openProductInfo(value?._id)}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value.description}>
+                        {truncateText(value?.description, 70)}
+                      </h6>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+          <h4>Last Week</h4>
+          <div className="d-flex flex-wrap justify-content-center align-items-center">
+            {timelineRecommendation?.data?.last7Days?.map((value, index) => {
+              if (!value) return null;
+              return (
+                <>
+                  <div
+                    className="card m-3"
+                    style={{ width: "18rem", height: "400px" }}
+                  >
+                    <img
+                      className="img-fluid"
+                      src={value?.image}
+                      alt="Card image cap"
+                      style={{
+                        objectFit: "cover",
+                        width: "300px",
+                        height: "200px",
+                      }}
+                      onClick={() => openProductInfo(value?._id)}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value.description}>
+                        {truncateText(value?.description, 70)}
+                      </h6>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -523,22 +610,17 @@ export default function RecommendationPage() {
                   >
                     <img
                       className="img-fluid"
-                      src={value.exerciseGif}
+                      src={value?.exerciseGif}
                       alt="Card image cap"
                       style={{
                         objectFit: "cover",
                         width: "300px",
                         height: "300px",
                       }}
-                      // onClick={() => openProductInfo(value._id)}
+                      onClick={() => handleOpenExercise(value?.name)}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{value.name}</h5>
-                      {/* <h6 className="card-title" value={value.description}>
-                        {truncateText(value.description, 70)}
-                      </h6> */}
-                      {/* <p className="card-text">{value.price}</p> */}
-                      {/* <p className="card-text">{value.avgRating}</p> */}
+                      <h5 className="card-title">{value?.name}</h5>
                     </div>
                   </div>
                 </>
