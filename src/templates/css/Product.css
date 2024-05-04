@@ -91,13 +91,15 @@ box-shadow: 0px 9px 30px -15px rgb(0 0 0);
 
 .add_cart {
 border:2px solid #43474D;
-display: inline-block;
+display:block;
 background: linear-gradient(45deg , #0bd2de , #0083f9);
 border-radius: 6px;
 border: none;
 font-size: 16px;
 color: #FFFFFF;
 text-decoration: none;
+
+width: auto;
 padding: 12px 30px;
 transition: all .5s;
 box-shadow: 0px 10px 30px -10px rgb(101, 173, 245);
@@ -154,10 +156,13 @@ color: grey;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 6rem;
+  padding: 10px;
   border-radius: 5px;
   margin-left: 4rem;
   cursor: pointer;
+}
+.add_cart:hover{
+  transform: scale(1.1);
 }
 .add_cart:active {
   transform: scale(0.98);
@@ -178,6 +183,7 @@ color: grey;
 
 .sa-reviews{
 display: inline-block;
+width:auto;
   background: #0083f9;
   border-radius: 6px;
   border: none;
@@ -189,9 +195,14 @@ display: inline-block;
   box-shadow: 0px 10px 30px -10px rgb(101, 173, 245);
 }
 
+.sa-reviews:hover{
+  transform: scale(1.1);
+}
+
 .a-reviews{
   margin-left: 20px;
   display: inline-block;
+  width: auto;
   background:#0083f9;
   border-radius: 6px;
   border: none;
@@ -201,6 +212,9 @@ display: inline-block;
   padding: 12px 30px;
   transition: all .5s;
   box-shadow: 0px 10px 30px -10px rgb(101, 173, 245);
+}
+.a-reviews:hover{
+  transform: scale(1.1);
 }
 
 .r-text{

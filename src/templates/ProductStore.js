@@ -210,10 +210,11 @@ export default function ProductStore() {
           {allProducts?.data?.map((value, index) => {
             return (
               <div
+              id="cads"
                 className="card m-3"
                 style={{
                   width: "18rem",
-                  height: "490px",
+                  height: "500px",
                   boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
                   borderRadius: "20px",
                   marginTop: "20px",
@@ -236,34 +237,38 @@ export default function ProductStore() {
                 <div className="card-body">
                   {!value?.inWishlist ? (
                     <IconButton
-                      style={{ position: "absolute", top: "0", right: "0" }}
+                      style={{ position: "absolute", top: "0", right: "0", background:"transparent" }}
                     >
                       <FavoriteBorderIcon
+                      id="heart"
                         onClick={() => handleAddToWishlist(value._id)}
                       />
                     </IconButton>
                   ) : (
                     <IconButton
-                      style={{ position: "absolute", top: "0", right: "0" }}
+                      style={{ position: "absolute", top: "0", right: "0",background:"transparent"  }}
                     >
                       <Favorite
+                      id="heart"
                         onClick={() => handleRemoveFromWishlist(value._id)}
                         style={{ color: "#F43E29" }}
                       />
                     </IconButton>
                   )}
-                  <h5 className="card-title">{value.name}</h5>
-                  <p className="card-title" value={value.description} style={{height:"60px"}}>
+                  <div style={{display:"block",justifyContent:"space-around",height:"260px"}}>
+                  <h5 className="card-title" style={{height:"50px"}}>{value.name}</h5>
+                  <p className="card-title" value={value.description} style={{height:"80px",textAlign:"justify"}}>
                     {truncateText(value.description, 70)}
                   </p>
                   <h6 className="card-text">&#8360; {value.price}</h6>
-                  <p className="card-text">
+                  <p className="card-text" style={{marginBottom:"2px"}}>
                     {value.avgRating} / 5{" "}
                     <StarIcon style={{ color: "#FFC300" }} />
                   </p>
                   {!value?.inCart ? (
                     <>
                       <button
+                      id="cartbtns"
                         className="btn btn-primary"
                         onClick={() => handleAddToCart(value?._id)}
                         style={{
@@ -271,7 +276,9 @@ export default function ProductStore() {
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
                             border:"none",
                             boxShadow:"0px",
-                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)"
+                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                            display:"block",
+                            width:"auto"
                         }}
                       >
                         Add to Cart
@@ -280,19 +287,23 @@ export default function ProductStore() {
                   ) : (
                     <>
                       <button
+                      id="cartbtns"
                         className="btn btn-primary"
                         onClick={(e) => handleRemoveFromCart(e, value?._id)}
                         style={{
                           background:
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
                             border:"none",
-                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)"
+                            boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                            display:"block",
+                            width:"auto"
                         }}
                       >
                         Remove from Cart
                       </button>
                     </>
                   )}
+                  </div>
                 </div>
               </div>
             );

@@ -159,14 +159,14 @@ export default function Cart() {
           <Grid container direction="row">
             <IconButton>
               <ArrowCircleUpIcon
-              style={{color:"#0083f9"}}
+                style={{ color: "#0083f9" }}
                 onClick={(e) => handleAddQty(e, row?.original?.product?._id)}
               />
             </IconButton>
             <Typography ml={2}>{row?.original?.quantity}</Typography>
             <IconButton>
               <ArrowCircleDownIcon
-              style={{color:"#0083f9"}}
+                style={{ color: "#0083f9" }}
                 onClick={(e) => handleSubQty(e, row?.original?.product?._id)}
               />
             </IconButton>
@@ -193,7 +193,7 @@ export default function Cart() {
         <>
           <IconButton>
             <DeleteIcon
-            style={{color:"#0083f9"}}
+              style={{ color: "#0083f9" }}
               onClick={(e) => handleDeleteItem(e, row?.original?.product?._id)}
             />
           </IconButton>
@@ -208,34 +208,34 @@ export default function Cart() {
   ];
   return (
     <>
-    <div class="cartcont">
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition="Bounce"
-      />
-      {allCart?.data ? (
-        <>
-        <div class="cartp">
-          <WMTable columns={columns} data={allCart?.data} tableTitle={"Cart"} /></div>
-          <div class="buyall">
-          <button class="cartbtn" onClick={() => handleDeleteAll()}>Delete All</button>
-          <button class="cartbtn" onClick={() => handleBuyAll()}>Buy all</button>
-          </div>
-        </>
-      ) : (
-        <>
-          <h1>No Items in Cart</h1>
-        </>
-      )}
+      <div class="cartcont">
+        <ToastContainer
+          position="bottom-left"
+          autoClose={1000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition="Bounce"
+        />
+        {allCart?.data ? (
+          <>
+            <div class="cartp">
+              <WMTable columns={columns} data={allCart?.data} tableTitle={"Cart"} /></div>
+            <div class="buyall">
+              <button class="cartbtn" onClick={() => handleDeleteAll()}>Delete All</button>
+              <button class="cartbtn" onClick={() => handleBuyAll()}>Buy all</button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h1>No Items in Cart</h1>
+          </>
+        )}
       </div>
     </>
   );

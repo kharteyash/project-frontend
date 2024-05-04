@@ -13,6 +13,13 @@
     
 
   }
+  #cads:hover{
+    transform: scale(1.05);
+  }
+
+  #cartbtns:hover{
+    transform: scale(1.05);
+  }
   
   .td {
     display: table-cell;
@@ -31,6 +38,11 @@
     border: 0;
     background-color: transparent;
   }
+
+#heart:hover{
+  color: #fd04ae;
+  
+}
   
 #cover{
 
