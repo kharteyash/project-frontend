@@ -119,9 +119,11 @@ export default function NavigationBar() {
                 <Link to="/gallery" className="nav-link">
                   Gallery
                 </Link>
+                {userDetails?.data?._id ? (<>
                 <Link to="/store" className="nav-link">
                   Store
                 </Link>
+                </>) : (<></>)}
                 {userDetails?.data?._id ? (
                   <a
                     href="https://indigo-crystal-95.tiiny.site/"

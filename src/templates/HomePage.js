@@ -7,6 +7,8 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 export default function HomePage() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({});
@@ -70,6 +72,26 @@ export default function HomePage() {
     }
     notifications();
   };
+
+  const handleDeleteNotif = async (notifId) => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/notifications/${notifId}/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const delNotifs = await response.json();
+      toast.success(delNotifs?.message);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    notifications();
+  };
   const handleOpenNotifications = (event) => {
     setMenuAnchorEl(event.currentTarget);
     setIsMenuOpen(true);
@@ -82,10 +104,6 @@ export default function HomePage() {
       notifications();
     }
   }, [userDetails?.data]);
-  // <style>
-  //   .css-hip9hq-MuiPaper-root-MuiAppBar-root {
-
-  // </style>
   const top5Purchase = async () => {
     try {
       const response = await fetch(
@@ -110,7 +128,6 @@ export default function HomePage() {
   }, []);
 
   const openProductInfo = (productId) => {
-    console.log(productId)
     navigate(`/store/product/${productId}`, {
       state: productId,
     });
@@ -165,9 +182,13 @@ export default function HomePage() {
                 {allNotifications?.map((value, index) => {
                   return (
                     <MenuItem
-                      key={value._id}
-                      onClick={() => handleSeeNotification(value._id)}
+                      key={value?._id}
+                      onClick={() => handleSeeNotification(value?._id)}
+                      style={{backgroundColor: value?.status==='read' ? "red" : "blue"}}
                     >
+                      <IconButton onClick={()=>handleDeleteNotif(value?._id)}>
+                        <DeleteIcon />
+                      </IconButton>
                       {value?.message}
                     </MenuItem>
                   );
@@ -198,9 +219,7 @@ export default function HomePage() {
             {top5Recommendation?.data && (
               <>
                 <h3>Top 5 products in our store</h3>
-                <div
-                  className="d-flex flex-wrap justify-content-center align-items-center"
-                >
+                <div className="d-flex flex-wrap justify-content-center align-items-center">
                   {top5Recommendation?.data?.map((value, index) => {
                     return (
                       <>

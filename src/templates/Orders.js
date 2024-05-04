@@ -26,6 +26,7 @@ export default function Orders() {
     }
   };
   const role = userDetails?.data?.role;
+  console.log("role", role);
 
   const [myOrders, setMyOrders] = useState({});
   const [myAllOrders, setMyAllOrders] = useState({});
@@ -46,7 +47,7 @@ export default function Orders() {
         }
       );
       const buyAgain = await response.json();
-      navigate("/cart")
+      navigate("/cart");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -143,7 +144,7 @@ export default function Orders() {
       Cell: ({ row }) => (
         <>
           {row?.original?.orderItems?.map((value, index) => {
-            return <p>{value?.name}</p>;
+            return (<p>{value?.name}</p>);
           })}
         </>
       ),
@@ -213,7 +214,8 @@ export default function Orders() {
     if (role === "user") {
       getUserMyOrders();
       getUserMyAllOrders();
-    } else {
+    }
+    if (role === "employee") {
       getEmpMyOrders();
       getEmpMyAllOrders();
     }
@@ -225,7 +227,7 @@ export default function Orders() {
         <WMTable
           columns={columns}
           tableTitle={"Current Orders"}
-          data={myOrders?.data}
+          data={myOrders}
         />
       )}
 
@@ -233,7 +235,7 @@ export default function Orders() {
         <WMTable
           columns={historyColumns}
           tableTitle={"Order History"}
-          data={myAllOrders?.data}
+          data={myAllOrders}
         />
       )}
     </div>

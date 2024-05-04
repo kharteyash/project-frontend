@@ -126,18 +126,15 @@ export default function Cart() {
     cart();
   };
 
-  const handleBuyAll = async() => {
+  const handleBuyAll = async () => {
     try {
-      const response = await fetch(
-        `http://${IP}:5000/api/users/buy`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://${IP}:5000/api/users/buy`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       const checkout = await response.json();
       toast.success(checkout?.message);
     } catch (error) {
@@ -201,8 +198,8 @@ export default function Cart() {
       Cell: ({ row }) => (
         <>
           <IconButton>
-          <DeleteIcon
-            style={{color:"#0083f9"}}
+            <DeleteIcon
+              style={{ color: "#0083f9" }}
               onClick={(e) => handleDeleteItem(e, row?.original?.product?._id)}
             />
           </IconButton>
@@ -212,42 +209,44 @@ export default function Cart() {
   ];
   return (
     <>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition="Bounce"
-      />
-      {allCart?.data ? (
-        <>
-          <div class="cartp">
-            <WMTable
-              columns={columns}
-              data={allCart?.data}
-              tableTitle={"Cart"}
-            />
-          </div>
-          <div class="buyall">
-            <button class="cartbtn" onClick={() => handleDeleteAll()}>  
-              Delete All
-            </button>
-            <button class="cartbtn" onClick={() => handleBuyAll()}>
-              Buy all
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <h1>No Items in Cart</h1>
-        </>
-      )}
+      <div class="cartcont">
+        <ToastContainer
+          position="bottom-left"
+          autoClose={1000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition="Bounce"
+        />
+        {allCart?.data ? (
+          <>
+            <div class="cartp">
+              <WMTable
+                columns={columns}
+                data={allCart?.data}
+                tableTitle={"Cart"}
+              />
+            </div>
+            <div class="buyall">
+              <button class="cartbtn" onClick={() => handleDeleteAll()}>
+                Delete All
+              </button>
+              <button class="cartbtn" onClick={() => handleBuyAll()}>
+                Buy all
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h1>No Items in Cart</h1>
+          </>
+        )}
+      </div>
     </>
   );
 }

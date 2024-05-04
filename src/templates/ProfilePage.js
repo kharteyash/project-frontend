@@ -284,6 +284,12 @@ export default function ProfilePage() {
                     </li>
                     <li>
                       <span>
+                        <InputLabel>BP Ratio :</InputLabel>
+                      </span>
+                      {profileDetails?.data?.bp}
+                    </li>
+                    {/* <li>
+                      <span>
                         <InputLabel>Systolic BP :</InputLabel>
                       </span>
                       {profileDetails?.data?.systolicBp}
@@ -293,7 +299,7 @@ export default function ProfilePage() {
                         <InputLabel>Diastolic BP :</InputLabel>
                       </span>
                       {profileDetails?.data?.diastolicBp}
-                    </li>
+                    </li> */}
                     <li>
                       <span>
                         <InputLabel>Diabetes :</InputLabel>

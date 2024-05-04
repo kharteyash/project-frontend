@@ -207,74 +207,127 @@ export default function ProductStore() {
         theme="dark"
         transition="Bounce"
       />
-      <TextField
-        onChange={(e) => setSearchItem(e.target.value)}
-        placeholder="Search"
-      />
-      <IconButton onClick={() => handleSearchItem()}>🔍</IconButton>
-      <div>
-        <div className="d-flex flex-wrap justify-content-center align-items-center">
-          {allProducts?.data?.map((value, index) => {
-            return (
-              <div
-                className="card m-3"
+      <div class="text-center">
+        <div id="cover">
+          <div class="tb">
+            <div class="td">
+              <input
+                type="text"
+                onChange={(e) => setSearchItem(e.target.value)}
                 style={{
-                  width: "18rem",
-                  height: "460px",
-                  boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
-                  borderRadius: "20px",
-                  marginTop: "20px",
-                  border: "1px solid lightgrey",
+                  borderRadius: "10px",
+                  border: "none",
                 }}
-              >
-                <img
-                  className="img-fluid"
-                  src={value.image}
-                  alt="Card image cap"
+                placeholder="Search"
+              />
+            </div>
+
+            <div class="td" id="s-cover">
+              <button onClick={() => handleSearchItem()}>
+                <div id="s-circle"></div>
+                <span id="ns"></span>
+              </button>
+            </div>
+          </div>
+          {/*tb ends*/}
+        </div>
+        {/* cover ends*/}
+      </div>
+      {/*text centerends*/}
+      <div className="d-flex flex-wrap justify-content-center align-items-center">
+        {allProducts?.data?.map((value, index) => {
+          return (
+            <div
+              id="cads"
+              className="card m-3"
+              style={{
+                width: "18rem",
+                height: "500px",
+                boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                borderRadius: "20px",
+                marginTop: "20px",
+                border: "1px solid lightgrey",
+              }}
+            >
+              <img
+                className="img-fluid"
+                src={value.image}
+                alt="Card image cap"
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "200px",
+                  borderRadius: "20px 20px 0px 0px",
+                }}
+                onClick={() => openProductInfo(value._id)}
+              />
+              <div className="card-body">
+                {!value?.inWishlist ? (
+                  <IconButton
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      right: "0",
+                      background: "transparent",
+                    }}
+                  >
+                    <FavoriteBorderIcon
+                      id="heart"
+                      onClick={() => handleAddToWishlist(value._id)}
+                    />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      right: "0",
+                      background: "transparent",
+                    }}
+                  >
+                    <Favorite
+                      id="heart"
+                      onClick={() => handleRemoveFromWishlist(value._id)}
+                      style={{ color: "#F43E29" }}
+                    />
+                  </IconButton>
+                )}
+                <div
                   style={{
-                    objectFit: "cover",
-                    width: "100%",
-                    height: "200px",
-                    borderRadius: "20px 20px 0px 0px",
+                    display: "block",
+                    justifyContent: "space-around",
+                    height: "260px",
                   }}
-                  onClick={() => openProductInfo(value._id)}
-                />
-                <div className="card-body">
-                  {!value?.inWishlist ? (
-                    <IconButton
-                      style={{ position: "absolute", top: "0", right: "0" }}
-                    >
-                      <FavoriteBorderIcon
-                        onClick={() => handleAddToWishlist(value._id)}
-                      />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      style={{ position: "absolute", top: "0", right: "0" }}
-                    >
-                      <Favorite
-                        onClick={() => handleRemoveFromWishlist(value._id)}
-                        style={{ color: "#F43E29" }}
-                      />
-                    </IconButton>
-                  )}
-                  <h5 className="card-title">{value.name}</h5>
-                  <p className="card-title" value={value.description}>
+                >
+                  <h5 className="card-title" style={{ height: "50px" }}>
+                    {value.name}
+                  </h5>
+                  <p
+                    className="card-title"
+                    value={value.description}
+                    style={{ height: "80px", textAlign: "justify" }}
+                  >
                     {truncateText(value.description, 70)}
                   </p>
                   <h6 className="card-text">&#8360; {value.price}</h6>
-                  <p className="card-text">
+                  <p className="card-text" style={{ marginBottom: "2px" }}>
                     {value.avgRating} / 5{" "}
                     <StarIcon style={{ color: "#FFC300" }} />
                   </p>
                   {!value?.inCart ? (
                     <>
                       <button
+                        id="cartbtns"
                         className="btn btn-primary"
                         onClick={() => handleAddToCart(value?._id)}
                         style={{
                           background:
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
+                          border: "none",
+                          boxShadow: "0px",
+                          boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                          display: "block",
+                          width: "auto",
                         }}
                       >
                         Add to Cart
@@ -283,11 +336,16 @@ export default function ProductStore() {
                   ) : (
                     <>
                       <button
+                        id="cartbtns"
                         className="btn btn-primary"
                         onClick={(e) => handleRemoveFromCart(e, value?._id)}
                         style={{
                           background:
                             "linear-gradient(45deg , #0bd2de , #0083f9)",
+                          border: "none",
+                          boxShadow: " 0px 9px 30px -15px rgb(0 0 0)",
+                          display: "block",
+                          width: "auto",
                         }}
                       >
                         Remove from Cart
@@ -296,13 +354,18 @@ export default function ProductStore() {
                   )}
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
-      <div>
-        <button onClick={() => handlePrevPage()}>Prev</button> {pageNo}{" "}
-        <button onClick={() => handleNextPage()}>Next</button>
+      <div class="pg-btns">
+        <button id="pg-btn" onClick={() => handlePrevPage()}>
+          Prev
+        </button>{" "}
+        {pageNo}{" "}
+        <button id="pg-btn" onClick={() => handleNextPage()}>
+          Next
+        </button>
       </div>
       <div>
         {aprioriRecommendation?.data && (

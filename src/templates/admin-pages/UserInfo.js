@@ -58,6 +58,44 @@ export default function UserInfo() {
     details();
   }, []);
 
+  const handleRecommendation = async(prodId) => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${userDetails?._id}/similRecom/${prodId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const recommendation = await response.json();
+      toast.success(recommendation?.message);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
+  const handleCustomRecommendation = async() => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/admin/view/users/${userDetails?._id}/custRec`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const recommendation = await response.json();
+      toast.success(recommendation?.message);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const similarColumns = [
     {
       header: "Name",
@@ -78,7 +116,7 @@ export default function UserInfo() {
                   {value?.product?.name}
                   <>
                     <IconButton>
-                      <ArrowCircleRightIcon />
+                      <ArrowCircleRightIcon onClick={()=>handleRecommendation(value?.product?._id)}/>
                     </IconButton>
                   </>
                 </p>
@@ -116,13 +154,6 @@ export default function UserInfo() {
     {
       header: "Total Price",
       accessorKey: "subtotalPrice",
-    },
-  ];
-
-  const notifColumns = [
-    {
-      header: "Notifications",
-      accessorKey: "message",
     },
   ];
 
@@ -263,15 +294,6 @@ export default function UserInfo() {
           />
         )}
       </div>
-      <div class="all-notifs">
-        {userInfo?.notifications && (
-          <WMTable
-            data={userInfo?.notifications}
-            tableTitle={"All Notifications"}
-            columns={notifColumns}
-          />
-        )}
-      </div>
       <div class="notif">
         <input
           id="notif-txt"
@@ -287,7 +309,7 @@ export default function UserInfo() {
       </div>
       <>
         <button onClick={() => similarUsers()}>Find Similar Users</button>
-        <button>Give Custom Recommendations</button>
+        <button onClick={()=>handleCustomRecommendation()}>Give Custom Recommendations</button>
       </>
       <div class="all-notifs">
         {similar?.data && (

@@ -16,10 +16,10 @@ export default function RecommendationPage() {
   const [recentlyViewRecommendation, setRecentlyViewRecommendation] = useState(
     {}
   );
-  const [top5Recommendation, setTop5Recommendation] = useState({});
   const [timelineRecommendation, setTimelineRecommendation] = useState({});
   const [prevSearchRecommendation, setPrevSearchRecommendation] = useState({});
   const [exerciseRecommendation, setExerciseRecommendation] = useState({});
+  const [adminRecommendation, setAdminRecommendation] = useState({});
   const [render, setRender] = useState(false);
   const ageHeightWeight = async () => {
     try {
@@ -30,7 +30,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -50,7 +49,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -70,7 +68,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -90,7 +87,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -110,7 +106,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -130,7 +125,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -150,7 +144,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -170,7 +163,6 @@ export default function RecommendationPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(details),
           credentials: "include",
         }
       );
@@ -180,6 +172,26 @@ export default function RecommendationPage() {
       console.error("Error:", error);
     }
   };
+
+  const customRecommendation = async () => {
+    try {
+      const response = await fetch(
+        `http://${IP}:5000/api/users/view/products/recommendation/getFromAdmin`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      setAdminRecommendation(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const truncateText = (text, maxLength) => {
     if (!text) return "";
     if (text.length <= maxLength) {
@@ -207,6 +219,7 @@ export default function RecommendationPage() {
           productGoal(),
           ageHeightWeight(),
           goalGender(),
+          customRecommendation(),
           exercises(),
         ]);
         setRender(true);
@@ -596,6 +609,46 @@ export default function RecommendationPage() {
           </div>
         </>
       )}
+      <br></br>
+      {adminRecommendation?.data && (
+        <>
+          <h3>Recommendations from Us</h3>
+          <div className="d-flex flex-wrap justify-content-center align-items-center">
+            {adminRecommendation?.data?.map((value, index) => {
+              if (!value) return null;
+              return (
+                <>
+                  <div
+                    className="card m-3"
+                    style={{ width: "18rem", height: "400px" }}
+                  >
+                    <img
+                      className="img-fluid"
+                      src={value?.image}
+                      alt="Card image cap"
+                      style={{
+                        objectFit: "cover",
+                        width: "300px",
+                        height: "200px",
+                      }}
+                      onClick={() => openProductInfo(value._id)}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{value?.name}</h5>
+                      <h6 className="card-title" value={value?.description}>
+                        {truncateText(value?.description, 70)}
+                      </h6>
+                      <p className="card-text">{value?.price}</p>
+                      <p className="card-text">{value?.avgRating}</p>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </>
+      )}
+      <br></br>
       {exerciseRecommendation?.data && (
         <>
           <h3>Exercises for you</h3>
