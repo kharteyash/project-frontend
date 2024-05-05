@@ -99,11 +99,12 @@
     text-decoration: none;
     padding: 12px 30px;
     transition: all .5s;
+    width: auto;
     box-shadow: 0px 10px 30px -10px rgb(101, 173, 245);
   }
   .add_cart:hover {
     background-color: lightsteelblue;
-    color: steelblue;
+    color: rgb(219, 232, 241);
   }
 
 
@@ -158,6 +159,10 @@
     margin-left: 4rem;
     cursor: pointer;
   }
+
+  .add_cart:hover{
+    transform: scale(1.1);
+  }
   .add_cart:active {
     transform: scale(0.98);
   }
@@ -177,6 +182,7 @@
 
   .sa-reviews{
 display: inline-block;
+width: auto;
     background: #0083f9;
     border-radius: 6px;
     border: none;
@@ -187,8 +193,12 @@ display: inline-block;
     transition: all .5s;
     box-shadow: 0px 10px 30px -10px rgb(101, 173, 245);
   }
+  .sa-reviews:hover{
+    transform: scale(1.1);
+  }
 
   .a-reviews{
+    width: auto;
     margin-left: 20px;
     display: inline-block;
     background:#0083f9;
@@ -200,6 +210,10 @@ display: inline-block;
     padding: 12px 30px;
     transition: all .5s;
     box-shadow: 0px 10px 30px -10px rgb(101, 173, 245);
+  }
+
+  .a-reviews:hover{
+    transform: scale(1.1);
   }
 
   .r-text{

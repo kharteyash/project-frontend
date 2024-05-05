@@ -9,12 +9,13 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import "../templates/css/Shipdetail.css";
+
 import React, { useEffect, useState } from "react";
 import { IP } from "./constants.js";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
+import "../templates/css/Shipdetail.css";
 export default function ShippingInfo() {
   const [editDetails, setEditDetails] = useState(false);
   const [allShippingDetails, setAllShippingDetails] = useState({});

@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 // import "../../templates/css/GreivanceD.css";
 import Typography from "@mui/material/Typography";
+import "../../templates/css/GreivanceD.css";
 
 export default function GrievanceDetails() {
   const location = useLocation();

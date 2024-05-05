@@ -4,6 +4,7 @@ import WMTable from "../../ui-components/table";
 import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
+import "../../templates/css/Cartabandon.css";
 
 export default function CartAbandon() {
   const [seeCartAbandon, setSeeCartAbandon] = useState(false);
@@ -80,10 +81,11 @@ export default function CartAbandon() {
   ];
 
   return (
-    <div>
-      <div>
+    <div class="ca">
+      <div class="abandon">
         {!seeCartAbandon ? (
-          <button
+          <button 
+          id="ca-btn"
             onClick={() => {
                 handleRunCartAbandon();
             }}
@@ -92,6 +94,7 @@ export default function CartAbandon() {
           </button>
         ) : (
           <button
+          id="ca-btn"
             onClick={() => {
               handleGetCartAbandonUsers();
             }}
@@ -101,11 +104,13 @@ export default function CartAbandon() {
         )}
       </div>
       {abandonUsers?.data && (
+        <div id="au-tbl">
         <WMTable
           tableTitle={"Users with cart abandonment possibility"}
           data={abandonUsers?.data}
           columns={columns}
         />
+        </div>
       )}
     </div>
   );

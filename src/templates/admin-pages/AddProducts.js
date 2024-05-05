@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IP } from "../constants";
-// import "../../templates/css/Addprod.css";
+import "../../templates/css/Addprod.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
@@ -226,7 +226,7 @@ export default function AddProducts() {
   
   return (
     <>
-      <div class="cont">
+      <div class="contadd">
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           {allProducts?.data?.map((value, index) => {
             return (
@@ -276,6 +276,7 @@ export default function AddProducts() {
           onClose={handleClose}
           products={products}
         />
+        
       </div>
     </>
   );

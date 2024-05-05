@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { IP } from "./constants";
 import { useNavigate } from "react-router";
 import { Button } from "@mui/material";
+import "../templates/css/Recommendation.css";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import GradeIcon from '@mui/icons-material/Grade';
+
 
 export default function RecommendationPage() {
   const navigate = useNavigate();
@@ -254,13 +258,16 @@ export default function RecommendationPage() {
   if (!render) {
     return (
       <>
+      <div style={{background:"#1C2833",color:"white"}}>
         <p>Your recommendations are Loading</p>
+        </div>
       </>
     );
   }
 
   return (
     <>
+    <div class="recommend-cont">
       <br></br>
       {goalGenderRecommendation?.data && (
         <>
@@ -271,8 +278,9 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "470px" }}
                   >
                     <img
                       className="img-fluid"
@@ -285,13 +293,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value?.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -310,8 +318,9 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "500px" }}
                   >
                     <img
                       className="img-fluid"
@@ -324,13 +333,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value?.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -349,8 +358,9 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "450px" }}
                   >
                     <img
                       className="img-fluid"
@@ -363,13 +373,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value?.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -381,15 +391,16 @@ export default function RecommendationPage() {
       <br></br>
       {prevPurchaseRecommendation?.data && (
         <>
-          <h3>prev purchase</h3>
+          <h3>Previous Purchases</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {prevPurchaseRecommendation?.data?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "460px" }}
                   >
                     <img
                       className="img-fluid"
@@ -402,7 +413,7 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value?.product._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.product?.name}</h5>
                       <h6
                         className="card-title"
@@ -410,8 +421,8 @@ export default function RecommendationPage() {
                       >
                         {truncateText(value?.product?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.product?.price}</p>
-                      <p className="card-text">{value?.product?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.product?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.product?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -423,15 +434,16 @@ export default function RecommendationPage() {
       <br></br>
       {prevSearchRecommendation?.data && (
         <>
-          <h3>prev search</h3>
+          <h3>Previous Search</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {prevSearchRecommendation?.data?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "460px" }}
                   >
                     <img
                       className="img-fluid"
@@ -444,7 +456,7 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value?.product._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.product?.name}</h5>
                       <h6
                         className="card-title"
@@ -452,8 +464,8 @@ export default function RecommendationPage() {
                       >
                         {truncateText(value?.product?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.product?.price}</p>
-                      <p className="card-text">{value?.product?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.product?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.product?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -465,15 +477,16 @@ export default function RecommendationPage() {
       <br></br>
       {recentlyViewRecommendation?.data && (
         <>
-          <h3>recently viewed</h3>
+          <h3>Recently Viewed</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {recentlyViewRecommendation?.data?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "460px" }}
                   >
                     <img
                       className="img-fluid"
@@ -486,13 +499,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value?._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value?.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -504,7 +517,7 @@ export default function RecommendationPage() {
       <br></br>
       {timelineRecommendation?.data && (
         <>
-          <h3>timeline</h3>
+          <h3>Timeline</h3>
           <h4>Last Month</h4>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
             {timelineRecommendation?.data?.lastMonth?.map((value, index) => {
@@ -512,8 +525,9 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "460px" }}
                   >
                     <img
                       className="img-fluid"
@@ -526,13 +540,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value?._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -546,8 +560,9 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "460px" }}
                   >
                     <img
                       className="img-fluid"
@@ -560,13 +575,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value?._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -580,8 +595,9 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "460px" }}
                   >
                     <img
                       className="img-fluid"
@@ -594,13 +610,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value?._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -619,8 +635,9 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
-                    style={{ width: "18rem", height: "400px" }}
+                    style={{ width: "18rem", height: "460px" }}
                   >
                     <img
                       className="img-fluid"
@@ -633,13 +650,13 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => openProductInfo(value._id)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                       <h6 className="card-title" value={value?.description}>
                         {truncateText(value?.description, 70)}
                       </h6>
-                      <p className="card-text">{value?.price}</p>
-                      <p className="card-text">{value?.avgRating}</p>
+                      <p className="card-text"><CurrencyRupeeIcon id="rup"  />{value?.price}</p>
+                      <p className="card-text"><GradeIcon id="star"/> {value?.avgRating}</p>
                     </div>
                   </div>
                 </>
@@ -658,6 +675,7 @@ export default function RecommendationPage() {
               return (
                 <>
                   <div
+                  id="cards"
                     className="card m-3"
                     style={{ width: "18rem", height: "400px" }}
                   >
@@ -672,7 +690,7 @@ export default function RecommendationPage() {
                       }}
                       onClick={() => handleOpenExercise(value?.name)}
                     />
-                    <div className="card-body">
+                    <div id="card-b" className="card-body">
                       <h5 className="card-title">{value?.name}</h5>
                     </div>
                   </div>
@@ -682,6 +700,7 @@ export default function RecommendationPage() {
           </div>
         </>
       )}
+      </div>{/*recomencont ends */}
     </>
   );
 }
