@@ -164,8 +164,9 @@ export default function Orders() {
           <IconButton
             value={"Check Order Status"}
             onClick={() => handleOpenOrder(row?.original)}
+            style={{background:"transparent"}}
           >
-            <ArrowCircleRightIcon />
+            <ArrowCircleRightIcon style={{color:"#0083f9"}}/>
           </IconButton>
         </>
       ),
@@ -222,21 +223,27 @@ export default function Orders() {
   }, [role]);
 
   return (
-    <div>
+    <div class="voc">
       {viewmyOrders?.data && (
+        <div  class="plcd-orders">
         <WMTable
           columns={columns}
           tableTitle={"Current Orders"}
           data={myOrders}
+         
         />
+        </div>
       )}
 
       {viewmyAllOrders?.data && (
+        <div class="deli-orders">
         <WMTable
           columns={historyColumns}
           tableTitle={"Order History"}
           data={myAllOrders}
+          
         />
+        </div>
       )}
     </div>
   );

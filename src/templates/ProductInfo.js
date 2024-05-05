@@ -383,10 +383,10 @@ export default function ProductInfo() {
         </div>
         {/*   prod-cont ends */}
       </main>
-      <div>
+      <div style={{marginTop:"30px",background:"#1C2833",padding:"20px"}}>
         {aprioriRecommendation?.data && (
           <>
-            <h3>Products Frequently Bought Together</h3>
+            <h3 style={{color:"#0bd2de"}}>Products Frequently Bought Together</h3>
             <br></br>
             <div className="d-flex flex-wrap justify-content-center align-items-center">
               {aprioriRecommendation?.data?.map((value, index) => {

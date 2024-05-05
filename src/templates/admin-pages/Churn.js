@@ -4,6 +4,7 @@ import WMTable from "../../ui-components/table";
 import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
+import "../../templates/css/Churn.css";
 
 export default function Churn() {
   const [seeChurn, setSeeChurn] = useState(false);
@@ -80,10 +81,10 @@ export default function Churn() {
   ];
 
   return (
-    <div>
+    <div class="churn-cont">
       <div>
         {!seeChurn ? (
-          <button
+          <button id="churn-det"
             onClick={() => {
               handleRunChurn();
             }}
@@ -95,6 +96,7 @@ export default function Churn() {
             onClick={() => {
               handleGetChurnedUsers();
             }}
+            id="churn-det"
           >
             See Churned Users
           </button>

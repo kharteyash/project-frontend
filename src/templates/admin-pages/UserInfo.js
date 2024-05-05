@@ -308,8 +308,8 @@ export default function UserInfo() {
         />
       </div>
       <>
-        <button onClick={() => similarUsers()}>Find Similar Users</button>
-        <button onClick={()=>handleCustomRecommendation()}>Give Custom Recommendations</button>
+        <button id="rec-btns" onClick={() => similarUsers()}>Find Similar Users</button>
+        <button id="rec-btns" onClick={()=>handleCustomRecommendation()}>Give Custom Recommendations</button>
       </>
       <div class="all-notifs">
         {similar?.data && (

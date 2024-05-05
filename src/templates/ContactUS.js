@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { IP } from "./constants";
+import "../templates/css/Contact.css";
 
 export default function ContactUS() {
   const [gtype, setGType] = useState("");
@@ -39,12 +40,12 @@ export default function ContactUS() {
   };
 
   return (
-    <div>
-      <div>
-        <form onSubmit={handleSubmit}>
+    <div id="contact-cont">
+      <div id="formblock">
+        <form id="frm" onSubmit={handleSubmit}>
           <InputLabel>Type : </InputLabel>
           <RadioGroup
-            aria-label="type"
+            aria-label="Type"
             name="type"
             id="type"
             onChange={(e) => setGType(e.target.value)}
@@ -52,22 +53,23 @@ export default function ContactUS() {
             <FormControlLabel
               value="employement_request"
               control={<Radio />}
-              label="employement_request"
+              label="Employement Request"
             />
             <FormControlLabel
               value="customer_care"
               control={<Radio />}
-              label="customer_care"
+              label="Customer Care"
             />
           </RadioGroup>
           <InputLabel>Message :</InputLabel>
           <TextField
+          
             multiline
             rows={3}
             onChange={(e) => setMessage(e.target.value)}
           />
           <br></br>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" id="sub" />
         </form>
       </div>
     </div>

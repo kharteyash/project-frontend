@@ -178,13 +178,14 @@ export default function HomePage() {
                 anchorEl={menuAnchorEl}
                 open={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
+                style={{opacity:"0.8"}}
               >
                 {allNotifications?.map((value, index) => {
                   return (
                     <MenuItem
                       key={value?._id}
                       onClick={() => handleSeeNotification(value?._id)}
-                      style={{backgroundColor: value?.status==='read' ? "red" : "blue"}}
+                      style={{backgroundColor: value?.status==='read' ? "#B0AFAF" : "#0bd2de",color:"white"}}
                     >
                       <IconButton onClick={()=>handleDeleteNotif(value?._id)}>
                         <DeleteIcon />

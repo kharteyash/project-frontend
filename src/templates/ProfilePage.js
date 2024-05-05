@@ -12,8 +12,19 @@ import {
   Divider,
   Autocomplete,
 } from "@mui/material";
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import HeightIcon from '@mui/icons-material/Height';
+import ScaleIcon from '@mui/icons-material/Scale';
+import WcIcon from '@mui/icons-material/Wc';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import LanguageIcon from '@mui/icons-material/Language';
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import CakeIcon from '@mui/icons-material/Cake';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import React, { useEffect, useState } from "react";
 import { IP } from "./constants.js";
+import "../templates/css/Profile.css";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
@@ -210,7 +221,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <div class="cont">
+      <div class="conticon">
         <ToastContainer
           position="bottom-left"
           autoClose={1000}
@@ -235,59 +246,76 @@ export default function ProfilePage() {
                 </IconButton>
               </div>
             </div>
-            <Divider color="#333" />
+            <Divider color="#333" style={{width:"95%",margin:"auto"}}/>
             {!editDetails ? (
               <>
-                <div class="det">
-                  <ul class="content_list">
-                    <li>
-                      <span>
-                        <InputLabel>Age :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.age}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>Height :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.height}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>Weight :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.weight}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>Gender :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.gender}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>Goal :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.goal}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>City :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.city}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>Country :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.country}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>BP Ratio :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.bp}
-                    </li>
+                <div class="social-icons">
+                  <div class="icon">
+                    <a><PersonAddAlt1Icon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.age}</h4>
+                    <p><InputLabel>Age</InputLabel></p>
+                  </div>
+
+                  
+                  <div class="icon">
+                    <a><HeightIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.height}</h4>
+                    <p> <InputLabel>Height</InputLabel></p>
+                  </div>
+
+                  <div class="icon">
+                    <a><ScaleIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.weight}</h4>
+                    <p> <InputLabel>Weight</InputLabel></p>
+                  </div>
+
+                  
+                  <div class="icon">
+                    <a><WcIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.gender}</h4>
+                    <p><InputLabel>Gender</InputLabel></p>
+                  </div>
+
+                  <div class="icon">
+                    <a><SportsScoreIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.goal}</h4>
+                    <p><InputLabel>Goal</InputLabel></p>
+                  </div>
+
+                  <div class="icon">
+                    <a><LocationOnIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.city} </h4>
+                    <p><InputLabel>City</InputLabel></p>
+                  </div>
+
+                  <div class="icon">
+                    <a><LanguageIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.country}</h4>
+                    <p><InputLabel>Country</InputLabel></p>
+                  </div>
+
+                  <div class="icon">
+                    <a><MonitorHeartIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.bp}</h4>
+                    <p><InputLabel>BP Ratio</InputLabel></p>
+                  </div>
+
+                  <div class="icon">
+                    <a><CakeIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.diabetes}</h4>
+                    <p><InputLabel>Diabetes</InputLabel></p>
+                  </div>
+
+                  <div class="icon">
+                    <a><WaterDropIcon fontSize="large"/></a>
+                    <h4>{profileDetails?.data?.cholesterol}</h4>
+                    <p><InputLabel>Cholestrol</InputLabel></p>
+                  </div>
+
+                  
+                  
+                    </div> 
+                  
                     {/* <li>
                       <span>
                         <InputLabel>Systolic BP :</InputLabel>
@@ -300,20 +328,8 @@ export default function ProfilePage() {
                       </span>
                       {profileDetails?.data?.diastolicBp}
                     </li> */}
-                    <li>
-                      <span>
-                        <InputLabel>Diabetes :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.diabetes}
-                    </li>
-                    <li>
-                      <span>
-                        <InputLabel>Cholestrol :</InputLabel>
-                      </span>
-                      {profileDetails?.data?.cholesterol}
-                    </li>
-                  </ul>
-                </div>
+                    
+                  
               </>
             ) : (
               <form onSubmit={handleSubmit}>

@@ -59,13 +59,25 @@
 
 #butn{
     color: #0083f9;
-    width: 37%;
+    width: 30%;
     padding: 1px;
     
     right: 0;
-    font-size: 14px;
+    font-size: 20px;
     margin-left: 7px;
     border-radius: 5px;
+    background: whitesmoke;
+    box-shadow: 0px 9px 30px -15px rgb(0 0 0);
+}
+
+#rec-btns{
+    width: 50%;
+    font-size: 20px;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #0083f9;
     background: whitesmoke;
     box-shadow: 0px 9px 30px -15px rgb(0 0 0);
 }

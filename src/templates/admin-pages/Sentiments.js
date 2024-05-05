@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IP } from "../constants";
+import "../../templates/css/Sentiment.css";
 import WMTable from "../../ui-components/table";
 import { IconButton } from "@mui/material";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
@@ -81,9 +82,10 @@ export default function Sentiments() {
 
   return (
     <>
-      <div>
+    <div class="sentiment-cont">
+      <div class="senti">
         {!seeNegative ? (
-          <button
+          <button id="get-sent" 
             onClick={() => {
               handleRunSentiments();
             }}
@@ -95,18 +97,22 @@ export default function Sentiments() {
             onClick={() => {
               handleGetSentiments();
             }}
+            id="get-sent" 
           >
             See Negative Users
           </button>
         )}
       </div>
       {negativeUsers?.data && (
+        <div class="tbl">
         <WMTable
           tableTitle={"Users with Negative Sentiments"}
           data={negativeUsers?.data}
           columns={columns}
         />
+        </div>
       )}
+    </div>
     </>
   );
 }

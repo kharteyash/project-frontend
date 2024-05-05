@@ -208,16 +208,17 @@ export default function NavigationBar() {
               anchorEl={menuAnchorEl}
               open={isMenuOpen}
               onClose={() => setIsMenuOpen(false)}
+              style={{opacity:"0.9"}}
             >
               {(userDetails?.data?._id && userDetails?.data?.role === "user") ||
               (userDetails?.data?._id &&
                 userDetails?.data?.role === "employee") ? (
                 <>
                   <MenuItem>
-                    <Link to="/profile">Profile</Link>
+                    <Link to="/profile" id="links">Profile</Link>
                   </MenuItem>
                   <MenuItem>
-                    <Link to="/orders">Orders</Link>
+                    <Link to="/orders" id="links">Orders</Link>
                   </MenuItem>
                 </>
               ) : (
@@ -228,16 +229,16 @@ export default function NavigationBar() {
               (userDetails?.data?._id &&
                 userDetails?.data?.role === "superadmin") ? (
                 <MenuItem>
-                  <Link to="/view-grievance">View Grievance</Link>
+                  <Link to="/view-grievance" id="links">View Grievance</Link>
                 </MenuItem>
               ) : (
                 <MenuItem>
-                  <Link to="/contact">Contact Us</Link>
+                  <Link to="/contact" id="links">Contact Us</Link>
                 </MenuItem>
               )}
 
               <MenuItem>
-                <Link to="/home" className="nav-link" onClick={logoutUser}>
+                <Link to="/home" className="nav-link" onClick={logoutUser} id="links">
                   Logout <LogoutIcon />
                 </Link>
               </MenuItem>
