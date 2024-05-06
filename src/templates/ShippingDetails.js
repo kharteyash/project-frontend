@@ -49,6 +49,31 @@ export default function ShippingInfo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const lettersOnlyRegex = /^[a-zA-Z]+$/;
+    const phoneNoRegex = /^[0-9]{10}/;
+    const pincodeRegex = /^[0-9]{6}/;
+
+    if (!phoneNoRegex.test(phoneNo)) {
+      alert("Enter valid Phone number");
+      return;
+    }
+    if (!pincodeRegex.test(pincode)) {
+      alert("Enter valid Phone number");
+      return;
+    }
+    if (!lettersOnlyRegex.test(state)) {
+      alert("State name should contain only letters");
+      return;
+    }
+    if (!lettersOnlyRegex.test(city)) {
+      alert("City name should contain only letters");
+      return;
+    }
+    if (!lettersOnlyRegex.test(country)) {
+      alert("Country name should contain only letters");
+      return;
+    }
+
     const formData = {
       address: allShippingDetails?.data?._id
         ? allShippingDetails?.data?.address
@@ -110,18 +135,20 @@ export default function ShippingInfo() {
         <form onSubmit={handleSubmit}>
           {!editDetails ? (
             <>
-              <InputLabel>Phone Number</InputLabel>
-              <Typography>{allShippingDetails?.data?.phoneNo}</Typography>
-              <InputLabel>Address</InputLabel>
-              <Typography>{allShippingDetails?.data?.address}</Typography>
-              <InputLabel>City</InputLabel>
-              <Typography>{allShippingDetails?.data?.city}</Typography>
-              <InputLabel>Pincode</InputLabel>
-              <Typography>{allShippingDetails?.data?.pincode}</Typography>
-              <InputLabel>State</InputLabel>
-              <Typography>{allShippingDetails?.data?.state}</Typography>
-              <InputLabel>Country</InputLabel>
-              <Typography>{allShippingDetails?.data?.country}</Typography>
+              <div class="fillform">
+                <InputLabel>Phone Number</InputLabel>
+                <Typography>{allShippingDetails?.data?.phoneNo}</Typography>
+                <InputLabel>Address</InputLabel>
+                <Typography>{allShippingDetails?.data?.address}</Typography>
+                <InputLabel>City</InputLabel>
+                <Typography>{allShippingDetails?.data?.city}</Typography>
+                <InputLabel>Pincode</InputLabel>
+                <Typography>{allShippingDetails?.data?.pincode}</Typography>
+                <InputLabel>State</InputLabel>
+                <Typography>{allShippingDetails?.data?.state}</Typography>
+                <InputLabel>Country</InputLabel>
+                <Typography>{allShippingDetails?.data?.country}</Typography>
+              </div>
             </>
           ) : (
             <div class="fillform">

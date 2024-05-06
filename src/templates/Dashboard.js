@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import "../templates/css/Dashboard.css";
@@ -6,9 +6,31 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
+import { IP } from "./constants";
 
 // import WMTable from "../ui-components/table";
 export default function Dashboard() {
+  const [dashboardData, setDashboardData] = useState();
+  const handleDashboardData = async() => {
+    try {
+      const response = await fetch(`http://${IP}:5000/api/admin/view/dashboard`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await response.json();
+      setDashboardData(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  useEffect(()=> {
+    handleDashboardData();
+  },[])
+
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -18,18 +40,6 @@ export default function Dashboard() {
   }));
   return (
     <>
-      {/* <WMTable /> */}
-
-      {/* things to show 
-      
-      1) no. of users registered in last 1 month
-      2) no. of items purchased
-      3) amount of money made
-
-       baaki aur kya chaiye daal do
-      
-      */}
-
       <Box
         sx={{ flexGrow: 1 }}
         style={{
@@ -92,7 +102,17 @@ export default function Dashboard() {
             </Item>
           </Grid>
           <Grid item xs={9}>
-            <Item style={{ background: "#1C2833" }}>charts & graph</Item>
+            <Item style={{ background: "#1C2833",color: "white" }}>
+              <p>
+              Total Revenue : 
+              {dashboardData?.data?.totalRevenue}
+              </p>
+              <p>
+              Number of users registered in the last month : 
+              {dashboardData?.data?.userRegistered}
+              </p>
+              
+            </Item>
           </Grid>
         </Grid>
       </Box>

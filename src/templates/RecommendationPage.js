@@ -10,20 +10,33 @@ import GradeIcon from '@mui/icons-material/Grade';
 export default function RecommendationPage() {
   const navigate = useNavigate();
   const [bmiRecommendation, setBmiRecommendation] = useState({});
+  const [seebmiRecommendation, setseeBmiRecommendation] = useState({});
   const [goalGenderRecommendation, setGoalGenderRecommendation] = useState({});
+  const [seegoalGenderRecommendation, setseeGoalGenderRecommendation] = useState({});
   const [productGoalRecommendation, setProductGoalRecommendation] = useState(
+    {}
+  );
+  const [seeproductGoalRecommendation, setseeProductGoalRecommendation] = useState(
     {}
   );
   const [prevPurchaseRecommendation, setPrevPurchaseRecommendation] = useState(
     {}
   );
+  const [seeprevPurchaseRecommendation, setseePrevPurchaseRecommendation] = useState(
+    {}
+  );
   const [recentlyViewRecommendation, setRecentlyViewRecommendation] = useState(
+    {}
+  );
+  const [seerecentlyViewRecommendation, setseeRecentlyViewRecommendation] = useState(
     {}
   );
   const [timelineRecommendation, setTimelineRecommendation] = useState({});
   const [prevSearchRecommendation, setPrevSearchRecommendation] = useState({});
+  const [seeprevSearchRecommendation, setseePrevSearchRecommendation] = useState({});
   const [exerciseRecommendation, setExerciseRecommendation] = useState({});
   const [adminRecommendation, setAdminRecommendation] = useState({});
+  const [seeadminRecommendation, setseeAdminRecommendation] = useState({});
   const [render, setRender] = useState(false);
   const ageHeightWeight = async () => {
     try {
@@ -38,7 +51,9 @@ export default function RecommendationPage() {
         }
       );
       const data = await response.json();
-      setBmiRecommendation(data);
+      setseeBmiRecommendation(data);
+      const array = data?.data;
+      setBmiRecommendation([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -57,7 +72,9 @@ export default function RecommendationPage() {
         }
       );
       const data = await response.json();
-      setGoalGenderRecommendation(data);
+      setseeGoalGenderRecommendation(data);
+      const array = data?.data;
+      setGoalGenderRecommendation([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -76,7 +93,9 @@ export default function RecommendationPage() {
         }
       );
       const data = await response.json();
-      setProductGoalRecommendation(data);
+      setseeProductGoalRecommendation(data);
+      const array = data?.data;
+      setProductGoalRecommendation([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -95,7 +114,9 @@ export default function RecommendationPage() {
         }
       );
       const data = await response.json();
-      setPrevPurchaseRecommendation(data);
+      setseePrevPurchaseRecommendation(data);
+      const array = data?.data;
+      setPrevPurchaseRecommendation([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -114,7 +135,9 @@ export default function RecommendationPage() {
         }
       );
       const data = await response.json();
-      setPrevSearchRecommendation(data);
+      setseePrevSearchRecommendation(data);
+      const array = data?.data;
+      setPrevSearchRecommendation([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -133,7 +156,9 @@ export default function RecommendationPage() {
         }
       );
       const data = await response.json();
-      setRecentlyViewRecommendation(data);
+      setseeRecentlyViewRecommendation(data);
+      const array = data?.data;
+      setRecentlyViewRecommendation([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -190,7 +215,9 @@ export default function RecommendationPage() {
         }
       );
       const data = await response.json();
-      setAdminRecommendation(data);
+      setseeAdminRecommendation(data);
+      const array = data?.data;
+      setAdminRecommendation([...array].reverse());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -269,11 +296,11 @@ export default function RecommendationPage() {
     <>
     <div class="recommend-cont">
       <br></br>
-      {goalGenderRecommendation?.data && (
+      {seegoalGenderRecommendation?.data && (
         <>
           <h3>Goal Gender</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {goalGenderRecommendation?.data?.map((value, index) => {
+            {goalGenderRecommendation?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
@@ -309,11 +336,11 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      {bmiRecommendation?.data && (
+      {seebmiRecommendation?.data && (
         <>
           <h3>Age Height Weight</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {bmiRecommendation?.data?.map((value, index) => {
+            {bmiRecommendation?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
@@ -349,11 +376,11 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      {productGoalRecommendation?.data && (
+      {seeproductGoalRecommendation?.data && (
         <>
           <h3>Product goal</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {productGoalRecommendation?.data?.map((value, index) => {
+            {productGoalRecommendation?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
@@ -389,11 +416,11 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      {prevPurchaseRecommendation?.data && (
+      {seeprevPurchaseRecommendation?.data && (
         <>
           <h3>Previous Purchases</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {prevPurchaseRecommendation?.data?.map((value, index) => {
+            {prevPurchaseRecommendation?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
@@ -432,11 +459,11 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      {prevSearchRecommendation?.data && (
+      {seeprevSearchRecommendation?.data && (
         <>
           <h3>Previous Search</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {prevSearchRecommendation?.data?.map((value, index) => {
+            {prevSearchRecommendation?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
@@ -475,11 +502,11 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      {recentlyViewRecommendation?.data && (
+      {seerecentlyViewRecommendation?.data && (
         <>
           <h3>Recently Viewed</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {recentlyViewRecommendation?.data?.map((value, index) => {
+            {recentlyViewRecommendation?.map((value, index) => {
               if (!value) return null;
               return (
                 <>
@@ -626,11 +653,11 @@ export default function RecommendationPage() {
         </>
       )}
       <br></br>
-      {adminRecommendation?.data && (
+      {seeadminRecommendation?.data && (
         <>
           <h3>Recommendations from Us</h3>
           <div className="d-flex flex-wrap justify-content-center align-items-center">
-            {adminRecommendation?.data?.map((value, index) => {
+            {adminRecommendation?.map((value, index) => {
               if (!value) return null;
               return (
                 <>

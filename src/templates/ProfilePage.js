@@ -159,6 +159,48 @@ export default function ProfilePage() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const lettersOnlyRegex = /^[a-zA-Z]+$/;
+    const phoneNoRegex = /^[0-9]{10}/;
+    const numbersRegex = /^[0-9]+/;
+
+    if (!numbersRegex.test(age)) {
+      alert("Enter valid Age");
+      return;
+    }
+    if (!numbersRegex.test(height)) {
+      alert("Enter valid height");
+      return;
+    }
+    if (!numbersRegex.test(weight)) {
+      alert("Enter valid weight");
+      return;
+    }
+    if (!numbersRegex.test(cholesterol)) {
+      alert("Enter valid Cholesterol level");
+      return;
+    }
+    if (!numbersRegex.test(diabetes)) {
+      alert("Enter valid Sugar level");
+      return;
+    }
+    if (!numbersRegex.test(systolicBp)) {
+      alert("Enter valid BP");
+      return;
+    }
+    if (!numbersRegex.test(diastolicBp)) {
+      alert("Enter valid BP");
+      return;
+    }
+    if (!lettersOnlyRegex.test(city)) {
+      alert("City name should contain only letters");
+      return;
+    }
+    if (!lettersOnlyRegex.test(country)) {
+      alert("Country name should contain only letters");
+      return;
+    }
+
     const formData = {
       age : age || profileDetails?.data?.age,
       weight : weight || profileDetails?.data?.weight,

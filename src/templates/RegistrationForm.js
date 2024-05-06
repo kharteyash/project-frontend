@@ -31,22 +31,22 @@ export default function RegistrationForm() {
       return;
     }
 
-  const lettersOnlyRegex = /^[a-zA-Z]+$/;
-  const userNameRegex = /^[a-zA-Z]/;
-  if (!userNameRegex.test(userName)) {
-    alert("Enter valid User Name");
-    return;
-  }
+    const lettersOnlyRegex = /^[a-zA-Z]+$/;
+    const userNameRegex = /^[a-zA-Z]/;
+    if (!userNameRegex.test(userName)) {
+      alert("Enter valid User Name");
+      return;
+    }
 
-  if (!lettersOnlyRegex.test(firstName)) {
-    alert("First name should contain only letters");
-    return;
-  }
+    if (!lettersOnlyRegex.test(firstName)) {
+      alert("First name should contain only letters");
+      return;
+    }
 
-  if (!lettersOnlyRegex.test(lastName)) {
-    alert("Last name should contain only letters");
-    return;
-  }
+    if (!lettersOnlyRegex.test(lastName)) {
+      alert("Last name should contain only letters");
+      return;
+    }
 
     const formData = {
       userName,
