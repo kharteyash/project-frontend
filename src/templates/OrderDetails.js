@@ -17,7 +17,6 @@ import {
 
 export default function OrderDetails() {
   const location = useLocation();
-  console.log("locatiojn", location?.state);
   const details = location?.state?.details;
   const role = location?.state?.role;
     const [enterOTP, setEnterOTP] = useState();

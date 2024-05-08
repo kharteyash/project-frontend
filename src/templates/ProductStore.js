@@ -82,8 +82,8 @@ export default function ProductStore() {
           credentials: "include",
         }
       );
-      const data = await response.json();
-      console.log("data", data);
+      const addToCart = await response.json();
+      toast.success(addToCart?.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -102,8 +102,8 @@ export default function ProductStore() {
           credentials: "include",
         }
       );
-      const data = await response.json();
-      console.log("data", data);
+      const addToWishlist = await response.json();
+      toast.success(addToWishlist?.message);
     } catch (error) {
       console.error("Error:", error);
     }

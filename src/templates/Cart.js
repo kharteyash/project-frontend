@@ -170,7 +170,7 @@ export default function Cart() {
                 onClick={(e) => handleAddQty(e, row?.original?.product?._id)}
               />
             </IconButton>
-            <Typography ml={2}>{row?.original?.quantity}</Typography>
+            <Typography ml={4.5}>{row?.original?.quantity}</Typography>
             <IconButton>
               <ArrowCircleDownIcon
                 onClick={(e) => handleSubQty(e, row?.original?.product?._id)}

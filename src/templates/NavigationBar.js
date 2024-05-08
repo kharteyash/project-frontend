@@ -96,7 +96,6 @@ export default function NavigationBar() {
       });
       const logout = await response.json();
       window.location.reload();
-      // navigate("/home");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -128,6 +127,7 @@ export default function NavigationBar() {
                   <a
                     href="https://indigo-crystal-95.tiiny.site/"
                     className="nav-link"
+                    target="_blank"
                   >
                     Exercise
                   </a>

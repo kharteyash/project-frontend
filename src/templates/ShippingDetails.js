@@ -19,13 +19,22 @@ import "../templates/css/Shipdetail.css";
 export default function ShippingInfo() {
   const [editDetails, setEditDetails] = useState(false);
   const [allShippingDetails, setAllShippingDetails] = useState({});
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
+  const [address, setAddress] = useState();
+  const [city, setCity] = useState();
+  const [state, setState] = useState();
+  const [country, setCountry] = useState();
+  const [pincode, setPincode] = useState();
+  const [phoneNo, setPhoneNo] = useState();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setAddress(address ? address : allShippingDetails?.data?.address);
+    setCity(city ? city : allShippingDetails?.data?.city);
+    setState(state ? state : allShippingDetails?.data?.state);
+    setCountry(country ? country : allShippingDetails?.data?.country);
+    setPincode(pincode ? pincode : allShippingDetails?.data?.pincode);
+    setPhoneNo(phoneNo ? phoneNo : allShippingDetails?.data?.phoneNo);
+  }, [allShippingDetails]);
 
   const getShippingDetails = async () => {
     try {
@@ -49,31 +58,6 @@ export default function ShippingInfo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const lettersOnlyRegex = /^[a-zA-Z]+$/;
-    const phoneNoRegex = /^[0-9]{10}/;
-    const pincodeRegex = /^[0-9]{6}/;
-
-    if (!phoneNoRegex.test(phoneNo)) {
-      alert("Enter valid Phone number");
-      return;
-    }
-    if (!pincodeRegex.test(pincode)) {
-      alert("Enter valid Phone number");
-      return;
-    }
-    if (!lettersOnlyRegex.test(state)) {
-      alert("State name should contain only letters");
-      return;
-    }
-    if (!lettersOnlyRegex.test(city)) {
-      alert("City name should contain only letters");
-      return;
-    }
-    if (!lettersOnlyRegex.test(country)) {
-      alert("Country name should contain only letters");
-      return;
-    }
-
     const formData = {
       address: allShippingDetails?.data?._id
         ? allShippingDetails?.data?.address
@@ -94,6 +78,31 @@ export default function ShippingInfo() {
         ? allShippingDetails?.data?.country
         : country,
     };
+
+    const lettersOnlyRegex = /^[a-zA-Z]+$/;
+    const cityRegex = /^[a-zA-Z\s]+$/;
+    const phoneNoRegex = /^[0-9]{10}$/;
+    const pincodeRegex = /^[0-9]{6}$/;
+    if (!phoneNoRegex.test(phoneNo)) {
+      alert("Enter valid Phone number");
+      return;
+    }
+    if (!pincodeRegex.test(pincode)) {
+      alert("Enter valid Pincode");
+      return;
+    }
+    if (!lettersOnlyRegex.test(state)) {
+      alert("State name should contain only letters");
+      return;
+    }
+    if (!cityRegex.test(city)) {
+      alert("City name should contain only letters");
+      return;
+    }
+    if (!lettersOnlyRegex.test(country)) {
+      alert("Country name should contain only letters");
+      return;
+    }
 
     try {
       const response = await fetch(

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../templates/css/Paymentinfo.css";
 import { IP } from "./constants";
 import {
   Grid,
@@ -32,40 +33,39 @@ export default function PaymentInfo() {
       }
 
       const data = await response.json();
-      console.log(data);
       navigate("/orders");
     } catch (error) {
       console.error("Error:", error);
     }
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div class="payment">
+      <form onSubmit={handleSubmit} id="paymentf">
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12} sm={12}>
-            <InputLabel>Enter Payment Type</InputLabel>
+            <InputLabel id="lbl">Enter Payment Type</InputLabel>
             <RadioGroup
               aria-label="paymentType"
               name="paymentType"
               id="paymentType"
               onChange={(e) => setPaymentMethod(e.target.value)}
             >
-              <FormControlLabel value="UPI" control={<Radio />} label="UPI" />
-              <FormControlLabel value="Card" control={<Radio />} label="Card" />
+              {/* <FormControlLabel value="UPI" control={<Radio />} label="UPI" /> */}
+              {/* <FormControlLabel value="Card" control={<Radio />} label="Card" /> */}
               <FormControlLabel
                 value="CashOnDelivery"
                 control={<Radio />}
                 label="CashOnDelivery"
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                 value="NetBanking"
                 control={<Radio />}
                 label="NetBanking"
-              />
+              /> */}
             </RadioGroup>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <input type="submit" value="Submit" />
+            <input class="sub-btn" type="submit" value="Submit"/>
           </Grid>
         </Grid>
       </form>

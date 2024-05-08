@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../templates/css/Common.css";
 import "../templates/css/Registrationf.css";
 import { Grid, InputLabel, TextField, Typography, Button } from "@mui/material";
@@ -6,13 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { IP } from "./constants.js";
 
 export default function RegistrationForm() {
-  const [userName, setUserName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [cpassword, setCpassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [password, setPassword] = useState();
+  const [cpassword, setCpassword] = useState();
+  const [email, setEmail] = useState();
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -32,8 +33,8 @@ export default function RegistrationForm() {
     }
 
     const lettersOnlyRegex = /^[a-zA-Z]+$/;
-    const userNameRegex = /^[a-zA-Z]/;
-    if (!userNameRegex.test(userName)) {
+    // const userNameRegex = /^[a-zA-Z]/;
+    if (!lettersOnlyRegex.test(userName)) {
       alert("Enter valid User Name");
       return;
     }

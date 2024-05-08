@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IP } from "../constants";
 import WMTable from "../../ui-components/table";
 import { IconButton } from "@mui/material";
@@ -7,24 +7,19 @@ import { useNavigate } from "react-router";
 import "../../templates/css/Churn.css";
 
 export default function Churn() {
-  const [seeChurn, setSeeChurn] = useState(false);
   const [churnedUsers, setChurnedUsers] = useState({});
   const navigate = useNavigate();
 
   const handleRunChurn = async () => {
     try {
-      const response = await fetch(
-        `http://${IP}:5000/api/admin/view/churned`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://${IP}:5000/api/admin/view/churned`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       const getChurn = await response.json();
-      setSeeChurn(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -47,6 +42,10 @@ export default function Churn() {
       console.error("Error:", error);
     }
   };
+
+  useEffect(() => {
+    handleRunChurn();
+  }, []);
 
   const handleOpenUserDetails = (data) => {
     navigate(`/userInfo/${data?.id}`, { state: data });
@@ -83,24 +82,14 @@ export default function Churn() {
   return (
     <div class="churn-cont">
       <div>
-        {!seeChurn ? (
-          <button id="churn-det"
-            onClick={() => {
-              handleRunChurn();
-            }}
-          >
-            Get Churn Details
-          </button>
-        ) : (
-          <button
-            onClick={() => {
-              handleGetChurnedUsers();
-            }}
-            id="churn-det"
-          >
-            See Churned Users
-          </button>
-        )}
+        <button
+          onClick={() => {
+            handleGetChurnedUsers();
+          }}
+          id="churn-det"
+        >
+          See Churned Users
+        </button>
       </div>
       {churnedUsers?.data && (
         <WMTable

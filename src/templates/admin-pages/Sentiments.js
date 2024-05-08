@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IP } from "../constants";
 import "../../templates/css/Sentiment.css";
 import WMTable from "../../ui-components/table";
@@ -7,7 +7,6 @@ import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useNavigate } from "react-router";
 
 export default function Sentiments() {
-  const [seeNegative, setSeeNegative] = useState(false);
   const [negativeUsers, setNegativeUsers] = useState({});
   const navigate = useNavigate();
 
@@ -24,7 +23,6 @@ export default function Sentiments() {
         }
       );
       const getSentiment = await response.json();
-      setSeeNegative(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -47,6 +45,10 @@ export default function Sentiments() {
       console.error("Error:", error);
     }
   };
+
+  useEffect(() => {
+    handleRunSentiments();
+  }, []);
 
   const handleOpenUserDetails = (data) => {
     navigate(`/userInfo/${data?.id}`, { state: data });
@@ -82,37 +84,27 @@ export default function Sentiments() {
 
   return (
     <>
-    <div class="sentiment-cont">
-      <div class="senti">
-        {!seeNegative ? (
-          <button id="get-sent" 
-            onClick={() => {
-              handleRunSentiments();
-            }}
-          >
-            Get Sentiment
-          </button>
-        ) : (
+      <div class="sentiment-cont">
+        <div class="senti">
           <button
             onClick={() => {
               handleGetSentiments();
             }}
-            id="get-sent" 
+            id="get-sent"
           >
             See Negative Users
           </button>
+        </div>
+        {negativeUsers?.data && (
+          <div class="tbl">
+            <WMTable
+              tableTitle={"Users with Negative Sentiments"}
+              data={negativeUsers?.data}
+              columns={columns}
+            />
+          </div>
         )}
       </div>
-      {negativeUsers?.data && (
-        <div class="tbl">
-        <WMTable
-          tableTitle={"Users with Negative Sentiments"}
-          data={negativeUsers?.data}
-          columns={columns}
-        />
-        </div>
-      )}
-    </div>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IP } from "../constants";
 import WMTable from "../../ui-components/table";
 import { IconButton } from "@mui/material";
@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 import "../../templates/css/Cartabandon.css";
 
 export default function CartAbandon() {
-  const [seeCartAbandon, setSeeCartAbandon] = useState(false);
   const [abandonUsers, setAbandonUsers] = useState({});
   const navigate = useNavigate();
 
@@ -24,7 +23,6 @@ export default function CartAbandon() {
         }
       );
       const getabandonnedusers = await response.json();
-      setSeeCartAbandon(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -47,6 +45,10 @@ export default function CartAbandon() {
       console.error("Error:", error);
     }
   };
+
+  useEffect(() => {
+    handleRunCartAbandon();
+  }, []);
 
   const handleOpenUserDetails = (data) => {
     navigate(`/userInfo/${data?.id}`, { state: data });
@@ -83,33 +85,22 @@ export default function CartAbandon() {
   return (
     <div class="ca">
       <div class="abandon">
-        {!seeCartAbandon ? (
-          <button 
+        <button
           id="ca-btn"
-            onClick={() => {
-                handleRunCartAbandon();
-            }}
-          >
-            Get Cart Abandonment Details
-          </button>
-        ) : (
-          <button
-          id="ca-btn"
-            onClick={() => {
-              handleGetCartAbandonUsers();
-            }}
-          >
-            See Cart Abandonned Users
-          </button>
-        )}
+          onClick={() => {
+            handleGetCartAbandonUsers();
+          }}
+        >
+          See Cart Abandonned Users
+        </button>
       </div>
       {abandonUsers?.data && (
         <div id="au-tbl">
-        <WMTable
-          tableTitle={"Users with cart abandonment possibility"}
-          data={abandonUsers?.data}
-          columns={columns}
-        />
+          <WMTable
+            tableTitle={"Users with cart abandonment possibility"}
+            data={abandonUsers?.data}
+            columns={columns}
+          />
         </div>
       )}
     </div>
