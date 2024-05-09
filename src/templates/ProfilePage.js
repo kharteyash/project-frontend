@@ -160,7 +160,7 @@ export default function ProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const lettersOnlyRegex = /^[a-zA-Z]+$/;
+    const lettersOnlyRegex = /^[a-zA-Z\s]+$/;
     const phoneNoRegex = /^[0-9]{10}/;
     const numbersRegex = /^[0-9]+/;
 
