@@ -103,13 +103,14 @@ export default function Dashboard() {
           </Grid>
           <Grid item xs={9}>
             <Item style={{ background: "#1C2833",color: "white" }}>
-              <p>
-              Total Revenue : 
-              {dashboardData?.data?.totalRevenue}
+              <p id="revnuser">
+              Total Revenue :
+
+              <h3 id="rdata">{dashboardData?.data?.totalRevenue}</h3>
               </p>
-              <p>
+              <p id="revnuser">
               Number of users registered in the last month : 
-              {dashboardData?.data?.userRegistered}
+              <h3 id="rdata">{dashboardData?.data?.userRegistered}</h3>
               </p>
               
             </Item>

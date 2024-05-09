@@ -67,7 +67,7 @@ function ReviewDialog(props) {
           fullWidth
           onChange={(e) => setRating(e.target.value)}
         />
-        <button onClick={() => handleSubmitReview()}>Submit</button>
+        <button id="revsub" onClick={() => handleSubmitReview()}>Submit</button>
       </Dialog>
     </div>
   );

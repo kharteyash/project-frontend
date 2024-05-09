@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IP } from "../constants";
+import "../../templates/css/Prodedit.css";
 import StarIcon from "@mui/icons-material/Star";
 import {
   Dialog,
@@ -67,6 +68,7 @@ function EditDetailsDialog(props) {
 
   return (
     <>
+    
       <Dialog
         open={props?.open}
         onClose={props?.onClose}
@@ -145,6 +147,7 @@ function EditDetailsDialog(props) {
           onClick={() => handleUpdateDetails()}
         />
       </Dialog>
+      
     </>
   );
 }
@@ -278,6 +281,7 @@ export default function ProductEdit() {
 
   return (
     <>
+    <div class="edit-cont">
       <ToastContainer
         position="bottom-left"
         autoClose={1000}
@@ -291,28 +295,32 @@ export default function ProductEdit() {
         theme="dark"
         transition="Bounce"
       />
-      <div>
-        <button onClick={() => handleEditDetails()}>Edit Details</button>
-        <button onClick={() => handleDeleteDetails()}>Delete Product</button>
+      <div class="newcont"> 
+        <button id="editbtn" onClick={() => handleEditDetails()}>Edit Details</button>
+        <button id="editbtn" onClick={() => handleDeleteDetails()}>Delete Product</button>
         <br></br>
+        <div class="h-cont">
+          <div class="lcont">
         <img
           src={productInfo?.data?.image}
-          height={"500px"}
-          width={"500px"}
+          
           style={{ objectFit: "cover" }}
         />
+        </div>
 
-        <div style={{ border: "3px solid pink" }}>
+        <div class="rcont" >
           <h1>{productInfo?.data?.name}</h1>
 
           <h3>{productInfo?.data?.description}</h3>
-          <h2>{productInfo?.data?.price}</h2>
+          <h2>&#8377; {productInfo?.data?.price}</h2>
           <p>
-            {productInfo?.data?.avgRating} / 5 <StarIcon /> (
+            {productInfo?.data?.avgRating} / 5 <StarIcon id="star"/> (
             {reviews?.data?.length})
           </p>
         </div>
-        <button onClick={() => handleReviews()}>
+
+        </div>
+        <button id="editbtn" onClick={() => handleReviews()}>
           {!seeReview ? "See All Reviews" : "Hide Reviews"}
         </button>
         {seeReview ? (
@@ -348,6 +356,7 @@ export default function ProductEdit() {
         onClose={handleCloseDeleteDialog}
         productId={productInfo?.data?._id}
       />
+      </div>
     </>
   );
 }

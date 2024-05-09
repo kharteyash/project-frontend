@@ -189,7 +189,7 @@ export default function ViewOrderById() {
         </div>
         {order?.orderStatus === "Placed" && (
           <>
-            <button onClick={(e) => handleOpenMenu(e)}>
+            <button id="assigndel" onClick={(e) => handleOpenMenu(e)}>
               Assign Delivery Person
             </button>
             <Menu
@@ -209,7 +209,7 @@ export default function ViewOrderById() {
         )}
         {order?.orderStatus === "Approved" && (
           <>
-            <button onClick={() => handleCompleteOrder()}>
+            <button onClick={() => handleCompleteOrder()} id="assigndel">
               Order Completed
             </button>
           </>
