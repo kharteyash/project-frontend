@@ -30,3 +30,14 @@
     width: 100%;
    
 }
+
+#revnuser{
+    color: #0bd2de;
+    font-size: 40px;
+}
+
+#rdata{
+    color: whitesmoke;
+    font-size: xx-large;
+    height: 55px;
+}

@@ -119,9 +119,10 @@ export default function OrderDetails() {
       {role === "employee" && (
         <>
         <div className="mainod">
-          <button onClick={() => handleSendOTP()}>Send OTP</button>
-          <TextField onChange={(e)=>setEnterOTP(e.target.value)}/>
-          <button onClick={()=>handleVerifyOTP()}>Verify OTP</button>
+          <button id="otp1" onClick={() => handleSendOTP()}>Send OTP</button>
+          <div id="verify">
+          <TextField id="otpip" onChange={(e)=>setEnterOTP(e.target.value)}/>
+          <button id="otp2" onClick={()=>handleVerifyOTP()}>Verify OTP</button></div>
           </div>
         </>
       )}

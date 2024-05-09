@@ -156,7 +156,7 @@ function AddProductDialog(props) {
             accept="image/*"
             onChange={(e) => setSelectedImage(e.target.files[0])}
           />
-          <input style={{color:"blue", border:"solid black 1px"}} type="submit" value="Add Product" />
+          <input id="add-prd" type="submit" value="Add Product" />
         </form>
       </Dialog>
     </>

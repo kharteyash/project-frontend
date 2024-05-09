@@ -8,9 +8,10 @@
 #add-prd {
   border-radius: 5px;
   margin: auto;
-  width: 25%;
+  width: 30%;
   margin-top: 20px;
   color: whitesmoke;
+  display:block;
   font-size: large;
   background: linear-gradient(45deg, #0bd2de, #0083f9);
   border: 1px solid rgba(255, 255, 255, 0.188);
@@ -73,4 +74,10 @@ form {
 }
 .cat {
   padding-left: 10px;
+}
+
+#file{
+  border: 1px solid #0083f9;
+  width:90%;
+  margin: auto;
 }

@@ -31,7 +31,7 @@ export default function Gallery() {
       style={{
         background: "linear-gradient(45deg , #0bd2de , #0083f9)",
         width: "100%",
-        height: "100%",
+        height: "100vh",
         display: "flex",
       }}
     >
