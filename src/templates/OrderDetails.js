@@ -6,6 +6,8 @@ import { TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import "../templates/css/Orderdet.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Typography,
   Dialog,
@@ -56,89 +58,122 @@ export default function OrderDetails() {
         }
       );
       const verifyOTP = await response.json();
-      // toast.success(deleteReview?.message);
+      toast.success(verifyOTP?.message);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <div class="ocont">
-      <div id="card-body">
-        <Card id="card">
-          <div class="pdetail">
-            {role === "employee" && (
-              <>
-                <Typography variant="h4" color="#0083f9" padding="10px">
-                  Name : {details?.user?.firstName} {details?.user?.lastName}
-                </Typography>
-                <Typography color="#1e89e7" paddingLeft="10px">
-                  {details?.shippingInfo?.phoneNo}
-                </Typography>
-              </>
-            )}{" "}
-          </div>
-          <div id="items">
-            <Typography>Order Id : {details?._id}</Typography>
-            <Typography variant="body1">Items Ordered :</Typography>
-            {details?.orderItems?.map((value, index) => {
-              return (
+    <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition="Bounce"
+      />
+      <div class="ocont">
+        <div id="card-body">
+          <Card id="card">
+            <div class="pdetail">
+              {role === "employee" && (
                 <>
-                  <div class="prods">
-                    <Typography variant="body2">
-                      {value?.name}
-                      {" | "}
-                      {"Price : "}
-                      {value?.netprice}
-                    </Typography>
-                  </div>
+                  <Typography variant="h4" color="#0083f9" padding="10px">
+                    Name : {details?.user?.firstName} {details?.user?.lastName}
+                  </Typography>
+                  <Typography color="#1e89e7" paddingLeft="10px">
+                    {details?.shippingInfo?.phoneNo}
+                  </Typography>
                 </>
-              );
-            })}
-          </div>
-          <div id="psp">
-            <Typography variant="body1">
-              <br></br>
-              Final Price (including gst) : <CurrencyRupeeIcon />
-              {details?.subtotalPrice}
-            </Typography>
-
-            <Typography variant="body1">
-              Order Status : {details?.orderStatus}
-            </Typography>
-            <Typography variant="body1">
-              Payment method : {details?.paymentMethod}{" "}
-            </Typography>
-          </div>
-          <br></br>
-          <Divider color="#333" />
-          <div id="shipinfo">
-            <Typography variant="body2">Shipping Info :</Typography>
-            <Typography variant="body2">
-              Address : {details?.shippingInfo?.address}
-              <br />
-              City : {details?.shippingInfo?.city}
-              <br />
-              Pincode : {details?.shippingInfo?.pincode}
-              <br />
-              State : {details?.shippingInfo?.state}
-              <br />
-              country : {details?.shippingInfo?.country}
-            </Typography>
-          </div>
-        </Card>
+              )}{" "}
+            </div>
+            <div id="items">
+              <Typography>Order Id : {details?._id}</Typography>
+              <Typography variant="body1">Items Ordered :</Typography>
+              {details?.orderItems?.map((value, index) => {
+                return (
+                  <>
+                    <div class="prods">
+                      <Typography variant="body2">
+                        {value?.name}
+                        {" | "}
+                        {"Price : "}
+                        {value?.netprice}
+                      </Typography>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+            <div id="psp">
+              <Typography variant="body1">
+                <br></br>
+                Final Price (including gst) : <CurrencyRupeeIcon />
+                {details?.subtotalPrice}
+              </Typography>
+              <Typography variant="body1">
+                Order Status : {details?.orderStatus}
+              </Typography>
+              <Typography variant="body1">
+                Payment method : {details?.paymentMethod}{" "}
+              </Typography>
+            </div>
+            <br></br>
+            <Divider color="#333" />
+            <div id="shipinfo">
+              <Typography variant="body2">Shipping Info :</Typography>
+              <Typography variant="body2">
+                Address : {details?.shippingInfo?.address}
+                <br />
+                City : {details?.shippingInfo?.city}
+                <br />
+                Pincode : {details?.shippingInfo?.pincode}
+                <br />
+                State : {details?.shippingInfo?.state}
+                <br />
+                country : {details?.shippingInfo?.country}
+              </Typography>
+            </div>
+          </Card>
+        </div>
+        {/* card body*/}
+        {role === "employee" && (
+          <>
+            <div className="mainod">
+              <button id="otp1" onClick={() => handleSendOTP()}>
+                Send OTP
+              </button>
+              <div id="verify">
+                <TextField
+                  id="otpip"
+                  onChange={(e) => setEnterOTP(e.target.value)}
+                />
+                <button id="otp2" onClick={() => handleVerifyOTP()}>
+                  Verify OTP
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       {/* card body*/}
       {role === "employee" && (
         <>
-        <div className="mainod">
-          <button id="otp1" onClick={() => handleSendOTP()}>Send OTP</button>
-          <div id="verify">
-          <TextField id="otpip" onChange={(e)=>setEnterOTP(e.target.value)}/>
-          <button id="otp2" onClick={()=>handleVerifyOTP()}>Verify OTP</button></div>
+          <div className="mainod">
+            <button id="otp1" onClick={() => handleSendOTP()}>Send OTP</button>
+            <div id="verify">
+              <TextField id="otpip" onChange={(e) => setEnterOTP(e.target.value)} />
+              <button id="otp2" onClick={() => handleVerifyOTP()}>Verify OTP</button></div>
           </div>
         </>
       )}
-    </div>
+    </>
   );
 }
