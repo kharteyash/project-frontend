@@ -261,28 +261,28 @@ export default function RecommendationPage() {
 
   const handleOpenExercise = (exerciseName) => {
     if (exerciseName === "Squat") {
-      window.open("https://indigo-crystal-95.tiiny.site/Squat.html", "_blank");
+      window.open("https://maroon-hope-55.tiiny.site/Squat.html", "_blank");
     }
     if (exerciseName === "Shoulder Press") {
       window.open(
-        "https://indigo-crystal-95.tiiny.site/ShoulderPress.html",
+        "https://maroon-hope-55.tiiny.site/pushup.html",
         "_blank"
       );
     }
     if (exerciseName === "Bicep Curl") {
       window.open(
-        "https://indigo-crystal-95.tiiny.site/bicep_curl.html",
+        "https://maroon-hope-55.tiiny.site/bicep_curl.html",
         "_blank"
       );
     }
     if (exerciseName === "Dead Lift") {
       window.open(
-        "https://indigo-crystal-95.tiiny.site/Deadlift.html",
+        "https://maroon-hope-55.tiiny.site/Deadlift.html",
         "_blank"
       );
     }
     if (exerciseName === "Pushup") {
-      window.open("https://indigo-crystal-95.tiiny.site/pushup.html", "_blank");
+      window.open("https://maroon-hope-55.tiiny.site/pushup.html", "_blank");
     }
   };
 

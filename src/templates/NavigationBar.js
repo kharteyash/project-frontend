@@ -125,7 +125,7 @@ export default function NavigationBar() {
                 </>) : (<></>)}
                 {userDetails?.data?._id ? (
                   <a
-                    href="https://indigo-crystal-95.tiiny.site/"
+                    href="https://maroon-hope-55.tiiny.site/"
                     className="nav-link"
                     target="_blank"
                   >
